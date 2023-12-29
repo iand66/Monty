@@ -1,0 +1,3 @@
+AppLog 2023-06-07 21:13:20 WARNING - [dbfunctions.py > dbSelectAll() > 58] - Query contains no columns with which to SELECT from.
+AppLog 2023-06-07 21:17:32 WARNING - [dbfunctions.py > dbSelectAll() > 58] - Query contains no columns with which to SELECT from.
+AppLog 2023-06-07 21:17:51 ERROR - [dbfunctions.py > dbSelectAll() > 58] - Query contains no columns with which to SELECT from.

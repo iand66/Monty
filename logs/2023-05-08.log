@@ -1,0 +1,14 @@
+AppLog 2023-05-08 14:20:44 INFO - [dbutils.py > dbInit() > 23] - Database sqlite:///./db/montytst.db created at 08-05-2023 14:20
+AppLog 2023-05-08 14:20:45 INFO - [dbutils.py > dbFill() > 49] - ./db/montytst.db populated at 08-05-2023 14:20
+AppLog 2023-05-08 14:20:45 ERROR - [dbfunctions.py > dbInsert() > 130] - (sqlite3.IntegrityError) UNIQUE constraint failed: Genres.GenreName
+[SQL: INSERT INTO "Genres" ("GenreName", "Date_Created") VALUES (?, ?)]
+[parameters: ('Screaming', datetime.datetime(2023, 5, 8, 13, 20, 45, 101010))]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+AppLog 2023-05-08 14:23:22 ERROR - [dbfunctions.py > dbUpdateAll() > 77] - Unconsumed column names: Title
+AppLog 2023-05-08 14:24:03 ERROR - [dbfunctions.py > dbUpdateAll() > 77] - subject table for an INSERT, UPDATE or DELETE expected, got <sqlalchemy.sql.elements.TextClause object at 0x000001A61ECE95D0>. To create a FROM clause from a <class 'sqlalchemy.sql.elements.TextClause'> object, use the .subquery() method. (Background on this error at: https://sqlalche.me/e/14/89ve)
+AppLog 2023-05-08 14:24:11 ERROR - [dbfunctions.py > dbUpdateAll() > 77] - Unconsumed column names: Title
+AppLog 2023-05-08 14:24:19 ERROR - [dbfunctions.py > dbUpdateAll() > 77] - Invalid expression type: 'Hobbies'
+AppLog 2023-05-08 14:24:48 ERROR - [dbfunctions.py > dbDeleteAll() > 103] - (sqlite3.OperationalError) no such table: Fred
+[SQL: DELETE FROM "Fred"]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+AppLog 2023-05-08 14:25:07 INFO - [dbutils.py > dbKill() > 66] - File ./db/montytst.db has been removed at 08-05-2023 14:25
