@@ -2,7 +2,7 @@ import logging
 import os
 import sqlalchemy
 
-from raw.csvHelper import csvDictReader, csvRead
+from raw.csvhelper import csvDictReader, csvRead
 from sqlalchemy_utils import create_database, database_exists
 from orm.dbfunctions import dbInsertAll
 from orm.schema import *
@@ -29,10 +29,10 @@ def dbInit(engine:sqlalchemy.engine) -> bool:
     
 def dbFill(engine:sqlalchemy.engine, seed:str, dbName:str, verbose:bool) -> bool:
     '''
-    Drop database & reload sample data from samples
+    Drop database & reload sample data
     :param engine - SQLAlchemy engine instance
     :param seed - Fully qualified CSV file of files to import
-    :param dbName - Database name
+    :param dbName - Database name to populate
     :param verbose - Enable verbose mode
     :return boolean - True or False
     :example - dbBuild(dbName, engine, False)
@@ -48,8 +48,8 @@ def dbFill(engine:sqlalchemy.engine, seed:str, dbName:str, verbose:bool) -> bool
             applog.info(f'{dbName} populated at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
             return True
     except Exception as e:
-        applog.error(f'Seed file of sample files could not be found')
-        return False
+        #applog.error(f'Seed file of sample files could not be found')
+        return e
 
 def dbKill(filename:str) -> bool:
     '''

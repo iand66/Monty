@@ -1,5 +1,6 @@
 import logging
 import sqlalchemy
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from orm.schema import *
@@ -19,7 +20,7 @@ def dbInsertAll(engine:sqlalchemy.engine, tblName:str, data:Base, verbose:bool) 
     datlog = logging.getLogger('DatLog')
     with Session(engine) as session:
         if engine.name == 'sqlite':
-            session.execute('pragma foreign_keys=on')
+            session.execute(text('pragma foreign_keys=on'))
         try:
             session.bulk_insert_mappings(tblName, data)
             session.commit()
@@ -40,7 +41,6 @@ def dbSelectAll(engine:Session, tblName:Base, verbose:bool) -> list:
     :return data - Query results as list
     :example - x = dbSelectAll(engine, Genre, True)
     '''
-    #FIXME DBAPI Events
     applog = logging.getLogger('AppLog')
     datlog = logging.getLogger('DatLog')
     try:
@@ -60,7 +60,7 @@ def dbSelectAll(engine:Session, tblName:Base, verbose:bool) -> list:
 
 def dbUpdateAll(engine:Session, tblName:Base, updAttr:str, updVal:str, verbose:bool) -> int:
     '''
-    Update unfiltered records in a database table
+    Update records in a database table
     :param engine - SQLAlchemy engine instance
     :param tblName - Database tablename 
     :param updAttr - Table column to update
@@ -145,7 +145,6 @@ def dbSelect(engine:Session, tblName:Base, filters:dict, verbose:bool) -> list:
     :return data - Query results as list
     :example - x = dbSelect(engine, Customer, {'Country':'Brazil' [,...]}, True)
     '''
-    #FIXME DBAPI Events
     datlog = logging.getLogger('DatLog')
     with Session(engine) as session:
         data = []
@@ -209,5 +208,4 @@ def dbDelete(engine:Session, tblName:Base, filters:dict, verbose:bool) -> int:
             return results
         except Exception as e:
             applog.error(e)
-            return e
-            
+            return e       

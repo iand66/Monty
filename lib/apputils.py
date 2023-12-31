@@ -23,8 +23,8 @@ def logSetup(logcfg:str, logloc:str, echo:bool) -> logging.Logger:
     '''
     Setup application & database level logging
     :param logcfg - Fully qualified location of logging config file
-    :param logloc - Directory to store application log files
-    :param echo - Propagate application logs to console
+    :param logloc - Directory to store log files app=*.log & db=*.trc
+    :param echo - Propagate logs to console
     :return logger - Updated logger object
     :example - logger = logSetup('./ini/logger.ini', './logs/', False)
     '''

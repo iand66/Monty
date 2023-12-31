@@ -3,7 +3,7 @@ import csv, logging
 def csvRead(filename:str, verbose:bool) -> list:
     '''
     Read CSV file
-    :param filename - Fully qualified path to database name
+    :param filename - Fully qualified path to filename
     :param verbose - Enable verbose mode
     :return list or exception
     :example - csvRead('MyFileName.csv', True)
@@ -23,7 +23,7 @@ def csvRead(filename:str, verbose:bool) -> list:
         applog.error(e)
         return e
 
-def csvWrite(filename:str, data:list, verbose:bool) -> int:
+def csvWrite(filename:str, data:list, verbose:bool) -> bool:
     '''
     Write CSV file
     :param filename - Fully qualified path to OS directory
@@ -41,8 +41,7 @@ def csvWrite(filename:str, data:list, verbose:bool) -> int:
                 writer.writerow([data[i]])
         if verbose:
             datlog.info(data)
-            #FIXME csvWrite Return boolean
-        return 1
+        return True
     except Exception as e:
         applog.error(e)
         return e
@@ -50,7 +49,7 @@ def csvWrite(filename:str, data:list, verbose:bool) -> int:
 def csvDictReader(filename:str, verbose:bool) -> list:
     '''
     Read CSV file as dictionary
-    :param filename - Fully qualified path to database name
+    :param filename - Fully qualified path to filename
     :param verbose - Enable verbose mode
     :return list or exception
     :example - csvDictReader('MyFileName.csv', True)
@@ -70,7 +69,7 @@ def csvDictReader(filename:str, verbose:bool) -> list:
         applog.error(e)
         return e
 
-def csvDictWriter(filename:str, data:dict, verbose:bool) -> int:
+def csvDictWriter(filename:str, data:dict, verbose:bool) -> bool:
     '''
     Write CSV file from dictionary
     :param filename - Fully qualified path to OS directory
@@ -89,9 +88,7 @@ def csvDictWriter(filename:str, data:dict, verbose:bool) -> int:
             writer.writerows(data)
             if verbose:
                 datlog.info(data)
-                print(data)
-        #FIXME csvDictWriter Return boolean
-        return 1
+        return True
     except Exception as e:
         applog.error(e)
         return e

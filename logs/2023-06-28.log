@@ -1,1 +1,0 @@
-AppLog 2023-06-28 18:57:44 ERROR - [dbfunctions.py > dbSelectAll() > 58] - Query contains no columns with which to SELECT from.

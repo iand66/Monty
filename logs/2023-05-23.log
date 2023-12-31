@@ -1,7 +1,0 @@
-AppLog 2023-05-23 19:59:14 INFO - [dbutils.py > dbInit() > 23] - Database sqlite:///./db/montytst.db created at 23-05-2023 19:59
-AppLog 2023-05-23 20:06:19 INFO - [dbutils.py > dbInit() > 28] - Database sqlite:///./db/montytst.db updated at at 23-05-2023 20:06
-AppLog 2023-05-23 20:12:17 INFO - [dbutils.py > dbInit() > 28] - Database sqlite:///./db/montytst.db updated at at 23-05-2023 20:12
-AppLog 2023-05-23 20:19:31 INFO - [dbutils.py > dbInit() > 23] - Database sqlite:///./db/montytst.db created at 23-05-2023 20:19
-AppLog 2023-05-23 20:19:51 INFO - [dbutils.py > dbInit() > 28] - Database sqlite:///./db/montytst.db updated at at 23-05-2023 20:19
-AppLog 2023-05-23 20:19:57 INFO - [dbutils.py > dbInit() > 28] - Database sqlite:///./db/montytst.db updated at at 23-05-2023 20:19
-AppLog 2023-05-23 20:20:15 INFO - [dbutils.py > dbInit() > 23] - Database sqlite:///./db/montytst.db created at 23-05-2023 20:20
