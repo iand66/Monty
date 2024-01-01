@@ -1,0 +1,11 @@
+Album -> Albums
+Artist -> Recording Artists
+Customer -> Customers
+Employee -> Employees
+Genre -> Musical Styles
+Invoice -> Invoices
+Invoiceitem -> Invoice Items
+Mediatype -> MediaType of Track
+Playlist -> Suggested Genre Mixes
+Playlisttrack -> Playlist Tracks
+Track -> Available Tracks per Album
