@@ -1,20 +1,20 @@
 import logging
-import sqlalchemy
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from orm.schema import *
 
 # Table level functions
-def dbInsertAll(engine:sqlalchemy.engine, tblName:str, data:Base, verbose:bool) -> int:
+def dbInsertAll(engine:Session, tablename:str, data:Base, verbose:bool) -> int:
+    #TODO Is this actually a session object?
     '''
     Insert multiple records into database table
-    :param engine - SQLAlchemy engine instance
-    :param tblName - Database tablename 
+    :param engine - SQLAlchemy session instance
+    :param tablename - Database tablename 
     :param data - SQLALchemy data objects
     :parma verbose - Enable verbose mode
     :return int - Number of records inserted or exception
-    :example - dbInsertAll(engine, eval(tblName.title()), dataToImport, verbose)
+    :example - dbInsertAll(engine, tablename, dataToImport, False)
     '''
     applog = logging.getLogger('AppLog')
     datlog = logging.getLogger('DatLog')
@@ -22,21 +22,22 @@ def dbInsertAll(engine:sqlalchemy.engine, tblName:str, data:Base, verbose:bool) 
         if engine.name == 'sqlite':
             session.execute(text('pragma foreign_keys=on'))
         try:
-            session.bulk_insert_mappings(tblName, data)
+            session.bulk_insert_mappings(tablename, data)
             session.commit()
             if verbose:
-                datlog.info(data)
+                datlog.info(f'{tablename.__tablename__} {data}')
             return len(data)
         except Exception as e:
             session.rollback()
             applog.error(e)
             return e
 
-def dbSelectAll(engine:Session, tblName:Base, verbose:bool) -> list:
+def dbSelectAll(engine:Session, tablename:Base, verbose:bool) -> list:
+    #TODO ORM to Dict{} conversion is not elegant
     '''
     Select all records from a database table
-    :param engine - SQLAlchemy engine instance
-    :param tblName - Database tablename 
+    :param engine - SQLAlchemy session instance
+    :param tablename - Database tablename 
     :param verbose - Enable verbose mode
     :return data - Query results as list
     :example - x = dbSelectAll(engine, Genre, True)
@@ -46,8 +47,8 @@ def dbSelectAll(engine:Session, tblName:Base, verbose:bool) -> list:
     try:
         with Session(engine) as session:
             data = []
-            results = session.query(tblName).all()
-            for row in results:
+            results = session.query(tablename).all()
+            for row in results: 
                 rowdict = {col: str(getattr(row,col)) for col in row.__table__.c.keys()}
                 if verbose:
                     datlog.info(f'Selected ... {rowdict}')
@@ -58,11 +59,12 @@ def dbSelectAll(engine:Session, tblName:Base, verbose:bool) -> list:
             applog.error(e)
         return e
 
-def dbUpdateAll(engine:Session, tblName:Base, updAttr:str, updVal:str, verbose:bool) -> int:
+def dbUpdateAll(engine:Session, tablename:Base, updAttr:str, updVal:str, verbose:bool) -> int:
+    #TODO Is this actually a session object?
     '''
     Update records in a database table
-    :param engine - SQLAlchemy engine instance
-    :param tblName - Database tablename 
+    :param engine - SQLAlchemy session instance
+    :param tablename - Database tablename 
     :param updAttr - Table column to update
     :param updVal - New value for table column
     :param verbose - Enable verbose mode
@@ -73,21 +75,22 @@ def dbUpdateAll(engine:Session, tblName:Base, updAttr:str, updVal:str, verbose:b
     datlog = logging.getLogger('DatLog')
     with Session(engine) as session:
         try:
-            results = session.query(tblName).update({updAttr:updVal})
+            results = session.query(tablename).update({updAttr:updVal})
             session.commit()
             if verbose:
-                datlog.info(f'Updated {tblName.__tablename__} table, {updAttr} column contents, to "{updVal}" {results} times')
+                datlog.info(f'Updated {tablename.__tablename__} table, {updAttr} column contents, to "{updVal}" {results} times')
             return results
         except Exception as e:
             session.rollback()
             applog.error(e)
             return(e)
 
-def dbDeleteAll(engine:Session, tblName:Base, verbose:bool) -> int:
+def dbDeleteAll(engine:Session, tablename:Base, verbose:bool) -> int:
+    #TODO Is this actually a session object?
     '''
     Delete all records from table
-    :param engine - SQLAlchemy engine instance
-    :param tblName - Database tablename 
+    :param engine - SQLAlchemy session instance
+    :param tablename - Database tablename 
     :param filters - Dictionary ColumnName Criteria
     :param verbose - Enable verbose mode
     :return int - Number of records deleted
@@ -99,10 +102,10 @@ def dbDeleteAll(engine:Session, tblName:Base, verbose:bool) -> int:
         if engine.name == 'sqlite':
             session.execute('pragma foreign_keys=on')
         try:
-            results = session.query(tblName).delete()
+            results = session.query(tablename).delete()
             session.commit()
             if verbose:
-                datlog.info(f'Deleted {tblName.__tablename__} contents ... {results} entries')
+                datlog.info(f'Deleted {tablename.__tablename__} contents ... {results} entries')
             return results
         except Exception as e:
             session.rollback()
@@ -111,9 +114,10 @@ def dbDeleteAll(engine:Session, tblName:Base, verbose:bool) -> int:
 
 # Record level functions
 def dbInsert(engine:Session, data:Base, verbose:bool) -> int:
+    #TODO Is this actually a session object?
     '''
     Insert record into database table
-    :param engine - SQLAlchemy engine instance
+    :param engine - SQLAlchemy session instance
     :param data - SQLALchemy data object 
     :param verbose - Enable verbose mode
     :return int - RowId of inserted record
@@ -135,11 +139,13 @@ def dbInsert(engine:Session, data:Base, verbose:bool) -> int:
             session.rollback()
             applog.error(e)
 
-def dbSelect(engine:Session, tblName:Base, filters:dict, verbose:bool) -> list:
+def dbSelect(engine:Session, tablename:Base, filters:dict, verbose:bool) -> list:
+    #TODO Is this actually a session object?
+    #TODO ORM to Dict{} is not elegant
     '''
     Select records from a database table
-    :param engine - SQLAlchemy engine instance
-    :param tblName - Database tablename 
+    :param engine - SQLAlchemy session instance
+    :param tablename - Database tablename 
     :param filters - Dictionary {'ColumnName':'Criteria'}
     :param verbose - Enable verbose mode
     :return data - Query results as list
@@ -148,7 +154,7 @@ def dbSelect(engine:Session, tblName:Base, filters:dict, verbose:bool) -> list:
     datlog = logging.getLogger('DatLog')
     with Session(engine) as session:
         data = []
-        results = session.query(tblName).filter_by(**filters).all()
+        results = session.query(tablename).filter_by(**filters).all()
         if len(results) > 0:
             for row in results:
                 rowdict = {col: str(getattr(row,col)) for col in row.__table__.c.keys()}
@@ -159,11 +165,12 @@ def dbSelect(engine:Session, tblName:Base, filters:dict, verbose:bool) -> list:
         else:
             datlog.info(f'Missing ... {filters}')
 
-def dbUpdate(engine:Session, tblName:Base, filters:dict, updAttr:str, updVal:str, verbose:bool) -> int:
+def dbUpdate(engine:Session, tablename:Base, filters:dict, updAttr:str, updVal:str, verbose:bool) -> int:
+    #TODO Is this actually a session object?
     '''
     Update filtered records in a database table
-    :param engine - SQLAlchemy engine instance
-    :param tblName - Database tablename 
+    :param engine - SQLAlchemy session instance
+    :param tablename - Database tablename 
     :param filters - Dictionary {'ColumnName':'Criteria' [,...]}
     :param updAttr - Table column to update
     :param updVal - New value for table column
@@ -175,21 +182,22 @@ def dbUpdate(engine:Session, tblName:Base, filters:dict, updAttr:str, updVal:str
     datlog = logging.getLogger('DatLog')
     with Session(engine) as session:
         try:
-            results = session.query(tblName).filter_by(**filters).update({updAttr:updVal})
+            results = session.query(tablename).filter_by(**filters).update({updAttr:updVal})
             session.commit()
             if verbose:
-                datlog.info(f'Updated {tblName.__tablename__} table, {updAttr} column contents, to "{updVal}" {results} times')
+                datlog.info(f'Updated {tablename.__tablename__} table, {updAttr} column contents, to "{updVal}" {results} times')
             return results
         except Exception as e:
             session.rollback()
             applog.error(e)
             return e
 
-def dbDelete(engine:Session, tblName:Base, filters:dict, verbose:bool) -> int:
+def dbDelete(engine:Session, tablename:Base, filters:dict, verbose:bool) -> int:
+    #TODO Is this actually a session object?
     '''
     Delete records from a database table
-    :param engine - SQLAlchemy engine instance
-    :param tblName - Database tablename 
+    :param engine - SQLAlchemy session instance
+    :param tablename - Database tablename 
     :param filters - Dictionary ColumnName Criteria
     :param verbose - Enable verbose mode
     :return int - Number of records deleted
@@ -201,10 +209,10 @@ def dbDelete(engine:Session, tblName:Base, filters:dict, verbose:bool) -> int:
         if engine.name == 'sqlite':
             session.execute('pragma foreign_keys=on')
         try:
-            results = session.query(tblName).filter_by(**filters).delete()
+            results = session.query(tablename).filter_by(**filters).delete()
             session.commit()
             if verbose:
-                datlog.info(f'Deleted {list(filters.keys())[0]} = {list(filters.values())[0]} from {tblName.__tablename__} table {results} times')
+                datlog.info(f'Deleted {list(filters.keys())[0]} = {list(filters.values())[0]} from {tablename.__tablename__} table {results} times')
             return results
         except Exception as e:
             applog.error(e)

@@ -1,54 +1,50 @@
-import logging
-import os
-import sqlalchemy
-
+import logging, os 
+import sqlalchemy #TODO Do we need all of it?
 from raw.csvhelper import csvDictReader, csvRead
-from sqlalchemy_utils import create_database, database_exists
+from sqlalchemy_utils import database_exists
 from orm.dbfunctions import dbInsertAll
 from orm.schema import *
 
-
 def dbInit(engine:sqlalchemy.engine) -> bool:
+    #TODO Should this be a session object?
     '''
     Create database shell
-    :param engine - SQLAlchemy engine instance
+    :param engine - SQLAlchemy session instance
     :return boolean - True or False
-    :example - dbInit(engine)
     '''
     applog = logging.getLogger('AppLog')
     if not database_exists(engine.url):
-        create_database(engine.url)
-        Base.metadata.create_all(engine)
-        applog.info(f'Database {engine.url} created at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+        Base.metadata.create_all(bind=engine)
+        applog.info(f'Database {engine.url.database} created at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
         return True
     else:
         for t in Base.metadata.sorted_tables:
-            Base.metadata.create_all(engine, checkfirst=True)
+            Base.metadata.create_all(bind=engine, checkfirst=True)
         applog.info(f'Database {engine.url} updated at at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
         return True
     
-def dbFill(engine:sqlalchemy.engine, seed:str, dbName:str, verbose:bool) -> bool:
+def dbFill(engine:sqlalchemy.engine, seed:str, database:str, verbose:bool) -> bool:
+    #TODO Should this be a session object?
     '''
-    Drop database & reload sample data
-    :param engine - SQLAlchemy engine instance
+    Reload sample data
+    :param engine - SQLAlchemy session instance
     :param seed - Fully qualified CSV file of files to import
-    :param dbName - Database name to populate
+    :param database - Database name to populate
     :param verbose - Enable verbose mode
     :return boolean - True or False
-    :example - dbBuild(dbName, engine, False)
     '''
     applog = logging.getLogger('AppLog')
     try:
-        filesToImport = csvRead(seed, verbose)
+        filesToImport = csvRead(seed)
         if filesToImport is not None:
             for f in enumerate(filesToImport):
-                dataToImport = csvDictReader(seed[0:seed.rfind('/')+1] + f[1], verbose)
+                dataToImport = csvDictReader(seed[0:seed.rfind('/')+1] + f[1])
                 tblName = f[1][0:f[1].rfind('.')-1]
                 dbInsertAll(engine, eval(tblName.title()), dataToImport, verbose)
-            applog.info(f'{dbName} populated at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+                applog.info(f'{database} {tblName.title()} populated at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
             return True
     except Exception as e:
-        #applog.error(f'Seed file of sample files could not be found')
+        applog.error(f'Seed file of sample files could not be found')
         return e
 
 def dbKill(filename:str) -> bool:
@@ -56,7 +52,6 @@ def dbKill(filename:str) -> bool:
     Delete database
     :param filename - Fully qualified path to database name
     :return boolean - True or False
-    :example - dbKill(dbName)
     '''
     applog = logging.getLogger('AppLog')
     try:

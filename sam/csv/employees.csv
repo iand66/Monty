@@ -1,4 +1,4 @@
-LastName,FirstName,Title,ReportsTo,BirthDate,HireDate,Address,City,State,Country,PostalCode,Phone,Fax,Email
+Lastname,Firstname,Title,ReportsTo,Birthdate,Hiredate,Address,City,State,Country,Postalcode,Phone,Fax,Email
 Adams,Andrew,General Manager,1,18/02/1962 00:00,14/08/2002 00:00,11120 Jasper Ave NW,Edmonton,AB,Canada,T5K 2N1,+1 (780) 428-9482,+1 (780) 428-3457,andrew@chinookcorp.com
 Edwards,Nancy,Sales Manager,1,08/12/1958 00:00,01/05/2002 00:00,825 8 Ave SW,Calgary,AB,Canada,T2P 2T3,+1 (403) 262-3443,+1 (403) 262-3322,nancy@chinookcorp.com
 Peacock,Jane,Sales Support Agent,2,29/08/1973 00:00,01/04/2002 00:00,1111 6 Ave SW,Calgary,AB,Canada,T2P 5M5,+1 (403) 262-3443,+1 (403) 262-6712,jane@chinookcorp.com

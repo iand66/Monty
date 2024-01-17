@@ -3,6 +3,8 @@ import logging, sys, os
 import datetime as dt
 from logging.config import fileConfig
 
+#TODO Logger cannot handle ł \u0142 character - utf-16?
+
 def config(filename:str) -> configparser:
     '''
     Read configurable parameters from INI file
@@ -21,7 +23,7 @@ def config(filename:str) -> configparser:
 
 def logSetup(logcfg:str, logloc:str, echo:bool) -> logging.Logger:
     '''
-    Setup application & database level logging
+    Setup logging
     :param logcfg - Fully qualified location of logging config file
     :param logloc - Directory to store log files app=*.log & db=*.trc
     :param echo - Propagate logs to console
