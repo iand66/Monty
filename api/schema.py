@@ -2,8 +2,6 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from decimal import Decimal
 
-#TODO Pydantic datatypes?
-
 class Base(BaseModel):
     Id: Optional[int] = None
 
@@ -45,8 +43,8 @@ class employee(Base):
     Firstname: str
     Title: str
     ReportsTo: int # Employee
-    Birthdate: str # TODO Date
-    Hiredate: str # TODO Date
+    Birthdate: str 
+    Hiredate: str 
     Address: str
     City: str 
     State: str
@@ -62,11 +60,31 @@ class genre(Base):
     '''
     GenreName: str
 
+class invoice(Base):
+    '''
+    Invoices
+    '''
+    CustomerId: int # 
+    InvoiceDate: str
+    BillingAddress: str
+    BillingCity: str
+    BillingState: str
+    BillingCountry: str
+    BillingPostalcode: str
+    Email: str # TODO Optional[EmailStr]
+    Total: Decimal
+
 class mediatype(Base):
     '''
     MediaType of Track
     '''
     MediaTypeName: str
+
+class playlist(Base):
+    '''
+    Suggested Mixes
+    '''
+    PlaylistName: str
 
 class track(Base):
     '''

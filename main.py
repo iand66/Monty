@@ -4,17 +4,11 @@ from sqlalchemy import create_engine
 from lib.apputils import config, logSetup
 from api.gets import *
 
-#TODO Update Documentation
-
 appcfg = config('./ini/globals.ini')
 logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], eval(appcfg['LOGCFG']['logecho']))
 engine = create_engine(appcfg['DBTST']['dbType'] + appcfg['DBTST']['dbName'], connect_args={"check_same_thread":False})
 
 app = FastAPI()
-
-@app.get('/')
-async def home():
-  return {'Welcome to Monty'}
 
 if __name__ == '__main__':
     logger = logging.getLogger('uvicorn.error')

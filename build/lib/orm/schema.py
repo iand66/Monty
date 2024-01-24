@@ -2,10 +2,13 @@ from datetime import datetime
 from sqlalchemy import Column, ForeignKey, Integer, Numeric, String, DateTime
 from sqlalchemy.orm import DeclarativeBase, relationship
 
+#TODO SQLA DataTypes?
+
 class Base(DeclarativeBase):
     pass
 
 class Album(Base):
+    #TODO Mapped Columns
     '''
     Available Albums
     '''
@@ -17,6 +20,7 @@ class Album(Base):
     Tracks = relationship('Track')
 
 class Artist(Base):
+    #TODO Mapped Columns
     '''
     Recording Artists
     '''
@@ -27,6 +31,7 @@ class Artist(Base):
     Albums = relationship('Album')
 
 class Customer(Base):
+    #TODO Mapped Columns
     '''
     Customers
     '''
@@ -48,6 +53,7 @@ class Customer(Base):
     Invoices = relationship('Invoice')
 
 class Employee(Base):
+    #TODO Mapped Columns
     '''
     Employees
     '''
@@ -72,6 +78,7 @@ class Employee(Base):
     Employees = relationship('Employee')
 
 class Genre(Base):
+    #TODO Mapped Columns
     '''
     Musical Styles
     '''
@@ -82,6 +89,7 @@ class Genre(Base):
     Tracks = relationship('Track')
 
 class Invoice(Base):
+    #TODO Mapped Columns
     '''
     Invoices
     '''
@@ -100,6 +108,7 @@ class Invoice(Base):
     InvoiceItems = relationship('Invoiceitem')
 
 class Invoiceitem(Base):
+    #TODO Mapped Columns
     '''
     Invoice Items
     '''
@@ -112,6 +121,7 @@ class Invoiceitem(Base):
     DateCreated = Column(DateTime(timezone=True), default=datetime.now)
 
 class Mediatype(Base):
+    #TODO Mapped Columns
     '''
     MediaType of Track
     '''
@@ -122,6 +132,7 @@ class Mediatype(Base):
     Tracks = relationship('Track')
 
 class Playlist(Base):
+    #TODO Mapped Columns
     '''
     Suggested Mixes
     '''
@@ -132,6 +143,7 @@ class Playlist(Base):
     PlaylistTrack = relationship('Playlisttrack')
 
 class Playlisttrack(Base):
+    #TODO Mapped Columns
     '''
     Playlist Tracks
     '''
@@ -142,6 +154,7 @@ class Playlisttrack(Base):
     DateCreated = Column(DateTime(timezone=True), default=datetime.now)
 
 class Track(Base):
+    #TODO Mapped Columns
     '''
     Available Tracks per Album
     '''

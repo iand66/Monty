@@ -1,10 +1,11 @@
 from main import engine, app
 from orm.dbfunctions import dbSelectAll
-from orm.schema import Album, Artist, Customer, Employee, Genre, Mediatype, Track
-from api.schema import album, artist, customer, employee, genre, mediatype, track
+from orm.schema import *
+from api.schema import *
 
-#TODO playlists playlisttracks invoices invoiceitems
-#TODO Get {id} // Gets {criteria}
+@app.get('/')
+async def home():
+  return {'Welcome to Monty'}
 
 @app.get('/albums', response_model=list[album])
 async def get_albums():
@@ -31,9 +32,19 @@ async def get_genres():
     result = dbSelectAll(engine, Genre, True)
     return result
 
+@app.get('/invoices', response_model=list[invoice])
+async def get_invoices():
+    result = dbSelectAll(engine, Invoice, True)
+    return result
+
 @app.get('/mediatypes', response_model=list[mediatype])
 async def get_mediatypes():
     result = dbSelectAll(engine, Mediatype, True)
+    return result
+
+@app.get('/playlists', response_model=list[playlist])
+async def get_playlists():
+    result = dbSelectAll(engine, Playlist, True)
     return result
 
 @app.get('/tracks', response_model=list[track])

@@ -3,7 +3,7 @@ import logging, sys, os
 import datetime as dt
 from logging.config import fileConfig
 
-#FIXMELogger cannot handle ł \u0142 character - utf-16? 
+#TODO Logger cannot handle ł \u0142 character - utf-16?
 
 def config(filename:str) -> configparser:
     '''

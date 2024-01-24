@@ -33,7 +33,7 @@ def dbInsertAll(engine:Engine, tablename:str, data:Base, verbose:bool) -> int:
             return e
 
 def dbSelectAll(engine:Engine, tablename:Base, verbose:bool) -> list:
-    #TODO ORM to Dict{} is not elegant
+    #TODO ORM to Dict{} conversion is not elegant
     '''
     Select all records from a database table
     :param engine - SQLAlchemy session instance
