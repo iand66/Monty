@@ -1,4 +1,4 @@
-CustomerId,InvoiceDate,BillingAddress,BillingCity,BillingState,BillingCountry,BillingPostalCode,Total
+CustomerId,InvoiceDate,BillingAddress,BillingCity,BillingState,BillingCountry,BillingPostalcode,Total
 2,01/01/2009 00:00,Theodor-Heuss-Straße 34,Stuttgart,,Germany,70174,1.98
 4,02/01/2009 00:00,Ullevålsveien 14,Oslo,,Norway,171,3.96
 8,03/01/2009 00:00,Grétrystraat 63,Brussels,,Belgium,1000,5.94

@@ -18,12 +18,24 @@ class artist(Base):
     '''
     ArtistName: str
 
+class genre(Base):
+    '''
+    Musical Style
+    '''
+    GenreName: str
+
+class mediatype(Base):
+    '''
+    MediaType of Track
+    '''
+    MediaTypeName: str
+
 class customer(Base):
     '''
     Customers
     '''
-    Lastname: str 
     Firstname: str 
+    Lastname: str 
     Company: str 
     Address: str 
     City: str 
@@ -54,12 +66,6 @@ class employee(Base):
     Fax: str
     Email: EmailStr
 
-class genre(Base):
-    '''
-    Musical Style
-    '''
-    GenreName: str
-
 class invoice(Base):
     '''
     Invoices
@@ -74,17 +80,15 @@ class invoice(Base):
     Email: str # TODO Optional[EmailStr]
     Total: Decimal
 
-class mediatype(Base):
+class invoiceitem(Base):
     '''
-    MediaType of Track
+    Invoice Items
     '''
-    MediaTypeName: str
-
-class playlist(Base):
-    '''
-    Suggested Mixes
-    '''
-    PlaylistName: str
+    Id: int
+    InvoiceId: int
+    TrackId: int
+    UnitPrice: Decimal
+    Quantity: int
 
 class track(Base):
     '''
@@ -98,3 +102,18 @@ class track(Base):
     Milliseconds: int
     Bytes: int
     UnitPrice: Decimal
+
+class playlist(Base):
+    '''
+    Suggested Mixes
+    '''
+    PlaylistName: str
+
+class playlisttrack(Base):
+    '''
+    Playlist Tracks
+    '''
+    Id: int
+    PlaylistId: int
+    TrackId: int
+
