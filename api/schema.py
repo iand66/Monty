@@ -70,14 +70,13 @@ class invoice(Base):
     '''
     Invoices
     '''
-    CustomerId: int # 
+    CustomerId: int 
     InvoiceDate: str
     BillingAddress: str
     BillingCity: str
     BillingState: str
     BillingCountry: str
     BillingPostalcode: str
-    Email: str # TODO Optional[EmailStr]
     Total: Decimal
 
 class invoiceitem(Base):

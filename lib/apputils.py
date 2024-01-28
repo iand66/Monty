@@ -21,7 +21,7 @@ def config(filename:str) -> configparser:
         sys.exit()
     return config
 
-def logSetup(logcfg:str, logloc:str, echo:bool) -> logging.Logger:
+def logSetup(logcfg:str, logloc:str, echo:bool, trace:bool) -> logging.Logger:
     '''
     Setup logging
     :param logcfg - Fully qualified location of logging config file
@@ -45,7 +45,7 @@ def logSetup(logcfg:str, logloc:str, echo:bool) -> logging.Logger:
         logger = logging.getLogger('AppLog')
         logger.propagate=echo
         logger = logging.getLogger('DatLog')
-        logger.propagate=echo
+        logger.propagate=trace
     except Exception as e:
         print(f'Could not parse {logcfg} file')
         sys.exit()

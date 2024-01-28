@@ -8,17 +8,23 @@ from orm.dbutils import dbKill, dbInit, dbFill
 @fixture(scope='session')
 def setup(request):
     appcfg = config('./ini/globals.ini')
-    logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], eval(appcfg['LOGCFG']['logecho']))
+    echo = eval(appcfg['LOGCFG']['logecho'])
+    trace = eval(appcfg['LOGCFG']['trace'])
+    logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], echo, trace)
     #engine = create_engine(appcfg['DBCFG']['dbType'] + appcfg['DBCFG']['dbName'], connect_args={"check_same_thread":False})
     engine = create_engine(appcfg['DBTST']['dbType'] + appcfg['DBTST']['dbName'], connect_args={"check_same_thread":False})
     
-
     if os.path.exists(appcfg['DBTST']['dbName']): 
-        assert dbKill(appcfg['DBTST']['dbName'], eval(appcfg['LOGCFG']['logecho'])) == True
-        assert dbInit(engine, eval(appcfg['LOGCFG']['logecho'])) == True
+        assert dbKill(appcfg['DBTST']['dbName'], echo) == True
+        assert dbInit(engine, echo) == True
     else:
-        assert dbInit(engine, eval(appcfg['LOGCFG']['logecho'])) == True
+        assert dbInit(engine, echo) == True
         
-    assert dbFill(engine, './sam/csv/import.csv', appcfg['DBTST']['dbName'], eval(appcfg['LOGCFG']['logecho'])) == True
+    assert dbFill(engine, './sam/csv/import.csv', appcfg['DBTST']['dbName'], echo, trace) == True
 
     yield engine
+
+@fixture(scope="session")
+def temp(tmp_path_factory):
+    tempdir = tmp_path_factory.mktemp('tmp')
+    return tempdir

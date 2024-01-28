@@ -1,14 +1,17 @@
 import uvicorn, logging
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from sqlalchemy import create_engine
 from lib.apputils import config, logSetup
-from api.gets import *
 
 appcfg = config('./ini/globals.ini')
-logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], eval(appcfg['LOGCFG']['logecho']))
+echo = eval(appcfg['LOGCFG']['logecho'])
+trace = eval(appcfg['LOGCFG']['trace'])
+logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], echo, trace)
 engine = create_engine(appcfg['DBTST']['dbType'] + appcfg['DBTST']['dbName'], connect_args={"check_same_thread":False})
 
 app = FastAPI()
+
+from api.gets import *
 
 if __name__ == '__main__':
     logger = logging.getLogger('uvicorn.error')

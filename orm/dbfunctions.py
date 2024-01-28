@@ -6,13 +6,14 @@ from sqlalchemy.exc import SQLAlchemyError
 from orm.schema import *
 
 # Table level functions
-def dbInsertAll(engine:Engine, tablename:str, data:Base, verbose:bool) -> int:
+def dbInsertAll(engine:Engine, tablename:str, data:Base, echo:bool, trace:bool) -> int:
     '''
     Insert multiple records into database table
     :param engine - SQLAlchemy session instance
     :param tablename - Database tablename 
     :param data - SQLALchemy data objects
-    :parma verbose - Enable verbose mode
+    :param echo - Enable application logging
+    :param trace - Enable database logging
     :return int - Number of records inserted or exception
     :example - dbInsertAll(engine, tablename, dataToImport, False)
     '''
@@ -24,21 +25,23 @@ def dbInsertAll(engine:Engine, tablename:str, data:Base, verbose:bool) -> int:
         try:
             session.bulk_insert_mappings(tablename, data)
             session.commit()
-            if verbose:
+            if trace:
                 datlog.info(f'{tablename.__tablename__} {data}')
             return len(data)
         except Exception as e:
             session.rollback()
-            applog.error(e)
+            if echo:
+                applog.error(e)
             return e
 
-def dbSelectAll(engine:Engine, tablename:Base, verbose:bool) -> list:
+def dbSelectAll(engine:Engine, tablename:Base, echo:bool, trace:bool) -> list:
     #TODO ORM to Dict{} is not elegant
     '''
     Select all records from a database table
     :param engine - SQLAlchemy session instance
     :param tablename - Database tablename 
-    :param verbose - Enable verbose mode
+    :param echo - Enable applocation logging
+    :param trace - Enable database logging
     :return data - Query results as list
     :example - x = dbSelectAll(engine, Genre, True)
     '''
@@ -50,23 +53,24 @@ def dbSelectAll(engine:Engine, tablename:Base, verbose:bool) -> list:
             results = session.query(tablename).all()
             for row in results: 
                 rowdict = {col: str(getattr(row,col)) for col in row.__table__.c.keys()}
-                if verbose:
+                if trace:
                     datlog.info(f'Selected ... {rowdict}')
                 data.append(rowdict)
             return data
     except SQLAlchemyError as e:
-        if verbose:
+        if echo:
             applog.error(e)
         return e
 
-def dbUpdateAll(engine:Engine, tablename:Base, updAttr:str, updVal:str, verbose:bool) -> int:
+def dbUpdateAll(engine:Engine, tablename:Base, updAttr:str, updVal:str, echo:bool, trace:bool) -> int:
     '''
     Update records in a database table
     :param engine - SQLAlchemy session instance
     :param tablename - Database tablename 
     :param updAttr - Table column to update
     :param updVal - New value for table column
-    :param verbose - Enable verbose mode
+    :param echo - Enable application logging
+    :param trace - Enable database logging
     :return results - Integer of update results processed
     :example - x = dbUpdateAll(engine, Customer, 'City', 'My Town', True)
     '''
@@ -76,21 +80,23 @@ def dbUpdateAll(engine:Engine, tablename:Base, updAttr:str, updVal:str, verbose:
         try:
             results = session.query(tablename).update({updAttr:updVal})
             session.commit()
-            if verbose:
+            if trace:
                 datlog.info(f'Updated {tablename.__tablename__} table, {updAttr} column contents, to "{updVal}" {results} times')
             return results
         except Exception as e:
             session.rollback()
-            applog.error(e)
+            if echo:
+                applog.error(e)
             return(e)
 
-def dbDeleteAll(engine:Engine, tablename:Base, verbose:bool) -> int:
+def dbDeleteAll(engine:Engine, tablename:Base, echo:bool, trace:bool) -> int:
     '''
     Delete all records from table
     :param engine - SQLAlchemy session instance
     :param tablename - Database tablename 
     :param filters - Dictionary ColumnName Criteria
-    :param verbose - Enable verbose mode
+    :param echo - Enable application logging
+    :param trace - Enable database logging
     :return int - Number of records deleted
     :example - dbDeleteAll(engine, Customer, True)
     '''
@@ -102,21 +108,23 @@ def dbDeleteAll(engine:Engine, tablename:Base, verbose:bool) -> int:
         try:
             results = session.query(tablename).delete()
             session.commit()
-            if verbose:
+            if trace:
                 datlog.info(f'Deleted {tablename.__tablename__} contents ... {results} entries')
             return results
         except Exception as e:
             session.rollback()
-            applog.error(e)
+            if echo:
+                applog.error(e)
             return(e)
 
 # Record level functions
-def dbInsert(engine:Engine, data:Base, verbose:bool) -> int:
+def dbInsert(engine:Engine, data:Base, echo:bool, trace:bool) -> int:
     '''
     Insert record into database table
     :param engine - SQLAlchemy session instance
     :param data - SQLALchemy data object 
-    :param verbose - Enable verbose mode
+    :param echo - Enable application logging
+    :param trace - Enable database logging
     :return int - RowId of inserted record
     :example - dbInsert(engine,Genre(GenreName='Screaming'),True)
     '''
@@ -129,21 +137,23 @@ def dbInsert(engine:Engine, data:Base, verbose:bool) -> int:
             session.add(data)
             session.commit()
             session.refresh(data)
-            if verbose:
+            if trace:
                 datlog.info(f'Added record number {data.Id} to {data.__tablename__}')
             return data.Id
         except Exception as e:
             session.rollback()
-            applog.error(e)
+            if echo:
+                applog.error(e)
 
-def dbSelect(engine:Engine, tablename:Base, filters:dict, verbose:bool) -> list:
+def dbSelect(engine:Engine, tablename:Base, filters:dict, echo:bool, trace:bool) -> list:
     #TODO ORM to Dict{} is not elegant
     '''
     Select records from a database table
     :param engine - SQLAlchemy session instance
     :param tablename - Database tablename 
     :param filters - Dictionary {'ColumnName':'Criteria'}
-    :param verbose - Enable verbose mode
+    :param echo - Enable application logging
+    :param trace - Enable database logging
     :return data - Query results as list
     :example - x = dbSelect(engine, Customer, {'Country':'Brazil' [,...]}, True)
     '''
@@ -155,13 +165,14 @@ def dbSelect(engine:Engine, tablename:Base, filters:dict, verbose:bool) -> list:
             for row in results:
                 rowdict = {col: str(getattr(row,col)) for col in row.__table__.c.keys()}
                 data.append(rowdict)
-                if verbose:
+                if trace:
                     datlog.info(f'Selected ... {rowdict}')
             return data
         else:
-            datlog.info(f'Missing ... {filters}')
+            if trace:
+                datlog.info(f'Missing ... {filters}')
 
-def dbUpdate(engine:Engine, tablename:Base, filters:dict, updAttr:str, updVal:str, verbose:bool) -> int:
+def dbUpdate(engine:Engine, tablename:Base, filters:dict, updAttr:str, updVal:str, echo:bool, trace:bool) -> int:
     '''
     Update filtered records in a database table
     :param engine - SQLAlchemy session instance
@@ -169,7 +180,8 @@ def dbUpdate(engine:Engine, tablename:Base, filters:dict, updAttr:str, updVal:st
     :param filters - Dictionary {'ColumnName':'Criteria' [,...]}
     :param updAttr - Table column to update
     :param updVal - New value for table column
-    :param verbose - Enable verbose mode
+    :param echo - Enable application logging
+    :parma trace - Enable database logging
     :return results - Integer of update results processed
     :example - x = dbUpdate(engine, Customer, {'Country':'Brazil'}, 'City', 'My Town', True)
     '''
@@ -179,21 +191,23 @@ def dbUpdate(engine:Engine, tablename:Base, filters:dict, updAttr:str, updVal:st
         try:
             results = session.query(tablename).filter_by(**filters).update({updAttr:updVal})
             session.commit()
-            if verbose:
+            if trace:
                 datlog.info(f'Updated {tablename.__tablename__} table, {updAttr} column contents, to "{updVal}" {results} times')
             return results
         except Exception as e:
             session.rollback()
-            applog.error(e)
+            if echo:
+                applog.error(e)
             return e
 
-def dbDelete(engine:Engine, tablename:Base, filters:dict, verbose:bool) -> int:
+def dbDelete(engine:Engine, tablename:Base, filters:dict, echo:bool, trace:bool) -> int:
     '''
     Delete records from a database table
     :param engine - SQLAlchemy session instance
     :param tablename - Database tablename 
     :param filters - Dictionary ColumnName Criteria
-    :param verbose - Enable verbose mode
+    :param echo - Enable application logging
+    :param trace - Enable database logging
     :return int - Number of records deleted
     :example - dbDelete(engine, Customer, {'Country':'Brazil'}, True)
     '''
@@ -205,9 +219,10 @@ def dbDelete(engine:Engine, tablename:Base, filters:dict, verbose:bool) -> int:
         try:
             results = session.query(tablename).filter_by(**filters).delete()
             session.commit()
-            if verbose:
+            if trace:
                 datlog.info(f'Deleted {list(filters.keys())[0]} = {list(filters.values())[0]} from {tablename.__tablename__} table {results} times')
             return results
         except Exception as e:
-            applog.error(e)
+            if echo:
+                applog.error(e)
             return e       
