@@ -155,7 +155,7 @@ def dbSelect(engine:Engine, tablename:Base, filters:dict, echo:bool, trace:bool)
     :param echo - Enable application logging
     :param trace - Enable database logging
     :return data - Query results as list
-    :example - x = dbSelect(engine, Customer, {'Country':'Brazil' [,...]}, True)
+    :example - x = dbSelect(engine, Customer, {'Country':'Brazil'}, True)
     '''
     datlog = logging.getLogger('DatLog')
     with Session(engine) as session:

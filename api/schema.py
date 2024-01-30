@@ -3,7 +3,7 @@ from typing import Optional
 from decimal import Decimal
 
 class Base(BaseModel):
-    Id: Optional[int] = None
+    Id: int
 
 class album(Base):
     '''
@@ -83,7 +83,6 @@ class invoiceitem(Base):
     '''
     Invoice Items
     '''
-    Id: int
     InvoiceId: int
     TrackId: int
     UnitPrice: Decimal
@@ -112,7 +111,6 @@ class playlisttrack(Base):
     '''
     Playlist Tracks
     '''
-    Id: int
     PlaylistId: int
     TrackId: int
 
