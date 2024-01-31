@@ -157,10 +157,27 @@ def dbSelect(engine:Engine, tablename:Base, filters:dict, echo:bool, trace:bool)
     :return data - Query results as list
     :example - x = dbSelect(engine, Customer, {'Country':'Brazil'}, True)
     '''
+    # with Session(engine) as session:
+    #     data = []
+    #     results = session.query(tablename).filter_by(**filters).all()
+    #     if len(results) > 0:
+    #         for row in results:
+    #             rowdict = {col: str(getattr(row,col)) for col in row.__table__.c.keys()}
+    #             data.append(rowdict)
+    #             if trace:
+    #                 datlog.info(f'Selected ... {rowdict}')
+    #         return data
+    #     else:
+    #         if trace:
+    #             datlog.info(f'Missing ... {filters}')
+    
     datlog = logging.getLogger('DatLog')
+    data = []
     with Session(engine) as session:
-        data = []
-        results = session.query(tablename).filter_by(**filters).all()
+        query = session.query(tablename)
+        for k,v in filters.items():
+            query = query.filter(getattr(tablename,k).like(v))
+        results = query.all()
         if len(results) > 0:
             for row in results:
                 rowdict = {col: str(getattr(row,col)) for col in row.__table__.c.keys()}
@@ -169,8 +186,8 @@ def dbSelect(engine:Engine, tablename:Base, filters:dict, echo:bool, trace:bool)
                     datlog.info(f'Selected ... {rowdict}')
             return data
         else:
-            if trace:
-                datlog.info(f'Missing ... {filters}')
+             if trace:
+                 datlog.info(f'Missing ... {filters}')
 
 def dbUpdate(engine:Engine, tablename:Base, filters:dict, updAttr:str, updVal:str, echo:bool, trace:bool) -> int:
     '''

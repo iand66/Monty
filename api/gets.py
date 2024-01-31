@@ -21,12 +21,11 @@ async def get_albums_id(id: int) -> list:
     else:
         return result
 
-# TODO Case sensitive
 @app.get('/albums/{name:str}', response_model=List[album])
-async def get_albums_title(title: str) -> list:
-    result = dbSelect(engine, Album, {'AlbumTitle':title}, echo, trace)
+async def get_albums_name(name: str) -> list:
+    result = dbSelect(engine, Album, {'AlbumTitle':name}, echo, trace)
     if result == None:
-        raise HTTPException(status_code=404, detail=f'Album title {title} not found')
+        raise HTTPException(status_code=404, detail=f'Album name {name} not found')
     else:
         return result
 
@@ -43,7 +42,6 @@ async def get_artists_id(id: int) -> list:
     else:
         return result
 
-# TODO Case sensitive
 @app.get('/artists/{name:str}', response_model=List[artist])
 async def get_artists_name(name: str) -> list:
     result = dbSelect(engine, Artist, {'ArtistName':name}, echo, trace)
@@ -65,12 +63,11 @@ async def get_customers_id(id: int) -> list:
     else:
         return result
     
-# TODO Case sensitive
-@app.get('/customers/{lastname:str}', response_model=List[customer])
-async def get_customers_name(lastname: str) -> list:
-    result = dbSelect(engine, Customer, {'Lastname':lastname}, echo, trace)
+@app.get('/customers/{name:str}', response_model=List[customer])
+async def get_customers_name(name: str) -> list:
+    result = dbSelect(engine, Customer, {'Lastname':name}, echo, trace)
     if result == None:
-        raise HTTPException(status_code=404, detail=f'Customer lastname {lastname} not found')
+        raise HTTPException(status_code=404, detail=f'Customer lastname {name} not found')
     else:
         return result
 
@@ -87,12 +84,11 @@ async def get_employees_id(id: int) -> list:
     else:
         return result
 
-# TODO Case sensitive
-@app.get('/employees/{lastname:str}', response_model=List[employee])
-async def get_employees_name(lastname: str) -> list:
-    result = dbSelect(engine, Employee, {'Lastname': lastname}, echo, trace)
+@app.get('/employees/{name:str}', response_model=List[employee])
+async def get_employees_name(name: str) -> list:
+    result = dbSelect(engine, Employee, {'Lastname': name}, echo, trace)
     if result == None:
-        raise HTTPException(status_code=404, detail=f'Employee {lastname} not found')
+        raise HTTPException(status_code=404, detail=f'Employee {name} not found')
     else:
         return result
 
@@ -109,10 +105,9 @@ async def get_genres_id(id: int) -> list:
     else:
         return result
 
-# TODO Case sensitive
 @app.get('/genres/{name:str}', response_model=List[genre])
 async def get_genres_name(name: str) -> list:
-    result = dbSelect(engine, Genre, {'GenreName': name}, echo, trace)
+    result = dbSelect(engine, Genre, {'GenreName':name}, echo, trace)
     if result == None:
         raise HTTPException(status_code=404, detail=f'Genre {name} not found')
     else:
@@ -131,7 +126,7 @@ async def get_invoices_id(id: int) -> list:
     else:
         return result
 
-# TODO Case sensitive
+# TODO Missing values?
 @app.get('/invoices/{postcode:str}', response_model=List[invoice])
 async def get_invoices_postcode(postcode: str) -> list:
     result = dbSelect(engine, Invoice, {'BillingPostalcode':postcode}, echo, trace)
@@ -153,7 +148,6 @@ async def get_mediatypes_id(id: int) -> list:
     else:
         return result
     
-# TODO Case sensitive
 @app.get('/mediatypes/{name:str}', response_model=List[mediatype])
 async def get_mediatypes_name(name: str) -> list:
     result = dbSelect(engine, Mediatype, {'MediaTypeName':name}, echo, trace)
@@ -175,7 +169,6 @@ async def get_playlists_id(id: int) -> list:
     else:
         return result
 
-# TODO Case sensitive    
 @app.get('/playlists/{name:str}', response_model=List[playlist])
 async def get_playlists_name(name: str) -> list:
     result = dbSelect(engine, Playlist, {'PlaylistName':name}, echo, trace)
@@ -197,7 +190,6 @@ async def get_tracks_id(id: int) -> list:
     else:
         return result
 
-# TODO Case sensitive
 @app.get('/tracks/{name:str}', response_model=List[track])
 async def get_tracks_name(name: str) -> list:
     result = dbSelect(engine, Track, {'TrackName':name}, echo, trace)
