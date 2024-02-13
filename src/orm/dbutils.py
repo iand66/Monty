@@ -1,14 +1,16 @@
 import logging, os 
+
 from sqlalchemy.engine.base import Engine
-from raw.csvhelper import csvDictReader, csvRead
 from sqlalchemy_utils import database_exists
-from orm.dbfunctions import dbInsertAll
-from orm.schema import *
+
+from src.raw.csvhelper import csvDictReader, csvRead
+from src.orm.dbfunctions import dbBulkInsert
+from src.orm.schema import *
 
 def dbInit(engine:Engine, echo:bool) -> bool:
     '''
-    Create database shell
-    :param engine - SQLAlchemy session instance
+    CREATE database shell
+    :param engine - SQLAlchemy engine instance
     :param echo - Enable application logging
     :return boolean - True or False
     '''
@@ -25,9 +27,9 @@ def dbInit(engine:Engine, echo:bool) -> bool:
             applog.info(f'Database {engine.url} updated at at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
         return True
     
-def dbFill(engine:Engine, seed:str, database:str, echo:bool, trace:bool) -> bool:
+def dbFill(session, seed:str, database:str, echo:bool, trace:bool) -> bool:
     '''
-    Reload sample data
+    RELOAD sample data
     :param engine - SQLAlchemy session instance
     :param seed - Fully qualified CSV file of files to import
     :param database - Database name to populate
@@ -42,7 +44,7 @@ def dbFill(engine:Engine, seed:str, database:str, echo:bool, trace:bool) -> bool
             for f in enumerate(filesToImport):
                 dataToImport = csvDictReader(seed[0:seed.rfind('/')+1] + f[1], echo)
                 tblName = f[1][0:f[1].rfind('.')-1]
-                dbInsertAll(engine, eval(tblName.title()), dataToImport, echo, trace)
+                dbBulkInsert(session, eval(tblName.title()), dataToImport, echo, trace)
                 if echo:
                     applog.info(f'{database} {tblName.title()} populated at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
             return True
@@ -53,7 +55,7 @@ def dbFill(engine:Engine, seed:str, database:str, echo:bool, trace:bool) -> bool
 
 def dbKill(filename:str, echo:bool) -> bool:
     '''
-    Delete database
+    DELETE database
     :param filename - Fully qualified path to database name
     :param echo - Enable application logging
     :return boolean - True or False

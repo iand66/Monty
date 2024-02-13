@@ -1,7 +1,10 @@
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import ForeignKey, Integer, Numeric, String, DateTime
+
+from sqlalchemy import ForeignKey, Integer, Numeric, String, DateTime, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
+
+# TODO DateCreated = datetime.now().strftime("%d/%m/%Y %H:%M")
 
 class Base(DeclarativeBase):
     pass
@@ -12,10 +15,12 @@ class Album(Base):
     '''
     __tablename__ = 'Albums'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
-    AlbumTitle: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
+    AlbumTitle: Mapped[str] = mapped_column(String(100), nullable=False)
     ArtistId: Mapped[int] = mapped_column(ForeignKey('Artists.Id'), nullable=False, index=True)
     DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
     Tracks = relationship('Track')
+
+    __table_args__ = (UniqueConstraint('AlbumTitle','ArtistId'),)
 
 class Artist(Base):
     '''
@@ -23,7 +28,7 @@ class Artist(Base):
     '''
     __tablename__ = 'Artists'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
-    ArtistName: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
+    ArtistName: Mapped[str] = mapped_column(String(100), nullable=False)
     DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
     Albums = relationship('Album')
 
@@ -55,14 +60,14 @@ class Customer(Base):
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     Firstname: Mapped[str] = mapped_column(String(50), nullable=False)
     Lastname: Mapped[str] = mapped_column(String(50), nullable=False)
-    Company: Mapped[str] = mapped_column(String(50))
-    Address: Mapped[str] = mapped_column(String(50))
-    City: Mapped[str] = mapped_column(String(25))
-    State: Mapped[str] = mapped_column(String(10))
-    Country: Mapped[str] = mapped_column(String(15))
-    Postalcode: Mapped[str] = mapped_column(String(10))
-    Phone: Mapped[str] = mapped_column(String(20))
-    Fax: Mapped[str] = mapped_column(String(20))
+    Company: Mapped[str] = mapped_column(String(50), nullable=True)
+    Address: Mapped[str] = mapped_column(String(50), nullable=True)
+    City: Mapped[str] = mapped_column(String(25), nullable=True)
+    State: Mapped[str] = mapped_column(String(10), nullable=True)
+    Country: Mapped[str] = mapped_column(String(15), nullable=True)
+    Postalcode: Mapped[str] = mapped_column(String(10), nullable=True)
+    Phone: Mapped[str] = mapped_column(String(20), nullable=True)
+    Fax: Mapped[str] = mapped_column(String(20), nullable=True)
     Email: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
     SupportRepId: Mapped[int] = mapped_column(ForeignKey('Employees.Id'), index=True)
     DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
@@ -78,15 +83,15 @@ class Employee(Base):
     Firstname: Mapped[str] = mapped_column(String(20), nullable=False)
     Title: Mapped[str] = mapped_column(String(30), nullable=False)
     ReportsTo: Mapped[int] = mapped_column(ForeignKey('Employees.Id'), nullable=False, index=True)
-    Birthdate: Mapped[str] = mapped_column(String(16)) # TODO Date?
-    Hiredate: Mapped[str] = mapped_column(String(16)) # TODO Date?
-    Address: Mapped[str] = mapped_column(String(30))
-    City: Mapped[str] = mapped_column(String(25))
-    State: Mapped[str] = mapped_column(String(10))
-    Country: Mapped[str] = mapped_column(String(10))
-    Postalcode: Mapped[str] = mapped_column(String(10))
-    Phone: Mapped[str] = mapped_column(String(20))
-    Fax: Mapped[str] = mapped_column(String(20))
+    Birthdate: Mapped[str] = mapped_column(String(16), nullable=True) # TODO Date?
+    Hiredate: Mapped[str] = mapped_column(String(16), nullable=True) # TODO Date?
+    Address: Mapped[str] = mapped_column(String(30), nullable=True)
+    City: Mapped[str] = mapped_column(String(25), nullable=True)
+    State: Mapped[str] = mapped_column(String(10), nullable=True)
+    Country: Mapped[str] = mapped_column(String(10), nullable=True)
+    Postalcode: Mapped[str] = mapped_column(String(10), nullable=True)
+    Phone: Mapped[str] = mapped_column(String(20), nullable=True)
+    Fax: Mapped[str] = mapped_column(String(20), nullable=True)
     Email: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
     DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
     SupportReps = relationship('Customer')
@@ -100,11 +105,11 @@ class Invoice(Base):
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     CustomerId: Mapped[int] = mapped_column(ForeignKey('Customers.Id'), nullable=False, index=True)
     InvoiceDate: Mapped[DateTime] = mapped_column(String(16)) # TODO Date?
-    BillingAddress: Mapped[str] = mapped_column(String(50))
-    BillingCity: Mapped[str] = mapped_column(String(25))
-    BillingState: Mapped[str] = mapped_column(String(10))
-    BillingCountry: Mapped[str] = mapped_column(String(20))
-    BillingPostalcode: Mapped[Optional[str]] = mapped_column(String(10))
+    BillingAddress: Mapped[str] = mapped_column(String(50), nullable=True)
+    BillingCity: Mapped[str] = mapped_column(String(25), nullable=True)
+    BillingState: Mapped[str] = mapped_column(String(10), nullable=True)
+    BillingCountry: Mapped[str] = mapped_column(String(20), nullable=True)
+    BillingPostalcode: Mapped[Optional[str]] = mapped_column(String(10), nullable=True)
     Total: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
     DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
     InvoiceItems = relationship('Invoiceitem')
@@ -131,9 +136,9 @@ class Track(Base):
     AlbumId: Mapped[int] = mapped_column(ForeignKey('Albums.Id'), nullable=False, index=True)
     MediaTypeId: Mapped[int] = mapped_column(ForeignKey('MediaTypes.Id'), nullable=False, index=True)
     GenreId: Mapped[int] = mapped_column(ForeignKey('Genres.Id'), nullable=False, index=True)
-    Composer: Mapped[str] = mapped_column(String(200))
-    Milliseconds: Mapped[int] = mapped_column(nullable=False)
-    Bytes: Mapped[int] = mapped_column()
+    Composer: Mapped[str] = mapped_column(String(200), nullable=True)
+    Milliseconds: Mapped[int] = mapped_column(nullable=True)
+    Bytes: Mapped[int] = mapped_column(nullable=True)
     UnitPrice: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
     DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
     PlaylistTracks = relationship('Playlisttrack')

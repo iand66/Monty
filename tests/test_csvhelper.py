@@ -1,8 +1,10 @@
 import os
+
 from pytest import mark, param
-from raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
-from orm.schema import *
-from orm.dbfunctions import dbSelectAll
+
+from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
+from src.orm.schema import *
+from src.orm.dbfunctions import dbSelect
 
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
@@ -17,7 +19,7 @@ from orm.dbfunctions import dbSelectAll
      param('./sam/csv/playlisttracks.csv', 8715, id='Playlisttracks'),
      param('./sam/csv/tracks.csv', 3503, id='Tracks')]
      )
-def test_csvRead(setup, filename, record):
+def test_csvRead(filename, record):
     if os.path.exists(filename):
         assert len(csvRead(filename, True))-1 == record
 
@@ -34,11 +36,11 @@ def test_csvRead(setup, filename, record):
      param('./sam/csv/playlisttracks.csv', 8715, id='Playlisttracks'),
      param('./sam/csv/tracks.csv', 3503, id='Tracks')]
      )
-def test_csvDictReader(setup, filename, record):
+def test_csvDictReader(filename, record):
     if os.path.exists(filename):
         assert len(csvDictReader(filename, True)) == record
 
-@mark.parametrize('filename, object',
+@mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
      param('customers.csv', Customer, id='Customers'),
@@ -51,10 +53,10 @@ def test_csvDictReader(setup, filename, record):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvWrite(setup, temp, filename, object):
-    assert csvWrite(temp/filename, dbSelectAll(setup.engine, object, False, False), False) == True
+def test_csvWrite(setup, temp, filename, table):
+    assert csvWrite(temp/filename, dbSelect(setup, table, False, False, **{'Id':'%'}), False) == True
 
-@mark.parametrize('filename, object',
+@mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
      param('customers.csv', Customer, id='Customers'),
@@ -67,5 +69,5 @@ def test_csvWrite(setup, temp, filename, object):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvDictWriter(setup, temp, filename, object):
-    assert csvDictWriter(temp/filename, dbSelectAll(setup.engine, object, False, False), False) == True
+def test_csvDictWriter(setup, temp, filename, table):
+    assert csvDictWriter(temp/filename, dbSelect(setup, table, False, False, **{'Id':'%'}), False) == True

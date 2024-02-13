@@ -1,39 +1,40 @@
-from pydantic import BaseModel, EmailStr
 from typing import Optional
+from pydantic import BaseModel, EmailStr
 from decimal import Decimal
 
 class Base(BaseModel):
-    Id: int
+    pass
 
 class album(Base):
-    '''
-    Available Albums
-    '''
+    '''Available Albums'''
+    Id: int
     AlbumTitle: str
-    ArtistId: int # ArtistName
+    ArtistId: int 
+
+class albumCreate(Base):
+    '''Available Albums'''
+    AlbumTitle: str
+    ArtistId: int 
+
+class albumUpdate(Base):
+    '''Available Albums'''
+    AlbumTitle: Optional[str] | None = None
+    ArtistId: Optional[int] | None = None
 
 class artist(Base):
-    '''
-    Recording Artists
-    '''
+    '''Recording Artists'''
     ArtistName: str
 
 class genre(Base):
-    '''
-    Musical Style
-    '''
+    '''Musical Style'''
     GenreName: str
 
 class mediatype(Base):
-    '''
-    MediaType of Track
-    '''
+    '''MediaType of Track'''
     MediaTypeName: str
 
 class customer(Base):
-    '''
-    Customers
-    '''
+    '''Customers'''
     Firstname: str 
     Lastname: str 
     Company: str 
@@ -45,18 +46,16 @@ class customer(Base):
     Phone: str 
     Fax: str 
     Email: EmailStr
-    SupportRepId: str # Employee Name
+    SupportRepId: str # TODO Employee name
 
 class employee(Base):
-    '''
-    Employees
-    '''
+    '''Employees'''
     Lastname: str
     Firstname: str
     Title: str
-    ReportsTo: int # Employee
-    Birthdate: str 
-    Hiredate: str 
+    ReportsTo: int # TODO Employee name
+    Birthdate: str # TODO Date
+    Hiredate: str # TODO Date
     Address: str
     City: str 
     State: str
@@ -67,10 +66,8 @@ class employee(Base):
     Email: EmailStr
 
 class invoice(Base):
-    '''
-    Invoices
-    '''
-    CustomerId: int 
+    '''Invoices'''
+    CustomerId: int # TODO Customer name
     InvoiceDate: str
     BillingAddress: str
     BillingCity: str
@@ -80,37 +77,29 @@ class invoice(Base):
     Total: Decimal
 
 class invoiceitem(Base):
-    '''
-    Invoice Items
-    '''
+    '''Invoice Items'''
     InvoiceId: int
-    TrackId: int
+    TrackId: int # TODO Track name
     UnitPrice: Decimal
     Quantity: int
 
 class track(Base):
-    '''
-    Available Tracks per Album
-    '''
+    '''Available Tracks per Album'''
     TrackName: str
-    AlbumId: int # Albums
-    MediaTypeId: int # Mediatypes
-    GenreId: int # Genres
+    AlbumId: int # TODO Album name
+    MediaTypeId: int # TODO Mediatype name
+    GenreId: int # TODO Genre name
     Composer: str
     Milliseconds: int
     Bytes: int
     UnitPrice: Decimal
 
 class playlist(Base):
-    '''
-    Suggested Mixes
-    '''
+    '''Suggested Mixes'''
     PlaylistName: str
 
 class playlisttrack(Base):
-    '''
-    Playlist Tracks
-    '''
-    PlaylistId: int
-    TrackId: int
+    '''Playlist Tracks'''
+    PlaylistId: int # TODO Playlist name
+    TrackId: int # TODO Track name
 
