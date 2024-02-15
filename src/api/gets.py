@@ -1,5 +1,4 @@
 from typing import List
-
 from src.orm.schema import *
 from src.api.schema import *
 from src.orm.dbfunctions import dbSelect

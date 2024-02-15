@@ -1,3 +1,5 @@
+# TODO DocStrings
+
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 from decimal import Decimal

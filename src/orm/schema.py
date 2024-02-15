@@ -1,18 +1,19 @@
+# TODO DocStrings
+
 from datetime import datetime
 from typing import Optional
-
 from sqlalchemy import ForeignKey, Integer, Numeric, String, DateTime, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
 
 # TODO DateCreated = datetime.now().strftime("%d/%m/%Y %H:%M")
 
 class Base(DeclarativeBase):
+    """ SQL Alchemy Base Class """
     pass
 
 class Album(Base):
-    '''
-    Available Albums
-    '''
+    """ Available Albums """
+
     __tablename__ = 'Albums'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     AlbumTitle: Mapped[str] = mapped_column(String(100), nullable=False)
@@ -23,9 +24,8 @@ class Album(Base):
     __table_args__ = (UniqueConstraint('AlbumTitle','ArtistId'),)
 
 class Artist(Base):
-    '''
-    Recording Artists
-    '''
+    """ Recording Artists """
+
     __tablename__ = 'Artists'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     ArtistName: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
@@ -33,9 +33,8 @@ class Artist(Base):
     Albums = relationship('Album')
 
 class Genre(Base):
-    '''
-    Musical Styles
-    '''
+    """ Musical Styles """
+
     __tablename__ = 'Genres'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     GenreName: Mapped[str] = mapped_column(String(20), nullable=False, unique=True)
@@ -43,9 +42,8 @@ class Genre(Base):
     Tracks = relationship('Track')
 
 class Mediatype(Base):
-    '''
-    MediaType of Track
-    '''
+    """ MediaType of Track """
+
     __tablename__ = 'MediaTypes'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     MediaTypeName: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
@@ -53,9 +51,8 @@ class Mediatype(Base):
     Tracks = relationship('Track')
 
 class Customer(Base):
-    '''
-    Customers
-    '''
+    """ Customers """
+
     __tablename__ = 'Customers'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     Firstname: Mapped[str] = mapped_column(String(50), nullable=False)
@@ -74,9 +71,8 @@ class Customer(Base):
     Invoices = relationship('Invoice')
 
 class Employee(Base):
-    '''
-    Employees
-    '''
+    """ Employees """
+    
     __tablename__ = 'Employees'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     Lastname: Mapped[str] = mapped_column(String(20), nullable=False)
@@ -98,9 +94,8 @@ class Employee(Base):
     Employees = relationship('Employee')
 
 class Invoice(Base):
-    '''
-    Invoices
-    '''
+    """ Invoices """
+
     __tablename__ = 'Invoices'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     CustomerId: Mapped[int] = mapped_column(ForeignKey('Customers.Id'), nullable=False, index=True)
@@ -115,9 +110,8 @@ class Invoice(Base):
     InvoiceItems = relationship('Invoiceitem')
 
 class Invoiceitem(Base):
-    '''
-    Invoice Items
-    '''
+    """ Invoice Items """
+
     __tablename__ = 'InvoiceItems'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     InvoiceId: Mapped[int] = mapped_column(ForeignKey('Invoices.Id'), nullable=False, index=True)
@@ -127,9 +121,8 @@ class Invoiceitem(Base):
     DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
 
 class Track(Base):
-    '''
-    Available Tracks per Album
-    '''
+    """ Available Tracks per Album """
+
     __tablename__ = 'Tracks'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     TrackName: Mapped[str] = mapped_column(String(150), nullable=False)
@@ -144,9 +137,8 @@ class Track(Base):
     PlaylistTracks = relationship('Playlisttrack')
 
 class Playlist(Base):
-    '''
-    Suggested Mixes
-    '''
+    """ Suggested Mixes """
+
     __tablename__ = 'Playlists'
     Id: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
     PlaylistName: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
@@ -154,9 +146,8 @@ class Playlist(Base):
     PlaylistTrack = relationship('Playlisttrack')
 
 class Playlisttrack(Base):
-    '''
-    Playlist Tracks
-    '''
+    """ Playlist Tracks """
+    
     __tablename__ = 'PlaylistTracks'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     PlaylistId: Mapped[int] = mapped_column(ForeignKey('Playlists.Id'), nullable=False, index=True)

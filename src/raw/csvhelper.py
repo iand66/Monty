@@ -1,13 +1,12 @@
 import csv, logging
 
 def csvRead(filename:str, echo:bool) -> list:
-    '''
+    """
     READ CSV file
-    :param filename - Fully qualified path to filename
-    :param echo - Enable application logging
-    :return list or exception
-    :example - csvRead('MyFileName.csv', echo)
-    '''
+    :param filename (str): Fully qualified path to filename
+    :param echo (bool): Enable application logging
+    :return list: List of read lines
+    """
     applog = logging.getLogger('AppLog')
     data = []
     try:
@@ -22,14 +21,13 @@ def csvRead(filename:str, echo:bool) -> list:
         return e
 
 def csvWrite(filename:str, data:list, echo:bool) -> bool:
-    '''
+    """
     WRITE CSV file
-    :param filename - Fully qualified path to OS directory
-    :parma data - Data to write
-    :param echo - Enable application logging
-    :return bool - True or exception
-    :example - csvWrite('MyFileName.csv', data, echo)
-    '''
+    :param filename (str): Fully qualified path to OS directory
+    :parma data (list): Data to write
+    :param echo (bool): Enable application logging
+    :return bool: True or exception
+    """
     applog = logging.getLogger('AppLog')
     try:
         with open(filename,'w', newline='', encoding='utf-8') as f:
@@ -43,13 +41,12 @@ def csvWrite(filename:str, data:list, echo:bool) -> bool:
         return e
 
 def csvDictReader(filename:str, echo:bool) -> list:
-    '''
+    """
     READ CSV file as dictionary
-    :param filename - Fully qualified path to filename
-    :param echo - Enable application logging
-    :return list or exception
-    :example - csvDictReader('MyFileName.csv', echo)
-    '''
+    :param filename (str): Fully qualified path to filename
+    :param echo (bool): Enable application logging
+    :return list: List of read lines 
+    """
     applog = logging.getLogger('AppLog')
     data = []
     try:
@@ -64,14 +61,13 @@ def csvDictReader(filename:str, echo:bool) -> list:
     return e
 
 def csvDictWriter(filename:str, data:dict, echo:bool) -> bool:
-    '''
+    """
     WRITE CSV file from dictionary
-    :param filename - Fully qualified path to OS directory
-    :parma data - Data to write
-    :param echo - Enable application logging
-    :return bool - True or exception
-    :example - csvDictWriter('MyFileName.csv', data, echo)
-    '''
+    :param filename (str): Fully qualified path to OS directory
+    :parma data (dict): Data to write
+    :param echo (bool): Enable application logging
+    :return bool (bool): True or exception
+    """
     applog = logging.getLogger('AppLog')
     try:
         with open(filename, 'w', newline='', encoding='utf8') as f:

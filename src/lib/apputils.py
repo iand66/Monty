@@ -6,12 +6,11 @@ from logging.config import fileConfig
 #FIXMELogger cannot handle ł \u0142 character - utf-16? 
 
 def config(filename:str) -> configparser:
-    '''
+    """
     Read configurable parameters from INI file
-    :param filename - Fully qualifed path to INI file
-    :return config - ConfigParser object
-    :example - c = config('MyConfigFilePath.ini')
-    '''
+    :param filename (str): Fully qualifed path to INI file
+    :return configparser: ConfigParser object
+    """
     config = configparser.ConfigParser()
 
     try:
@@ -22,14 +21,14 @@ def config(filename:str) -> configparser:
     return config
 
 def logSetup(logcfg:str, logloc:str, echo:bool, trace:bool) -> logging.Logger:
-    '''
+    """
     Setup logging
-    :param logcfg - Fully qualified location of logging config file
-    :param logloc - Directory to store log files app=*.log & db=*.trc
-    :param echo - Propagate logs to console
-    :return logger - Updated logger object
-    :example - logger = logSetup('./ini/logger.ini', './logs/', False)
-    '''
+    :param logcfg (str): Fully qualified location of logging config file
+    :param logloc (str): Directory to store log files app=*.log & db=*.trc
+    :param echo (bool): Propagate logs to console
+    :param trace (bool): Updated logger object
+    :return logging.Logger: Logger object
+    """
     today = dt.datetime.today()
     logfile = logloc + f'{today.year}-{today.month:02d}-{today.day:02d}.log'
     datfile = logloc + f'{today.year}-{today.month:02d}-{today.day:02d}.trc'

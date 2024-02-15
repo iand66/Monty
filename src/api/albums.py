@@ -1,5 +1,5 @@
+# TODO DocStrings
 from typing import List
-
 from src.orm.schema import Album
 from src.api.schema import album
 from src.orm.dbfunctions import dbSelect

@@ -6,8 +6,8 @@ from src.orm.schema import Base
 def get_attributes(model) -> dict:
     """
     RETURN all attributes from a SQLAlchemy object.
-    :param obj: SQLAlchemy object instance.
-    :return: Dictionary containing all attributes.
+    :param model (object): SQLAlchemy object instance.
+    :return dict: Dictionary containing all attributes.
     """
     # TODO Reverse these items
     data = {}
@@ -17,15 +17,15 @@ def get_attributes(model) -> dict:
     return data
 
 def dbBulkInsert(session, table:str, data:Base, echo:bool, trace:bool) -> int:
-    '''
+    """
     INSERT multiple records into database table
-    :param engine - SQLAlchemy session instance
-    :param table - Database tablename 
-    :param data - SQLALchemy data objects
-    :param echo - Enable application logging
-    :param trace - Enable database logging
-    :return int - Number of records inserted or exception
-    '''
+    :param session (session): SQLAlchemy session instance
+    :param table (str): Database tablename 
+    :param data (Base): SQLALchemy data object(s)
+    :param echo (bool): Enable application logging
+    :param trace (bool): Enable database logging
+    :return int: Number of records inserted
+    """
     applog = logging.getLogger('AppLog')
     datlog = logging.getLogger('DatLog')
     if session.bind.name == 'sqlite':
@@ -45,14 +45,14 @@ def dbBulkInsert(session, table:str, data:Base, echo:bool, trace:bool) -> int:
         session.close()
 
 def dbInsert(session, data:Base, echo:bool, trace:bool) -> int:
-    '''
+    """
     INSERT record into database table
-    :param session - SQLAlchemy session instance
-    :param data - SQLALchemy data object 
-    :param echo - Enable application logging
-    :param trace - Enable database logging
-    :return int - RowId of inserted record
-    '''
+    :param session (session): SQLAlchemy session instance
+    :param data (Base): SQLALchemy data object 
+    :param echo (bool): Enable application logging
+    :param trace (bool): Enable database logging
+    :return int: RowId of inserted record
+    """
     applog = logging.getLogger('AppLog')
     datlog = logging.getLogger('DatLog')
     if session.bind.name == 'sqlite':
@@ -73,15 +73,15 @@ def dbInsert(session, data:Base, echo:bool, trace:bool) -> int:
         session.close()
 
 def dbSelect(session, table:Base, echo:bool, trace:bool, **kwargs) -> list:
-    '''
-    SELECT * query on the given table with optional filtering
-    :param session: SQLAlchemy session object
-    :param table - Database tablename 
-    :param echo - Enable application logging
-    :param trace - Enable database logging
-    :param kwargs: Key-value pairs representing filter conditions (column_name=value)
-    :return: List of model instances if found, empty list otherwise.
-    '''
+    """
+    SELECT query on the given table with optional filtering
+    :param session (session): SQLAlchemy session object
+    :param table (Base): Database tablename 
+    :param echo (bool): Enable application logging
+    :param trace (bool): Enable database logging
+    :param kwargs (dict): Key-value pairs representing filter conditions (column_name=value)
+    :return list: List of model instances if found, empty list otherwise.
+    """
     applog = logging.getLogger('AppLog')
     datlog = logging.getLogger('DatLog')
     data = []
@@ -108,14 +108,14 @@ def dbSelect(session, table:Base, echo:bool, trace:bool, **kwargs) -> list:
         session.close()
     
 def dbUpdate(session, table:Base, filter:dict, update:dict, echo:bool, trace:bool,) -> int:
-    '''
-    UPDATE records in the database based on the given filter conditions
-    :param session: SQLAlchemy session object
-    :param model: SQLAlchemy model class
-    :param filter_kwargs: Key-value pairs filter conditions (column_name=value)
-    :param update_kwargs: Key-value pairs update values (column_name=new_value)
-    :return: Number of updated records
-    '''
+    """
+    UPDATE records in the database based on the given filter condition(s)
+    :param session (session): SQLAlchemy session object
+    :param table (Base): SQLAlchemy model class
+    :param filter_kwargs (dict): Key-value pairs filter conditions (column_name=value)
+    :param update_kwargs (dict): Key-value pairs update values (column_name=new_value)
+    :return int: Number of updated records
+    """
     applog = logging.getLogger('AppLog')
     datlog = logging.getLogger('DatLog')
     if session.bind.name == 'sqlite':
@@ -140,15 +140,15 @@ def dbUpdate(session, table:Base, filter:dict, update:dict, echo:bool, trace:boo
         session.close()
 
 def dbDelete(session, table:Base, echo:bool, trace:bool, **kwargs) -> int:
-    '''
+    """
     DELETE records from a database table
-    :param session - SQLAlchemy session object
-    :param table - Database tablename 
-    :param echo - Enable application logging
-    :param trace - Enable database logging
-    :param kwargs: Key-value pairs representing filter conditions (column_name=value)
-    :return int - Number of records deleted
-    '''
+    :param session (session): SQLAlchemy session object
+    :param table (Base): Database tablename 
+    :param echo (bool): Enable application logging
+    :param trace (bool): Enable database logging
+    :param kwargs (dict): Key-value pairs representing filter conditions (column_name=value)
+    :return int: Number of records deleted
+    """
     applog = logging.getLogger('AppLog')
     datlog = logging.getLogger('DatLog')
     if session.bind.name == 'sqlite':

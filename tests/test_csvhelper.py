@@ -1,10 +1,14 @@
+# TODO DocStrings
+
 import os
+from icecream import ic 
 from pytest import mark, param
 from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect
 
-def test_build(build, get_db):
+def test_build(request, build, get_db):
+    ic(f'{request.node.name}')
     assert os.path.exists(get_db[1]['DBTST']['dbName'])
 
 @mark.parametrize('filename, record',
@@ -20,9 +24,10 @@ def test_build(build, get_db):
      param('./sam/csv/playlisttracks.csv', 8715, id='Playlisttracks'),
      param('./sam/csv/tracks.csv', 3503, id='Tracks')]
      )
-def test_csvRead(filename, record):
+def test_csvRead(request, get_db, filename, record):
+    ic(f'{request.node.name}')
     if os.path.exists(filename):
-        assert len(csvRead(filename, True))-1 == record
+        assert len(csvRead(filename, get_db[3]))-1 == record
 
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
@@ -37,9 +42,10 @@ def test_csvRead(filename, record):
      param('./sam/csv/playlisttracks.csv', 8715, id='Playlisttracks'),
      param('./sam/csv/tracks.csv', 3503, id='Tracks')]
      )
-def test_csvDictReader(filename, record):
+def test_csvDictReader(request, get_db, filename, record):
+    ic(f'{request.node.name}')
     if os.path.exists(filename):
-        assert len(csvDictReader(filename, True)) == record
+        assert len(csvDictReader(filename, get_db[3])) == record
 
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
@@ -54,8 +60,9 @@ def test_csvDictReader(filename, record):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvWrite(get_db, temp, filename, table):
-    assert csvWrite(temp/filename, dbSelect(get_db[0], table, False, False, **{'Id':'%'}), False) == True
+def test_csvWrite(request, get_db, temp, filename, table):
+    ic(f'{request.node.name}')
+    assert csvWrite(temp/filename, dbSelect(get_db[0], table, get_db[3], get_db[4], **{'Id':'%'}), False) == True
 
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
@@ -70,5 +77,6 @@ def test_csvWrite(get_db, temp, filename, table):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvDictWriter(get_db, temp, filename, table):
-    assert csvDictWriter(temp/filename, dbSelect(get_db[0], table, False, False, **{'Id':'%'}), False) == True
+def test_csvDictWriter(request, get_db, temp, filename, table):
+    ic(f'{request.node.name}')
+    assert csvDictWriter(temp/filename, dbSelect(get_db[0], table, get_db[3], get_db[4], **{'Id':'%'}), False) == True
