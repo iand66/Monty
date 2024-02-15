@@ -12,7 +12,7 @@ engine = create_engine(appcfg['DBCFG']['dbType'] + appcfg['DBCFG']['dbName'], co
 
 app = FastAPI()
 
-from src.api.gets import *
+from src.api.home import *
 
 if __name__ == '__main__':
     logger = logging.getLogger('uvicorn.error')

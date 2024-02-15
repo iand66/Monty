@@ -1,8 +1,6 @@
 import logging
-
 from sqlalchemy import text
 from sqlalchemy import text, exc
-
 from src.orm.schema import Base
 
 def get_attributes(model) -> dict:

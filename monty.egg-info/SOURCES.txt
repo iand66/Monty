@@ -8,6 +8,7 @@ src/main.py
 src/api/__init__.py
 src/api/albums.py
 src/api/gets.py
+src/api/home.py
 src/api/schema.py
 src/lib/__init__.py
 src/lib/apputils.py
@@ -20,6 +21,4 @@ src/raw/__init__.py
 src/raw/csvhelper.py
 tests/__init__.py
 tests/conftest.py
-tests/test_apiget.py
-tests/test_csvhelper.py
-tests/test_dbfunctions.py
+tests/test_setup.py

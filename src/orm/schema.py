@@ -28,7 +28,7 @@ class Artist(Base):
     '''
     __tablename__ = 'Artists'
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
-    ArtistName: Mapped[str] = mapped_column(String(100), nullable=False)
+    ArtistName: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
     DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
     Albums = relationship('Album')
 

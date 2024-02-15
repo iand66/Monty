@@ -1,10 +1,11 @@
 import os
-
 from pytest import mark, param
-
 from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect
+
+def test_build(build, get_db):
+    assert os.path.exists(get_db[1]['DBTST']['dbName'])
 
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
@@ -53,8 +54,8 @@ def test_csvDictReader(filename, record):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvWrite(setup, temp, filename, table):
-    assert csvWrite(temp/filename, dbSelect(setup, table, False, False, **{'Id':'%'}), False) == True
+def test_csvWrite(get_db, temp, filename, table):
+    assert csvWrite(temp/filename, dbSelect(get_db[0], table, False, False, **{'Id':'%'}), False) == True
 
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
@@ -69,5 +70,5 @@ def test_csvWrite(setup, temp, filename, table):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvDictWriter(setup, temp, filename, table):
-    assert csvDictWriter(temp/filename, dbSelect(setup, table, False, False, **{'Id':'%'}), False) == True
+def test_csvDictWriter(get_db, temp, filename, table):
+    assert csvDictWriter(temp/filename, dbSelect(get_db[0], table, False, False, **{'Id':'%'}), False) == True
