@@ -1,22 +1,37 @@
-import uvicorn, logging
-from fastapi import FastAPI, HTTPException
-from sqlalchemy import create_engine
-from src.lib.apputils import config, logSetup
+import uvicorn
 
-""" Setup Environment """
-appcfg = config('./ini/globals.ini')
-echo = eval(appcfg['LOGCFG']['logecho'])
-trace = eval(appcfg['LOGCFG']['trace'])
-logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], echo, trace)
-engine = create_engine(appcfg['DBCFG']['dbType'] + appcfg['DBCFG']['dbName'], connect_args={"check_same_thread":False})
-app = FastAPI()
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.index import *
+from src.api import albums
 
-def main():
-    """ Launch Uvicorn """
-    logger = logging.getLogger('uvicorn.error')
-    uvicorn.run("main:app", port=8000, log_level="debug", reload=True)
+# Define FastAPI parameters
+metadata = [{'name':'All','description':'**Common Methods**'},
+            {'name':'Albums','description':'**Album Methods**'}]
 
+app = FastAPI(title='Monty API', description='API Methods', openapi_tags=metadata, debug=True)
+
+origins = ['http://localhost:8000']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'])
+
+app.include_router(albums.router, prefix='/albums', tags=['Albums'])
+
+# Welcome page - Server is alive?
+@app.get('/', tags=['All'])
+async def index():
+  return 'Welcome to Monty'
+
+# Run Uvicorn
+def main() -> None:
+  uvicorn.run('main:app', port=8000, log_level='debug', reload=True)
+  
 if __name__ == '__main__':
-    main()
+  main()
+
+

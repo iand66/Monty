@@ -1,15 +1,24 @@
-# TODO DocStrings
-
 import os
+
 from pytest import fixture
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from src.lib.apputils import config, logSetup
 from src.orm.schema import *
 from src.orm.dbutils import dbKill, dbInit, dbFill
 
+# Setup testing environment
 @fixture(scope="session")
 def get_db():
+    """
+    appcfg - Application configuration file to read
+    echo - Echo application logs to ./logs/$datetime.log
+    trace - Trace database CRUD events to ./logs/$datetime.trc
+    logger - Application & Database logging events
+    engine - SQL Alchemy database to use
+    session - SQL Alchemy session object
+    """
     appcfg = config('./ini/globals.ini')
     echo = eval(appcfg['LOGCFG']['logecho'])
     trace = eval(appcfg['LOGCFG']['trace'])
@@ -20,9 +29,15 @@ def get_db():
     session = Session()
     
     yield session, appcfg, engine, echo, trace
-    
+
+# Setup clean test database    
 @fixture(scope="session")
 def build(get_db):
+    """
+    dbKill - Delete test database if exists
+    dbInit - Create new database shell - orm/schema
+    dbFill - Populate new database
+    """
     session = get_db[0] 
     appcfg = get_db[1] 
     engine = get_db[2]
@@ -39,8 +54,9 @@ def build(get_db):
     
     yield session
     
-# TODO tmp =./sam/tmp
+# Define tmp directory
 @fixture(scope="session")
+# TODO tmp =./sam/tmp
 def temp(tmp_path_factory):
     tempdir = tmp_path_factory.mktemp('tmp')
     return tempdir

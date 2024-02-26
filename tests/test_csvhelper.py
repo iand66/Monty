@@ -1,16 +1,16 @@
-# TODO DocStrings
-
 import os
-from icecream import ic 
+
 from pytest import mark, param
+
 from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect
 
-def test_build(request, build, get_db):
-    ic(f'{request.node.name}')
+# Verify test datbase exists
+def test_build(build, get_db):
     assert os.path.exists(get_db[1]['DBTST']['dbName'])
 
+# Verify sample files loaded to test database
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
      param('./sam/csv/artists.csv', 275, id='Artists'),
@@ -24,11 +24,11 @@ def test_build(request, build, get_db):
      param('./sam/csv/playlisttracks.csv', 8715, id='Playlisttracks'),
      param('./sam/csv/tracks.csv', 3503, id='Tracks')]
      )
-def test_csvRead(request, get_db, filename, record):
-    ic(f'{request.node.name}')
+def test_csvRead(get_db, filename, record):
     if os.path.exists(filename):
         assert len(csvRead(filename, get_db[3]))-1 == record
 
+# Verify sample files loaded to test database
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
      param('./sam/csv/artists.csv', 275, id='Artists'),
@@ -42,11 +42,11 @@ def test_csvRead(request, get_db, filename, record):
      param('./sam/csv/playlisttracks.csv', 8715, id='Playlisttracks'),
      param('./sam/csv/tracks.csv', 3503, id='Tracks')]
      )
-def test_csvDictReader(request, get_db, filename, record):
-    ic(f'{request.node.name}')
+def test_csvDictReader(get_db, filename, record):
     if os.path.exists(filename):
         assert len(csvDictReader(filename, get_db[3])) == record
 
+# Verify CSV write from test database
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
@@ -60,10 +60,10 @@ def test_csvDictReader(request, get_db, filename, record):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvWrite(request, get_db, temp, filename, table):
-    ic(f'{request.node.name}')
+def test_csvWrite(get_db, temp, filename, table):
     assert csvWrite(temp/filename, dbSelect(get_db[0], table, get_db[3], get_db[4], **{'Id':'%'}), False) == True
 
+# Verify CSV write from test database
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
@@ -77,6 +77,5 @@ def test_csvWrite(request, get_db, temp, filename, table):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvDictWriter(request, get_db, temp, filename, table):
-    ic(f'{request.node.name}')
+def test_csvDictWriter(get_db, temp, filename, table):
     assert csvDictWriter(temp/filename, dbSelect(get_db[0], table, get_db[3], get_db[4], **{'Id':'%'}), False) == True

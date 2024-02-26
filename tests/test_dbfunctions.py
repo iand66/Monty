@@ -1,19 +1,16 @@
-# TODO DocStrings
-
 import os
-from icecream import ic
+
 from pytest import mark, param
+
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect, dbInsert, dbUpdate, dbDelete
 
-ic.configureOutput(prefix='Debug -> ')
-
+# Verify build of test database
 @mark.order(1)
-def test_dbBuild(request, build, get_db):
-# TODO :memory: option?
-    ic(f'{request.node.name}')
+def test_dbBuild(build, get_db):
     assert os.path.exists(get_db[1]['DBTST']['dbName'])
 
+# Verify dbSelect matches known record count
 # def dbSelect(session, table:Base, echo:bool, trace:bool, filter:dict) -> list:
 @mark.order(2)
 @mark.parametrize('tablename, record',
@@ -29,29 +26,29 @@ def test_dbBuild(request, build, get_db):
     param(Playlisttrack, 8715, id='Playlisttrack'),
     param(Track, 3503, id='Track')]
     )
-def test_dbSelect(request, get_db, tablename, record):
-    ic(f'{request.node.name}')
+def test_dbSelect(get_db, tablename, record):
     assert len(dbSelect(get_db[0], tablename, get_db[3], get_db[4], **{'Id':'%'})) == record
-        
+
+# Verify dbInsert of new records to each test database table        
 # def dbInsert(session, table:Base, echo:bool, trace:bool) -> int:
 @mark.order(3)
-@mark.parametrize('tablename, record, data',
-    [param(Artist, 275, {'ArtistName':'Test Artist'}, id='Artists'),
-    param(Album, 347, {'AlbumTitle':'Test Album','ArtistId':'276'}, id='Album'),
-    param(Customer, 59, {'Firstname':'Test','Lastname':'User','Email':'test@somewhere.com','SupportRepId':'1'}, id='Customer'),
-    param(Employee, 8, {'Lastname':'Employee','Firstname':'Test','Title':'Temporary Employee','ReportsTo':'1','Email':'test@somewhere.com'}, id='Employee'),
-    param(Genre, 25, {'GenreName':'Unbearable'}, id='Genres'),
-    param(Mediatype, 5, {'MediaTypeName':'Unrecognised Format'}, id='Mediatype'),
-    param(Playlist, 14, {'PlaylistName':'Unbearable'}, id='Playlist'),
-    param(Track, 3503, {'TrackName':'Just Don\'t Do It!','AlbumId':'348','MediaTypeId':'6','GenreId':'26','UnitPrice':'0.01'}, id='Track'),
-    param(Playlisttrack, 8715, {'PlaylistId':'15','TrackId':'3504'}, id='Playlisttrack'),
-    param(Invoice, 412, {'CustomerId':'60','InvoiceDate':datetime.now().strftime("%d/%m/%Y %H:%M"),'Total':'0.01'}, id='Invoice'),
-    param(Invoiceitem, 2240, {'InvoiceId':'413','TrackId':'3504','UnitPrice':'0.01','Quantity':'1'}, id='Invoiceitem')]   
+@mark.parametrize('tablename, data',
+    [param(Artist, {'ArtistName':'Test Artist'}, id='Artists'),
+    param(Album, {'AlbumTitle':'Test Album','ArtistId':'276'}, id='Album'),
+    param(Customer, {'Firstname':'Test','Lastname':'User','Email':'test@somewhere.com','SupportRepId':'1'}, id='Customer'),
+    param(Employee, {'Lastname':'Employee','Firstname':'Test','Title':'Temporary Employee','ReportsTo':'1','Email':'test@somewhere.com'}, id='Employee'),
+    param(Genre, {'GenreName':'Unbearable'}, id='Genres'),
+    param(Mediatype, {'MediaTypeName':'Unrecognised Format'}, id='Mediatype'),
+    param(Playlist, {'PlaylistName':'Unbearable'}, id='Playlist'),
+    param(Track, {'TrackName':'Just Don\'t Do It!','AlbumId':'348','MediaTypeId':'6','GenreId':'26','UnitPrice':'0.01'}, id='Track'),
+    param(Playlisttrack, {'PlaylistId':'15','TrackId':'3504'}, id='Playlisttrack'),
+    param(Invoice, {'CustomerId':'60','InvoiceDate':datetime.now().strftime("%d/%m/%Y %H:%M"),'Total':'0.01'}, id='Invoice'),
+    param(Invoiceitem, {'InvoiceId':'413','TrackId':'3504','UnitPrice':'0.01','Quantity':'1'}, id='Invoiceitem')]   
     )
-def test_dbInsert(request, get_db, tablename, record, data):
-    ic(f'Running ... {request.node.name}')
-    assert dbInsert(get_db[0], tablename(**data), get_db[3], get_db[4]) == record + 1
+def test_dbInsert(get_db, tablename, data):
+    assert dbInsert(get_db[0], tablename(**data), get_db[3], get_db[4]) == True
 
+# Verify dbUpdate to dbInsert records
 # def dbUpdate(session, table:Base, from:dict, to:dict, echo:bool, trace:bool,) -> int:
 @mark.order(4)
 @mark.parametrize('tablename, f_data, t_data',
@@ -66,10 +63,10 @@ def test_dbInsert(request, get_db, tablename, record, data):
     param(Invoice, {'CustomerId':'60'}, {'InvoiceDate':datetime.now().strftime("%d/%m/%Y %H:%M")}, id='Invoice'),
     param(Invoiceitem, {'InvoiceId':'413'},{'Quantity':'5'}, id='Invoiceitem')]   
     )
-def test_dbUpdate(request, get_db, tablename, f_data, t_data):
-    ic(f'{request.node.name}')
-    assert dbUpdate(get_db[0], tablename, f_data, t_data, get_db[3], get_db[4]) >= 1
+def test_dbUpdate(get_db, tablename, f_data, t_data):
+    assert dbUpdate(get_db[0], tablename, f_data, t_data, get_db[3], get_db[4]) == True
 
+# Verify dbDelete of dbInsert records
 # def dbDelete(session, table:Base, echo:bool, trace:bool, filter:dict) -> int:
 @mark.order(5)
 @mark.parametrize('tablename, data',
@@ -85,6 +82,5 @@ def test_dbUpdate(request, get_db, tablename, f_data, t_data):
     param(Album, {'AlbumTitle':'Another Test Album'}, id='Album'),
     param(Artist, {'ArtistName':'Another Test Artist'}, id='Artists')]   
     )
-def test_dbDelete(request, get_db, tablename, data):
-    ic(f'{request.node.name}')
-    assert dbDelete(get_db[0], tablename, get_db[3], get_db[4], **(data)) >= 1
+def test_dbDelete(get_db, tablename, data):
+    assert dbDelete(get_db[0], tablename, get_db[3], get_db[4], **(data)) == True

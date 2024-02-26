@@ -7,12 +7,10 @@ src/__init__.py
 src/main.py
 src/api/__init__.py
 src/api/albums.py
-src/api/gets.py
-src/api/home.py
 src/api/schema.py
+src/gui/__init__.py
 src/lib/__init__.py
 src/lib/apputils.py
-src/mvc/__init__.py
 src/orm/__init__.py
 src/orm/dbfunctions.py
 src/orm/dbutils.py
@@ -21,4 +19,5 @@ src/raw/__init__.py
 src/raw/csvhelper.py
 tests/__init__.py
 tests/conftest.py
-tests/test_setup.py
+tests/test_csvhelper.py
+tests/test_dbfunctions.py

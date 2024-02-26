@@ -1,75 +1,76 @@
-# TODO DocStrings
-
-from typing import Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from decimal import Decimal
+from datetime import date
 
 class Base(BaseModel):
+    """ Pydantic BaseModel """
     pass
 
 class album(Base):
-    '''Available Albums'''
+    """ Available Albums """
     Id: int
     AlbumTitle: str
-    ArtistId: int 
+    ArtistId: int
+    DateCreated: date
 
-class albumCreate(Base):
-    '''Available Albums'''
+class albumCreate(Base):# TODO Inheritance Override?
+    """ Create Album """
     AlbumTitle: str
-    ArtistId: int 
+    ArtistId: int
 
-class albumUpdate(Base):
-    '''Available Albums'''
-    AlbumTitle: Optional[str] | None = None
-    ArtistId: Optional[int] | None = None
+class albumUpdate(Base):# TODO Inheritance Override?
+    """ Update Album """
+    # TODO One of Title OR Id to be supplied
+    AlbumTitle: str  # TODO If present not NULL
+    ArtistId: int  # TODO If present > 0
 
 class artist(Base):
-    '''Recording Artists'''
+    """ Recording Artists """
     ArtistName: str
 
 class genre(Base):
-    '''Musical Style'''
+    """ Musical Styles """
     GenreName: str
 
 class mediatype(Base):
-    '''MediaType of Track'''
+    """ MediaType of Track """
     MediaTypeName: str
 
 class customer(Base):
-    '''Customers'''
-    Firstname: str 
-    Lastname: str 
-    Company: str 
-    Address: str 
-    City: str 
-    State: str 
-    Country: str 
-    Postalcode: str 
-    Phone: str 
-    Fax: str 
-    Email: EmailStr
-    SupportRepId: str # TODO Employee name
-
-class employee(Base):
-    '''Employees'''
-    Lastname: str
+    """ Customers """
     Firstname: str
-    Title: str
-    ReportsTo: int # TODO Employee name
-    Birthdate: str # TODO Date
-    Hiredate: str # TODO Date
+    Lastname: str
+    Company: str
     Address: str
-    City: str 
+    City: str
     State: str
     Country: str
     Postalcode: str
     Phone: str
     Fax: str
-    Email: EmailStr
+    Email: str  # TODO Valid Email?
+    SupportRepId: str
+
+class employee(Base):
+    """ Employees """
+    Lastname: str
+    Firstname: str
+    Title: str
+    ReportsTo: int
+    Birthdate: str  # TODO Date
+    Hiredate: str  # TODO Date
+    Address: str
+    City: str
+    State: str
+    Country: str
+    Postalcode: str
+    Phone: str
+    Fax: str
+    Email: str  # TODO Valid Email?
 
 class invoice(Base):
-    '''Invoices'''
-    CustomerId: int # TODO Customer name
+    """ Invoices """
+    CustomerId: int
     InvoiceDate: str
     BillingAddress: str
     BillingCity: str
@@ -79,29 +80,28 @@ class invoice(Base):
     Total: Decimal
 
 class invoiceitem(Base):
-    '''Invoice Items'''
+    """ Invoice Items """
     InvoiceId: int
-    TrackId: int # TODO Track name
+    TrackId: int
     UnitPrice: Decimal
     Quantity: int
 
 class track(Base):
-    '''Available Tracks per Album'''
+    """ Tracks per Album """
     TrackName: str
-    AlbumId: int # TODO Album name
-    MediaTypeId: int # TODO Mediatype name
-    GenreId: int # TODO Genre name
+    AlbumId: int
+    MediaTypeId: int
+    GenreId: int
     Composer: str
     Milliseconds: int
     Bytes: int
     UnitPrice: Decimal
 
 class playlist(Base):
-    '''Suggested Mixes'''
+    """ Suggested Mixes """
     PlaylistName: str
 
 class playlisttrack(Base):
-    '''Playlist Tracks'''
-    PlaylistId: int # TODO Playlist name
-    TrackId: int # TODO Track name
-
+    """ Playlist Tracks """
+    PlaylistId: int
+    TrackId: int

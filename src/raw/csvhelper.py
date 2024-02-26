@@ -1,4 +1,5 @@
-import csv, logging
+import csv 
+import logging
 
 def csvRead(filename:str, echo:bool) -> list:
     """
