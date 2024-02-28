@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from decimal import Decimal
-from datetime import date
+from datetime import date, datetime
 
 class Base(BaseModel):
     """ Pydantic BaseModel """
@@ -11,19 +11,24 @@ class album(Base):
     Id: int
     AlbumTitle: str
     ArtistId: int
-    DateCreated: date
+    DateCreated: datetime
 
-class albumCreate(Base):# TODO Inheritance Override?
+class albumCreate(Base):
     """ Create Album """
     AlbumTitle: str
     ArtistId: int
 
-class albumUpdate(Base):# TODO Inheritance Override?
+class albumUpdate(Base):
     """ Update Album """
-    # TODO One of Title OR Id to be supplied
     AlbumTitle: str  # TODO If present not NULL
     ArtistId: int  # TODO If present > 0
 
+class albumDelete(Base):
+    """ Delete Album """
+    Id: int
+    AlbumTitle: str  # TODO If present not NULL
+    ArtistId: int  # TODO If present > 0
+ 
 class artist(Base):
     """ Recording Artists """
     ArtistName: str

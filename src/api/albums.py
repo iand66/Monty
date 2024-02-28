@@ -6,7 +6,7 @@ from fastapi import HTTPException, Depends, APIRouter, status
 from src.helper import get_db, echo, trace
 from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
 from src.orm.schema import Album
-from src.api.schema import album, albumCreate, albumUpdate
+from src.api.schema import albumCreate, albumUpdate, albumDelete
 
 router = APIRouter()
 
@@ -51,7 +51,7 @@ async def get_albums_artist(artist: int, db: Session = Depends(get_db)) -> Any:
 async def create_albums_name(data: albumCreate, db: Session = Depends(get_db)) -> Any:
     result = dbSelect(db, Album, echo, trace, **data.model_dump())
     if result:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Album {data.model_dump()} already exists")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Album {data} already exists")
     else:
         new_album = Album(**data.model_dump())
         success = dbInsert(db, new_album, echo, trace)
@@ -59,22 +59,9 @@ async def create_albums_name(data: albumCreate, db: Session = Depends(get_db)) -
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
 
-# POST Album as JSON array
-@router.post("/json", status_code=status.HTTP_201_CREATED, tags=["Albums"])
-async def create_albums_json(data: List[albumCreate], db: Session = Depends(get_db)) -> Any:
-    accepted, rejected = [], []
-    for d in data:
-        new_album = Album(**d.model_dump())
-        success = dbInsert(db, new_album, echo, trace)
-        if not success:
-            rejected.append(d)
-        else:
-            accepted.append(d)
-    return [{"accepted": accepted, "rejected": rejected}]
-
 # PUT Album by Album Id
-@router.put("/id/{id:int}", status_code=status.HTTP_201_CREATED, tags=["Albums"])
-async def update_albums_id(id: int, data: albumUpdate, db: Session = Depends(get_db)):
+@router.put("/id/{id:int}", status_code=status.HTTP_201_CREATED, tags=["Albums"], response_model=albumCreate)
+async def update_albums_id(id: int, data: albumCreate, db: Session = Depends(get_db)) -> Any:
     result = dbSelect(db, Album, echo, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {id} not found")
@@ -83,11 +70,11 @@ async def update_albums_id(id: int, data: albumUpdate, db: Session = Depends(get
         success = dbUpdate(db, Album, result[0], new_album, echo, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
-    return new_album
+    return data
 
 # PUT Album by Album name
-@router.put("/name/{name:str}", status_code=status.HTTP_201_CREATED, tags=["Albums"])
-async def update_albums_name(name: str, data: albumUpdate, db: Session = Depends(get_db)):
+@router.put("/name/{name:str}", status_code=status.HTTP_201_CREATED, tags=["Albums"], response_model=albumUpdate)
+async def update_albums_name(name: str, data: albumUpdate, db: Session = Depends(get_db)) -> Any:
     result = dbSelect(db, Album, echo, trace, **{"AlbumTitle": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {name} not found")
@@ -96,26 +83,11 @@ async def update_albums_name(name: str, data: albumUpdate, db: Session = Depends
         success = dbUpdate(db, Album, result[0], new_album, echo, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
-    return new_album
-
-# PUT Album(s) by JSON array
-@router.put("/json", status_code=status.HTTP_201_CREATED, tags=["Albums"])
-async def update_albums_json(data: List[album], db: Session = Depends(get_db)):
-    accepted, rejected = [], []
-    for d in data:
-        result = dbSelect(db, Album, echo, trace, **{"Id": d.Id})
-        if result:
-            new_album = d.model_dump()
-            success = dbUpdate(db, Album, result[0], new_album, echo, trace)
-            if not success:
-                rejected.append(new_album)
-            else:
-                accepted.append(new_album)
-    return [{"accepted": accepted, "rejected": rejected}]
+    return data
 
 # DELETE Album by Album Id
-@router.delete("/id/{id:int}", status_code=status.HTTP_202_ACCEPTED, tags=["Albums"])
-async def delete_albums_id(id: int, db: Session = Depends(get_db)):
+@router.delete("/id/{id:int}", status_code=status.HTTP_202_ACCEPTED, tags=["Albums"], response_model=List[albumDelete])
+async def delete_albums_id(id: int, db: Session = Depends(get_db)) -> Any:
     result = dbSelect(db, Album, echo, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {id} not found")
@@ -126,8 +98,8 @@ async def delete_albums_id(id: int, db: Session = Depends(get_db)):
     return result
 
 # DELETE Album(s) by Album name  - Supports SQL % wildcard
-@router.delete("/name/{name:str}", status_code=status.HTTP_202_ACCEPTED, tags=["Albums"])
-async def delete_albums_name(name: str, db: Session = Depends(get_db)):
+@router.delete("/name/{name:str}", status_code=status.HTTP_202_ACCEPTED, tags=["Albums"], response_model=List[albumDelete])
+async def delete_albums_name(name: str, db: Session = Depends(get_db)) -> Any:
     result = dbSelect(db, Album, echo, trace, **{"AlbumTitle": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {name} not found")
@@ -136,16 +108,3 @@ async def delete_albums_name(name: str, db: Session = Depends(get_db)):
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result
-
-# DELETE Album(s) by JSON array
-@router.delete("/json", status_code=status.HTTP_202_ACCEPTED, tags=["Albums"])
-async def delete_album_json(data: List[albumUpdate], db: Session = Depends(get_db)):
-    accepted, rejected = [], []
-    for d in data:
-        old_album = d.model_dump()
-        success = dbDelete(db, Album, echo, trace, **old_album)
-        if not success:
-            rejected.append(old_album)
-        else:
-            accepted.append(old_album)
-    return [{"accepted": accepted, "rejected": rejected}]
