@@ -3,7 +3,7 @@ import logging
 import sys
 import os
 import inspect
-import datetime as dt
+from datetime import date
 
 from logging.config import fileConfig
 
@@ -36,7 +36,7 @@ def logSetup(logcfg: str, logloc: str, echo: bool, trace: bool) -> logging.Logge
     :param trace (bool): Updated logger object
     :return logging.Logger: Logger object
     """
-    today = dt.datetime.today()
+    today = date.today()
     logfile = logloc + f"{today.year}-{today.month:02d}-{today.day:02d}.log"
     datfile = logloc + f"{today.year}-{today.month:02d}-{today.day:02d}.trc"
 

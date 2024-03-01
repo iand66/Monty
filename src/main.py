@@ -3,7 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api import albums
+from src.api import albums_v1
 
 # Define FastAPI parameters
 metadata = [{'name':'All','description':'**Common Methods**'},
@@ -20,10 +20,10 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'])
 
-app.include_router(albums.router, prefix='/albums', tags=['Albums'])
+app.include_router(albums_v1.router, prefix='/albums/v1', tags=['Albums'])
 
 # Welcome page - Server is alive?
-@app.get('/', tags=['All'])
+@app.get('/', summary='Home Page', tags=['All'])
 async def index():
   return 'Welcome to Monty'
 

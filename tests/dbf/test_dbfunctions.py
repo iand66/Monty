@@ -1,5 +1,6 @@
 import os
 
+from datetime import date
 from pytest import mark, param
 
 from src.orm.schema import *
@@ -42,7 +43,7 @@ def test_dbSelect(get_db, tablename, record):
     param(Playlist, {'PlaylistName':'Unbearable'}, id='Playlist'),
     param(Track, {'TrackName':'Just Don\'t Do It!','AlbumId':'348','MediaTypeId':'6','GenreId':'26','UnitPrice':'0.01'}, id='Track'),
     param(Playlisttrack, {'PlaylistId':'15','TrackId':'3504'}, id='Playlisttrack'),
-    param(Invoice, {'CustomerId':'60','InvoiceDate':datetime.now().strftime("%d/%m/%Y %H:%M"),'Total':'0.01'}, id='Invoice'),
+    param(Invoice, {'CustomerId':'60','InvoiceDate':date.now().strftime("%d/%m/%Y %H:%M"),'Total':'0.01'}, id='Invoice'),
     param(Invoiceitem, {'InvoiceId':'413','TrackId':'3504','UnitPrice':'0.01','Quantity':'1'}, id='Invoiceitem')]   
     )
 def test_dbInsert(get_db, tablename, data):
@@ -60,7 +61,7 @@ def test_dbInsert(get_db, tablename, data):
     param(Mediatype, {'MediaTypeName':'Unrecognised Format'}, {'MediaTypeName':'Unusable Format'}, id='Mediatype'),
     param(Playlist, {'PlaylistName':'Unbearable'}, {'PlaylistName':'Grotesque'}, id='Playlist'),
     param(Track, {'AlbumId':'348'}, {'Composer':'Should B Shot'}, id='Track'),
-    param(Invoice, {'CustomerId':'60'}, {'InvoiceDate':datetime.now().strftime("%d/%m/%Y %H:%M")}, id='Invoice'),
+    param(Invoice, {'CustomerId':'60'}, {'InvoiceDate':date.now().strftime("%d/%m/%Y %H:%M")}, id='Invoice'),
     param(Invoiceitem, {'InvoiceId':'413'},{'Quantity':'5'}, id='Invoiceitem')]   
     )
 def test_dbUpdate(get_db, tablename, f_data, t_data):

@@ -1,6 +1,6 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from decimal import Decimal
-from datetime import date, datetime
+from datetime import date
 
 class Base(BaseModel):
     """ Pydantic BaseModel """
@@ -11,7 +11,7 @@ class album(Base):
     Id: int
     AlbumTitle: str
     ArtistId: int
-    DateCreated: datetime
+    DateCreated: date
 
 class albumCreate(Base):
     """ Create Album """

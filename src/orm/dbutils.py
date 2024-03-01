@@ -1,6 +1,8 @@
 import logging
 import os
 
+from datetime import date
+
 from sqlalchemy.engine.base import Engine
 from sqlalchemy_utils import database_exists
 
@@ -19,13 +21,13 @@ def dbInit(engine: Engine, echo: bool) -> bool:
     if not database_exists(engine.url):
         Base.metadata.create_all(bind=engine)
         if echo:
-            applog.info(f'Database {engine.url.database} created at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+            applog.info(f'Database {engine.url.database} created at {date.today().strftime("%d-%m-%Y %H:%M")}')
         return True
     else:
         for t in Base.metadata.sorted_tables:
             Base.metadata.create_all(bind=engine, checkfirst=True)
         if echo:
-            applog.info(f'Database {engine.url} updated at at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+            applog.info(f'Database {engine.url} updated at at {date.today().strftime("%d-%m-%Y %H:%M")}')
         return True
 
 def dbFill(session, seed: str, database: str, echo: bool, trace: bool) -> bool:
@@ -47,7 +49,7 @@ def dbFill(session, seed: str, database: str, echo: bool, trace: bool) -> bool:
                 tblName = f[1][0 : f[1].rfind(".") - 1]
                 dbBulkInsert(session, eval(tblName.title()), dataToImport, echo, trace)
                 if echo:
-                    applog.info(f'{database} {tblName.title()} populated at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+                    applog.info(f'{database} {tblName.title()} populated at {date.today().strftime("%d-%m-%Y %H:%M")}')
             return True
     except Exception as e:
         if echo:
@@ -66,7 +68,7 @@ def dbKill(filename: str, echo: bool) -> bool:
         if os.path.exists(filename):
             os.remove(filename)
             if echo:
-                applog.info(f'File {filename} has been removed at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+                applog.info(f'File {filename} has been removed at {date.today().strftime("%d-%m-%Y %H:%M")}')
             if not os.path.exists(filename):
                 return True
         else:

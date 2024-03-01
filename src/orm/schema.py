@@ -1,10 +1,8 @@
-from datetime import datetime
+from datetime import date
 from typing import Optional
-from sqlalchemy import ForeignKey, Integer, Numeric, String, DateTime, UniqueConstraint
+from sqlalchemy import ForeignKey, Integer, Numeric, String, UniqueConstraint
+from sqlalchemy.types import Date
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
-
-# TODO DateCreated = datetime.now().strftime("%d/%m/%Y %H:%M")
-# TODO DateUpdated
 
 class Base(DeclarativeBase):
     """ Alchemy Base Class """
@@ -16,7 +14,8 @@ class Album(Base):
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     AlbumTitle: Mapped[str] = mapped_column(String(100), nullable=False)
     ArtistId: Mapped[int] = mapped_column(ForeignKey("Artists.Id"), nullable=False, index=True)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     Tracks = relationship("Track")
 
     __table_args__ = (UniqueConstraint("AlbumTitle", "ArtistId"),)
@@ -26,7 +25,8 @@ class Artist(Base):
     __tablename__ = "Artists"
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     ArtistName: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     Albums = relationship("Album")
 
 class Genre(Base):
@@ -34,7 +34,8 @@ class Genre(Base):
     __tablename__ = "Genres"
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     GenreName: Mapped[str] = mapped_column(String(20), nullable=False, unique=True)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     Tracks = relationship("Track")
 
 class Mediatype(Base):
@@ -42,15 +43,16 @@ class Mediatype(Base):
     __tablename__ = "MediaTypes"
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     MediaTypeName: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     Tracks = relationship("Track")
 
 class Customer(Base):
     """ Customers """
     __tablename__ = "Customers"
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
-    Firstname: Mapped[str] = mapped_column(String(50), nullable=False)
     Lastname: Mapped[str] = mapped_column(String(50), nullable=False)
+    Firstname: Mapped[str] = mapped_column(String(50), nullable=False)
     Company: Mapped[str] = mapped_column(String(50), nullable=True)
     Address: Mapped[str] = mapped_column(String(50), nullable=True)
     City: Mapped[str] = mapped_column(String(25), nullable=True)
@@ -61,7 +63,8 @@ class Customer(Base):
     Fax: Mapped[str] = mapped_column(String(20), nullable=True)
     Email: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
     SupportRepId: Mapped[int] = mapped_column(ForeignKey("Employees.Id"), index=True)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     Invoices = relationship("Invoice")
 
 class Employee(Base):
@@ -72,8 +75,8 @@ class Employee(Base):
     Firstname: Mapped[str] = mapped_column(String(20), nullable=False)
     Title: Mapped[str] = mapped_column(String(30), nullable=False)
     ReportsTo: Mapped[int] = mapped_column(ForeignKey("Employees.Id"), nullable=False, index=True)
-    Birthdate: Mapped[str] = mapped_column(String(16), nullable=True)  # TODO Date?
-    Hiredate: Mapped[str] = mapped_column(String(16), nullable=True)  # TODO Date?
+    Birthdate: Mapped[Date] = mapped_column(String(16), nullable=True)  # TODO Date?
+    Hiredate: Mapped[Date] = mapped_column(String(16), nullable=True)  # TODO Date?
     Address: Mapped[str] = mapped_column(String(30), nullable=True)
     City: Mapped[str] = mapped_column(String(25), nullable=True)
     State: Mapped[str] = mapped_column(String(10), nullable=True)
@@ -82,7 +85,8 @@ class Employee(Base):
     Phone: Mapped[str] = mapped_column(String(20), nullable=True)
     Fax: Mapped[str] = mapped_column(String(20), nullable=True)
     Email: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     SupportReps = relationship("Customer")
     Employees = relationship("Employee")
 
@@ -91,14 +95,15 @@ class Invoice(Base):
     __tablename__ = "Invoices"
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     CustomerId: Mapped[int] = mapped_column(ForeignKey("Customers.Id"), nullable=False, index=True)
-    InvoiceDate: Mapped[DateTime] = mapped_column(String(16))  # TODO Date?
+    InvoiceDate: Mapped[Date] = mapped_column(String(16), nullable=True)  # TODO Date?
     BillingAddress: Mapped[str] = mapped_column(String(50), nullable=True)
     BillingCity: Mapped[str] = mapped_column(String(25), nullable=True)
     BillingState: Mapped[str] = mapped_column(String(10), nullable=True)
     BillingCountry: Mapped[str] = mapped_column(String(20), nullable=True)
     BillingPostalcode: Mapped[Optional[str]] = mapped_column(String(10), nullable=True)
     Total: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     InvoiceItems = relationship("Invoiceitem")
 
 class Invoiceitem(Base):
@@ -109,7 +114,8 @@ class Invoiceitem(Base):
     TrackId: Mapped[int] = mapped_column(ForeignKey("Tracks.Id"), nullable=False, index=True)
     UnitPrice: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
     Quantity: Mapped[int] = mapped_column(nullable=False)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
 
 class Track(Base):
     """ Available Tracks per Album """
@@ -123,7 +129,8 @@ class Track(Base):
     Milliseconds: Mapped[int] = mapped_column(nullable=True)
     Bytes: Mapped[int] = mapped_column(nullable=True)
     UnitPrice: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     PlaylistTracks = relationship("Playlisttrack")
 
 class Playlist(Base):
@@ -131,7 +138,8 @@ class Playlist(Base):
     __tablename__ = "Playlists"
     Id: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
     PlaylistName: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())
     PlaylistTrack = relationship("Playlisttrack")
 
 class Playlisttrack(Base):
@@ -140,4 +148,5 @@ class Playlisttrack(Base):
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     PlaylistId: Mapped[int] = mapped_column(ForeignKey("Playlists.Id"), nullable=False, index=True)
     TrackId: Mapped[int] = mapped_column(ForeignKey("Tracks.Id"), nullable=False, index=True)
-    DateCreated: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=datetime.now)
+    DateCreated: Mapped[Date] = mapped_column(Date, default=date.today())
+    DateUpdated: Mapped[Date] = mapped_column(Date, default=date.today())

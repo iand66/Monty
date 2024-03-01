@@ -23,8 +23,8 @@ def get_db():
     echo = eval(appcfg['LOGCFG']['logecho'])
     trace = eval(appcfg['LOGCFG']['trace'])
     logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], echo, trace)
-    #engine = create_engine(appcfg['DBCFG']['dbType'] + appcfg['DBCFG']['dbName'], connect_args={"check_same_thread":False})
-    engine = create_engine(appcfg['DBTST']['dbType'] + appcfg['DBTST']['dbName'], connect_args={"check_same_thread":False})
+    engine = create_engine(appcfg['DBCFG']['dbType'] + appcfg['DBCFG']['dbName'], connect_args={"check_same_thread":False})
+    #engine = create_engine(appcfg['DBTST']['dbType'] + appcfg['DBTST']['dbName'], connect_args={"check_same_thread":False})
     Session = sessionmaker(bind=engine)
     session = Session()
     
@@ -56,7 +56,6 @@ def build(get_db):
     
 # Define tmp directory
 @fixture(scope="session")
-# TODO tmp =./sam/tmp
 def temp(tmp_path_factory):
     tempdir = tmp_path_factory.mktemp('tmp')
     return tempdir
