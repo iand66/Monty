@@ -3,11 +3,12 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api import albums_v1
+from src.api import albums_v1, artists_v1
 
 # Define FastAPI parameters
 metadata = [{'name':'All','description':'**Common Methods**'},
-            {'name':'Albums','description':'**Album Methods**'}]
+            {'name':'Albums','description':'**Album Methods**'},
+            {'name':'Artists','description':'**Artist Methods**'}]
 
 app = FastAPI(title='Monty API', description='API Methods', openapi_tags=metadata, debug=True)
 
@@ -21,6 +22,7 @@ app.add_middleware(
     allow_headers=['*'])
 
 app.include_router(albums_v1.router, prefix='/albums/v1', tags=['Albums'])
+app.include_router(artists_v1.router, prefix='/artists/v1', tags=['Artists'])
 
 # Welcome page - Server is alive?
 @app.get('/', summary='Home Page', tags=['All'])

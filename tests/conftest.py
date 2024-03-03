@@ -15,6 +15,7 @@ def get_db():
     appcfg - Application configuration file to read
     echo - Echo application logs to ./logs/$datetime.log
     trace - Trace database CRUD events to ./logs/$datetime.trc
+    livemode - Running in live of test mode
     logger - Application & Database logging events
     engine - SQL Alchemy database to use
     session - SQL Alchemy session object
@@ -23,14 +24,16 @@ def get_db():
     echo = eval(appcfg['LOGCFG']['logecho'])
     trace = eval(appcfg['LOGCFG']['trace'])
     logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], echo, trace)
-    engine = create_engine(appcfg['DBCFG']['dbType'] + appcfg['DBCFG']['dbName'], connect_args={"check_same_thread":False})
-    #engine = create_engine(appcfg['DBTST']['dbType'] + appcfg['DBTST']['dbName'], connect_args={"check_same_thread":False})
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    
-    yield session, appcfg, engine, echo, trace
+    engine = create_engine(appcfg['DBTST']['dbType'] + appcfg['DBTST']['dbName'], connect_args={"check_same_thread":False})
+    session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    db = session()
 
-# Setup clean test database    
+    try:
+        yield db, appcfg, engine, echo, trace
+    finally:
+        db.close()
+
+# Setup clean database    
 @fixture(scope="session")
 def build(get_db):
     """
