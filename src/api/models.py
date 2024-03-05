@@ -9,7 +9,7 @@ class albumCreate(BaseModel):
 class albumUpdate(albumCreate):
     AlbumTitle: str | None
     ArtistId: int  | None
-    DateUpdated: date
+    #DateUpdated: date | None
 
 class albumDelete(albumCreate):
     Id: int

@@ -8,6 +8,7 @@ from src.lib.apputils import config, logSetup
 from src.orm.schema import *
 from src.orm.dbutils import dbKill, dbInit, dbFill
 
+# TODO Test or Live Mode?
 # Setup testing environment
 @fixture(scope="session")
 def get_db():
@@ -33,8 +34,9 @@ def get_db():
     finally:
         db.close()
 
+# TODO Test or Live Mode?
 # Setup clean database    
-@fixture(scope="session")
+@fixture(scope="session", autouse=True)
 def build(get_db):
     """
     dbKill - Delete test database if exists
@@ -60,5 +62,8 @@ def build(get_db):
 # Define tmp directory
 @fixture(scope="session")
 def temp(tmp_path_factory):
+    """
+    Create tempdir for CSV I/O tests
+    """
     tempdir = tmp_path_factory.mktemp('tmp')
     return tempdir

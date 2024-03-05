@@ -6,6 +6,7 @@ from pytest import mark, param
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect, dbInsert, dbUpdate, dbDelete
 
+# TODO Test or Live Mode?
 # Verify build of test database
 @mark.order(1)
 def test_dbBuild(build, get_db):

@@ -15,7 +15,7 @@ def test_running():
 # GET All
 @mark.parametrize('tablename, version, record',
     [param('albums', "v1", 347, id='Albums'),
-    # param('artists', 275, id='Artists'),
+    param('artists', "v1", 275, id='Artists'),
     # param('customers', 59, id='Customers'),
     # param('employees', 8, id='Employees'),
     # param('genres', 25, id='Genres'),
@@ -23,8 +23,7 @@ def test_running():
     # param('mediatypes', 5, id='Mediatypes'),
     # param('playlists', 14, id='Playlists'),
     # param('tracks', 3503, id='Tracks')
-    ]
-    )
+    ])
 def test_endpoint(tablename: str, version: str, record: int):
     response = client.get(f'/{tablename}/{version}')
     print(f'Endpoint = /{tablename}/{version} record count {record}')

@@ -75,8 +75,8 @@ class Employee(Base):
     Firstname: Mapped[str] = mapped_column(String(20), nullable=False)
     Title: Mapped[str] = mapped_column(String(30), nullable=False)
     ReportsTo: Mapped[int] = mapped_column(ForeignKey("Employees.Id"), nullable=False, index=True)
-    Birthdate: Mapped[Date] = mapped_column(String(16), nullable=True)  # TODO Date?
-    Hiredate: Mapped[Date] = mapped_column(String(16), nullable=True)  # TODO Date?
+    Birthdate: Mapped[Date] = mapped_column(String(16), nullable=True)
+    Hiredate: Mapped[Date] = mapped_column(String(16), nullable=True)
     Address: Mapped[str] = mapped_column(String(30), nullable=True)
     City: Mapped[str] = mapped_column(String(25), nullable=True)
     State: Mapped[str] = mapped_column(String(10), nullable=True)
@@ -95,7 +95,7 @@ class Invoice(Base):
     __tablename__ = "Invoices"
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     CustomerId: Mapped[int] = mapped_column(ForeignKey("Customers.Id"), nullable=False, index=True)
-    InvoiceDate: Mapped[Date] = mapped_column(String(16), nullable=True)  # TODO Date?
+    InvoiceDate: Mapped[Date] = mapped_column(String(16), nullable=True)
     BillingAddress: Mapped[str] = mapped_column(String(50), nullable=True)
     BillingCity: Mapped[str] = mapped_column(String(25), nullable=True)
     BillingState: Mapped[str] = mapped_column(String(10), nullable=True)

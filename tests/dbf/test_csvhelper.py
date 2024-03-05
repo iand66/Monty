@@ -6,6 +6,7 @@ from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect
 
+# TODO Test or Live Mode?
 # Verify test datbase exists
 def test_build(build, get_db):
     assert os.path.exists(get_db[1]['DBCFG']['dbName'])

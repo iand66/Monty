@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from src.lib.apputils import config, logSetup
 
+# TODO Test or Live Mode?
 # Setup working environment
 appcfg = config('./ini/globals.ini')
 echo = eval(appcfg['LOGCFG']['logecho'])
