@@ -1,11 +1,7 @@
-import logging
-import os
-
+import os, logging
 from datetime import date
-
 from sqlalchemy.engine.base import Engine
 from sqlalchemy_utils import database_exists
-
 from src.raw.csvhelper import csvDictReader, csvRead
 from src.orm.dbfunctions import dbBulkInsert
 from src.orm.schema import *

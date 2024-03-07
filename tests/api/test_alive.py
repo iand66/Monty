@@ -1,6 +1,5 @@
 from fastapi.testclient import TestClient
 from pytest import mark, param
-
 from src.main import app
 
 client = TestClient(app)

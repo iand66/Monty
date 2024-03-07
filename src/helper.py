@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-
 from src.lib.apputils import config, logSetup
 
 # TODO Test or Live Mode?

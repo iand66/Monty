@@ -1,8 +1,6 @@
 from typing import List, Any
-
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, Depends, APIRouter, status
-
 from src.helper import get_db, echo, trace
 from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
 from src.orm.schema import Artist
@@ -10,9 +8,8 @@ from src.api.models import artist, artistCreate, artistUpdate
 
 router = APIRouter()
 
-# GET All Artists(s)
 @router.get("/", summary='Get All Artists', response_model=List[artistCreate], status_code=status.HTTP_200_OK)
-async def get_artists(db: Session = Depends(get_db)) -> Any:
+async def get_all(db: Session = Depends(get_db)) -> Any:
     """
     **Get All Artists:**
     - **ArtistName**: Name of the Artist
@@ -23,9 +20,8 @@ async def get_artists(db: Session = Depends(get_db)) -> Any:
     else:
         return result
 
-# GET Artist by Id
 @router.get("/id/{id:int}", summary= 'Get Artist by Artist Id', response_model=List[artistCreate], status_code=status.HTTP_200_OK)
-async def get_artists_id(id: int, db: Session = Depends(get_db)) -> Any:
+async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Get Artist by Artist Id:**
     - **ArtistName**: Name of the Artist
@@ -36,9 +32,8 @@ async def get_artists_id(id: int, db: Session = Depends(get_db)) -> Any:
     else:
         return result
 
-# GET Artist(s) by Artist Name - Supports SQL % wildcard
 @router.get("/name/{name:str}", summary='Get Artists(s) by Artist Name', response_model=List[artistCreate], status_code=status.HTTP_200_OK)
-async def get_artists_name(name: str, db: Session = Depends(get_db)) -> Any:
+async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Get Artist by Artist Name:**
     - **ArtistName**: Name of the Artist
@@ -49,9 +44,8 @@ async def get_artists_name(name: str, db: Session = Depends(get_db)) -> Any:
     else:
         return result
 
-# POST Artist by Name
 @router.post("/name/{name:str}", summary='Create New Artist', response_model=artistCreate, status_code=status.HTTP_201_CREATED)
-async def create_artist_name(data: artistCreate, db: Session = Depends(get_db)) -> Any:
+async def create_name(data: artistCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Create New Artist:**
     - **ArtistName**: Name of the Artist
@@ -66,9 +60,8 @@ async def create_artist_name(data: artistCreate, db: Session = Depends(get_db)) 
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
 
-# PUT Artist by Artist Id
 @router.put("/id/{id:int}", summary='Update Artist by Artist Id', response_model=artistCreate, status_code=status.HTTP_201_CREATED)
-async def update_artists_id(id: int, data: artistCreate, db: Session = Depends(get_db)) -> Any:
+async def update_id(id: int, data: artistCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Artist by Artist Id:**
     - **ArtistName**: Name of the Artist
@@ -83,9 +76,8 @@ async def update_artists_id(id: int, data: artistCreate, db: Session = Depends(g
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
 
-# PUT Artist by Artist Name
 @router.put("/name/{name:str}", summary='Update Artist by Artist Name', response_model=artistUpdate, status_code=status.HTTP_201_CREATED)
-async def update_artists_name(name: str, data: artistUpdate, db: Session = Depends(get_db)) -> Any:
+async def update_name(name: str, data: artistUpdate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Artist by Artist Name:**
     - **ArtistName**: Name of the Artist
@@ -100,9 +92,8 @@ async def update_artists_name(name: str, data: artistUpdate, db: Session = Depen
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
 
-# DELETE Artist by Artist Id
 @router.delete("/id/{id:int}", summary='Delete Artist by Artist Id', response_model=List[artist], status_code=status.HTTP_202_ACCEPTED)
-async def delete_artists_id(id: int, db: Session = Depends(get_db)) -> Any:
+async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Artist by Artist Id:**
     - **Id**: Unique Id of Artist
@@ -117,9 +108,8 @@ async def delete_artists_id(id: int, db: Session = Depends(get_db)) -> Any:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result
 
-# DELETE Artist(s) by Artist Name  - Supports SQL % wildcard
 @router.delete("/name/{name:str}", summary='Artist(s) by Artist Name', response_model=List[artist], status_code=status.HTTP_202_ACCEPTED)
-async def delete_artists_name(name: str, db: Session = Depends(get_db)) -> Any:
+async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Artist(s) by Artist Name:**
     - **Id**: Unique Id of Artist

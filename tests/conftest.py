@@ -1,9 +1,7 @@
 import os
-
 from pytest import fixture
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from src.lib.apputils import config, logSetup
 from src.orm.schema import *
 from src.orm.dbutils import dbKill, dbInit, dbFill
@@ -36,8 +34,8 @@ def get_db():
 
 # TODO Test or Live Mode?
 # Setup clean database    
-@fixture(scope="session", autouse=True)
-def build(get_db):
+@fixture(scope="session")
+def dbBuild(get_db):
     """
     dbKill - Delete test database if exists
     dbInit - Create new database shell - orm/schema

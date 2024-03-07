@@ -1,24 +1,21 @@
 import os
-
 from datetime import date
 from pytest import mark, param
-
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect, dbInsert, dbUpdate, dbDelete
 
 # TODO Test or Live Mode?
 # Verify build of test database
 @mark.order(1)
-def test_dbBuild(build, get_db):
+def test_dbBuild(dbBuild, get_db):
     #assert os.path.exists(get_db[1]['DBCFG']['dbName'])
     assert os.path.exists(get_db[1]['DBTST']['dbName'])
 
 # Verify dbSelect matches known record count
-# def dbSelect(session, table:Base, echo:bool, trace:bool, filter:dict) -> list:
 @mark.order(2)
 @mark.parametrize('tablename, record',
     [param(Album, 347, id='Album'),
-    param(Artist, 275, id='Artists'),
+    param(Artist, 275, id='Artist'),
     param(Customer, 59, id='Customer'),
     param(Employee, 8, id='Employee'),   
     param(Genre, 25, id='Genres'),
@@ -33,10 +30,9 @@ def test_dbSelect(get_db, tablename, record):
     assert len(dbSelect(get_db[0], tablename, get_db[3], get_db[4], **{'Id':'%'})) == record
 
 # Verify dbInsert of new records to each test database table        
-# def dbInsert(session, table:Base, echo:bool, trace:bool) -> int:
 @mark.order(3)
 @mark.parametrize('tablename, data',
-    [param(Artist, {'ArtistName':'Test Artist'}, id='Artists'),
+    [param(Artist, {'ArtistName':'Test Artist'}, id='Artist'),
     param(Album, {'AlbumTitle':'Test Album','ArtistId':'276'}, id='Album'),
     param(Customer, {'Firstname':'Test','Lastname':'User','Email':'test@somewhere.com','SupportRepId':'1'}, id='Customer'),
     param(Employee, {'Lastname':'Employee','Firstname':'Test','Title':'Temporary Employee','ReportsTo':'1','Email':'test@somewhere.com'}, id='Employee'),
@@ -52,10 +48,9 @@ def test_dbInsert(get_db, tablename, data):
     assert dbInsert(get_db[0], tablename(**data), get_db[3], get_db[4]) == True
 
 # Verify dbUpdate to dbInsert records
-# def dbUpdate(session, table:Base, from:dict, to:dict, echo:bool, trace:bool,) -> int:
 @mark.order(4)
 @mark.parametrize('tablename, f_data, t_data',
-    [param(Artist, {'ArtistName':'Test Artist'}, {'ArtistName':'Another Test Artist'}, id='Artists'),
+    [param(Artist, {'ArtistName':'Test Artist'}, {'ArtistName':'Another Test Artist'}, id='Artist'),
     param(Album, {'AlbumTitle':'Test Album'}, {'AlbumTitle':'Another Test Album'}, id='Album'),
     param(Customer, {'Email':'test@somewhere.com'},{'Company':'ACME Inc'}, id='Customer'),
     param(Employee, {'Email':'test@somewhere.com'}, {'ReportsTo':'2'}, id='Employee'),
@@ -70,7 +65,6 @@ def test_dbUpdate(get_db, tablename, f_data, t_data):
     assert dbUpdate(get_db[0], tablename, f_data, t_data, get_db[3], get_db[4]) == True
 
 # Verify dbDelete of dbInsert records
-# def dbDelete(session, table:Base, echo:bool, trace:bool, filter:dict) -> int:
 @mark.order(5)
 @mark.parametrize('tablename, data',
     [param(Invoiceitem, {'InvoiceId':'413'}, id='Invoiceitem'),
@@ -83,7 +77,7 @@ def test_dbUpdate(get_db, tablename, f_data, t_data):
     param(Employee, {'Email':'test@somewhere.com'}, id='Employee'),
     param(Customer, {'Email':'test@somewhere.com'}, id='Customer'),
     param(Album, {'AlbumTitle':'Another Test Album'}, id='Album'),
-    param(Artist, {'ArtistName':'Another Test Artist'}, id='Artists')]   
+    param(Artist, {'ArtistName':'Another Test Artist'}, id='Artist')]   
     )
 def test_dbDelete(get_db, tablename, data):
     assert dbDelete(get_db[0], tablename, get_db[3], get_db[4], **(data)) == True

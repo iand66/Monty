@@ -32,13 +32,47 @@ class artist(BaseModel):
     Id: int
     DateCreated: date
     
-# class genre(Base):
-#     """ Musical Styles """
-#     GenreName: str
+""" Musical Styles """
+class genreCreate(BaseModel):
+    GenreName: str
 
-# class mediatype(Base):
-#     """ MediaType of Track """
-#     MediaTypeName: str
+class genreUpdate(genreCreate):
+    DateUpdated: date
+
+class genreDelete(genreCreate):
+    Id: int
+
+class genre(BaseModel):
+    Id: int
+    DateCreated: date
+    
+""" MediaType of Track """
+class mediatypeCreate(BaseModel):
+    MediaTypeName: str
+
+class mediatypeUpdate(mediatypeCreate):
+    DateUpdated: date
+
+class mediatypeDelete(mediatypeCreate):
+    Id: int
+
+class mediatype(BaseModel):
+    Id: int
+    DateCreated: date
+
+""" Suggested Mixes """
+class playlistCreate(BaseModel):
+    PlaylistName: str
+
+class playlistUpdate(playlistCreate):
+    DateUpdated: date
+
+class playlistDelete(playlistCreate):
+    Id: int
+
+class playlist(BaseModel):
+    Id: int
+    DateCreated: date
 
 # class customer(Base):
 #     """ Customers """
@@ -101,9 +135,7 @@ class artist(BaseModel):
 #     Bytes: int
 #     UnitPrice: Decimal
 
-# class playlist(Base):
-#     """ Suggested Mixes """
-#     PlaylistName: str
+
 
 # class playlisttrack(Base):
 #     """ Playlist Tracks """

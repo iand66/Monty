@@ -1,10 +1,5 @@
-import configparser
-import logging 
-import sys
-import os
-import inspect
+import configparser, logging, os, sys, inspect
 from datetime import date
-
 from logging.config import fileConfig
 
 # Call stack used in debug mode
@@ -27,7 +22,6 @@ def config(filename: str) -> configparser:
     return config
 
 def logSetup(logcfg: str, logloc: str, echo: bool, trace: bool) -> logging.Logger:
-    # FIXMELogger cannot handle ł \u0142 character - utf-16?
     """
     Setup logging environment
     :param logcfg (str): Fully qualified location of logging config file
@@ -47,6 +41,8 @@ def logSetup(logcfg: str, logloc: str, echo: bool, trace: bool) -> logging.Logge
         sys.exit()
 
     try:
+        # TODO Update to dictConfig - json.load(filename)
+        # TODO Investigate QueueHendler & Threads
         fileConfig(logcfg, defaults={"logfilename": logfile, "datfilename": datfile})
         logger = logging.getLogger("AppLog")
         logger.propagate = echo

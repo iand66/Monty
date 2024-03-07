@@ -1,15 +1,13 @@
 import os
-
 from pytest import mark, param
-
 from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect
 
 # TODO Test or Live Mode?
 # Verify test datbase exists
-def test_build(build, get_db):
-    assert os.path.exists(get_db[1]['DBCFG']['dbName'])
+def test_build(dbBuild, get_db):
+    assert os.path.exists(get_db[1]['DBTST']['dbName'])
 
 # Verify sample files loaded to test database
 @mark.parametrize('filename, record',
