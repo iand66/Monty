@@ -3,13 +3,14 @@ from pytest import mark, param
 from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect
+from src.helper import engine
 
-# TODO Test or Live Mode?
 # Verify test datbase exists
-def test_build(dbBuild, get_db):
-    assert os.path.exists(get_db[1]['DBTST']['dbName'])
+def test_dbBuild(dbBuild):
+    assert os.path.exists(engine.url.database) == True
 
 # Verify sample files loaded to test database
+# def csvRead(filename:str, echo:bool) -> list:
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
      param('./sam/csv/artists.csv', 275, id='Artists'),
@@ -28,6 +29,7 @@ def test_csvRead(get_db, filename, record):
         assert len(csvRead(filename, get_db[3]))-1 == record
 
 # Verify sample files loaded to test database
+# def csvDictReader(filename:str, echo:bool) -> list:
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
      param('./sam/csv/artists.csv', 275, id='Artists'),
@@ -46,6 +48,7 @@ def test_csvDictReader(get_db, filename, record):
         assert len(csvDictReader(filename, get_db[3])) == record
 
 # Verify CSV write from test database
+# def csvWrite(filename:str, data:list, echo:bool) -> bool: 
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
@@ -63,6 +66,7 @@ def test_csvWrite(get_db, temp, filename, table):
     assert csvWrite(temp/filename, dbSelect(get_db[0], table, get_db[3], get_db[4], **{'Id':'%'}), False) == True
 
 # Verify CSV write from test database
+# def csvDictWriter(filename:str, data:dict, echo:bool) -> bool:
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),

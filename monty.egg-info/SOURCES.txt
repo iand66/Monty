@@ -9,7 +9,10 @@ src/main.py
 src/api/__init__.py
 src/api/albums_v1.py
 src/api/artists_v1.py
+src/api/genres_v1.py
+src/api/mediatype_v1.py
 src/api/models.py
+src/api/playlists_v1.py
 src/gui/__init__.py
 src/lib/__init__.py
 src/lib/apputils.py

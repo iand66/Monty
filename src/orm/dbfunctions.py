@@ -2,18 +2,6 @@ import logging
 from sqlalchemy import exc
 from src.orm.schema import Base
 
-# def get_attributes(model) -> dict:
-#     """
-#     RETURN all attributes from a SQLAlchemy object.
-#     :param model (object): SQLAlchemy object instance.
-#     :return dict: Dictionary containing all attributes.
-#     """
-#     data = {}
-#     for key, value in model.__dict__.items():
-#         if not key.startswith("_sa_"):
-#             data[key] = value
-#     return data
-
 def get_attributes(model) -> dict:
     """
     RETURN all attributes from a SQLAlchemy object.

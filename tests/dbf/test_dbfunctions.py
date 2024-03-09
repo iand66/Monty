@@ -3,15 +3,15 @@ from datetime import date
 from pytest import mark, param
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect, dbInsert, dbUpdate, dbDelete
+from src.helper import engine
 
-# TODO Test or Live Mode?
 # Verify build of test database
 @mark.order(1)
-def test_dbBuild(dbBuild, get_db):
-    #assert os.path.exists(get_db[1]['DBCFG']['dbName'])
-    assert os.path.exists(get_db[1]['DBTST']['dbName'])
+def test_dbBuild(dbBuild):
+    assert os.path.exists(engine.url.database) == True
 
 # Verify dbSelect matches known record count
+# def dbSelect(session, table: Base, echo: bool, trace: bool, **kwargs) -> list:
 @mark.order(2)
 @mark.parametrize('tablename, record',
     [param(Album, 347, id='Album'),
@@ -29,7 +29,8 @@ def test_dbBuild(dbBuild, get_db):
 def test_dbSelect(get_db, tablename, record):
     assert len(dbSelect(get_db[0], tablename, get_db[3], get_db[4], **{'Id':'%'})) == record
 
-# Verify dbInsert of new records to each test database table        
+# Verify dbInsert of new records to each test database table  
+# def dbInsert(session, data: Base, echo: bool, trace: bool) -> bool:      
 @mark.order(3)
 @mark.parametrize('tablename, data',
     [param(Artist, {'ArtistName':'Test Artist'}, id='Artist'),
@@ -48,6 +49,7 @@ def test_dbInsert(get_db, tablename, data):
     assert dbInsert(get_db[0], tablename(**data), get_db[3], get_db[4]) == True
 
 # Verify dbUpdate to dbInsert records
+# def dbUpdate(session, table: Base, filter: dict, update: dict,echo: bool, trace: bool,) -> bool:
 @mark.order(4)
 @mark.parametrize('tablename, f_data, t_data',
     [param(Artist, {'ArtistName':'Test Artist'}, {'ArtistName':'Another Test Artist'}, id='Artist'),
@@ -65,6 +67,7 @@ def test_dbUpdate(get_db, tablename, f_data, t_data):
     assert dbUpdate(get_db[0], tablename, f_data, t_data, get_db[3], get_db[4]) == True
 
 # Verify dbDelete of dbInsert records
+# def dbDelete(session, table: Base, echo: bool, trace: bool, **kwargs) -> bool:
 @mark.order(5)
 @mark.parametrize('tablename, data',
     [param(Invoiceitem, {'InvoiceId':'413'}, id='Invoiceitem'),

@@ -1,38 +1,19 @@
 import os
 from pytest import fixture
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from src.lib.apputils import config, logSetup
 from src.orm.schema import *
 from src.orm.dbutils import dbKill, dbInit, dbFill
+from src.helper import appcfg, mode, echo, trace, engine, session
 
-# TODO Test or Live Mode?
 # Setup testing environment
 @fixture(scope="session")
 def get_db():
-    """
-    appcfg - Application configuration file to read
-    echo - Echo application logs to ./logs/$datetime.log
-    trace - Trace database CRUD events to ./logs/$datetime.trc
-    livemode - Running in live of test mode
-    logger - Application & Database logging events
-    engine - SQL Alchemy database to use
-    session - SQL Alchemy session object
-    """
-    appcfg = config('./ini/globals.ini')
-    echo = eval(appcfg['LOGCFG']['logecho'])
-    trace = eval(appcfg['LOGCFG']['trace'])
-    logger = logSetup(appcfg['LOGCFG']['logcfg'], appcfg['LOGCFG']['logloc'], echo, trace)
-    engine = create_engine(appcfg['DBTST']['dbType'] + appcfg['DBTST']['dbName'], connect_args={"check_same_thread":False})
-    session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     db = session()
 
     try:
-        yield db, appcfg, engine, echo, trace
+        yield db
     finally:
         db.close()
 
-# TODO Test or Live Mode?
 # Setup clean database    
 @fixture(scope="session")
 def dbBuild(get_db):
@@ -41,23 +22,29 @@ def dbBuild(get_db):
     dbInit - Create new database shell - orm/schema
     dbFill - Populate new database
     """
-    session = get_db[0] 
-    appcfg = get_db[1] 
-    engine = get_db[2]
-    echo = get_db[3]
-    trace = get_db[4]
+    session = get_db
     
-    if os.path.exists(appcfg['DBTST']['dbName']): 
-        assert dbKill(appcfg['DBTST']['dbName'], echo) == True
-        assert dbInit(engine, echo) == True
+    if mode:
+        if os.path.exists(appcfg['DBCFG']['dbName']): 
+            assert dbKill(appcfg['DBCFG']['dbName'], echo) == True
+            assert dbInit(engine, echo) == True
+        else:
+            assert dbInit(engine, echo) == True
+            
+        assert dbFill(session, './sam/csv/import.csv', appcfg['DBCFG']['dbName'], echo, trace) == True
     else:
-        assert dbInit(engine, echo) == True
-        
-    assert dbFill(session, './sam/csv/import.csv', appcfg['DBTST']['dbName'], echo, trace) == True
+        if os.path.exists(appcfg['DBTST']['dbName']): 
+            assert dbKill(appcfg['DBTST']['dbName'], echo) == True
+            assert dbInit(engine, echo) == True
+        else:
+            assert dbInit(engine, echo) == True
+            
+        assert dbFill(session, './sam/csv/import.csv', appcfg['DBTST']['dbName'], echo, trace) == True
     
-    yield session
+    #yield session
     
 # Define tmp directory
+# TODO tmp directory?
 @fixture(scope="session")
 def temp(tmp_path_factory):
     """
