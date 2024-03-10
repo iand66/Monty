@@ -3,7 +3,7 @@ from datetime import date
 from pytest import mark, param
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect, dbInsert, dbUpdate, dbDelete
-from src.helper import engine
+from src.helper import engine, echo, trace
 
 # Verify build of test database
 @mark.order(1)
@@ -27,7 +27,7 @@ def test_dbBuild(dbBuild):
     param(Track, 3503, id='Track')]
     )
 def test_dbSelect(get_db, tablename, record):
-    assert len(dbSelect(get_db[0], tablename, get_db[3], get_db[4], **{'Id':'%'})) == record
+    assert len(dbSelect(get_db, tablename, echo, trace, **{'Id':'%'})) == record
 
 # Verify dbInsert of new records to each test database table  
 # def dbInsert(session, data: Base, echo: bool, trace: bool) -> bool:      
@@ -46,7 +46,7 @@ def test_dbSelect(get_db, tablename, record):
     param(Invoiceitem, {'InvoiceId':'413','TrackId':'3504','UnitPrice':'0.01','Quantity':'1'}, id='Invoiceitem')]   
     )
 def test_dbInsert(get_db, tablename, data):
-    assert dbInsert(get_db[0], tablename(**data), get_db[3], get_db[4]) == True
+    assert dbInsert(get_db, tablename(**data), echo, trace) == True
 
 # Verify dbUpdate to dbInsert records
 # def dbUpdate(session, table: Base, filter: dict, update: dict,echo: bool, trace: bool,) -> bool:
@@ -64,7 +64,7 @@ def test_dbInsert(get_db, tablename, data):
     param(Invoiceitem, {'InvoiceId':'413'},{'Quantity':'5'}, id='Invoiceitem')]   
     )
 def test_dbUpdate(get_db, tablename, f_data, t_data):
-    assert dbUpdate(get_db[0], tablename, f_data, t_data, get_db[3], get_db[4]) == True
+    assert dbUpdate(get_db, tablename, f_data, t_data, echo, trace) == True
 
 # Verify dbDelete of dbInsert records
 # def dbDelete(session, table: Base, echo: bool, trace: bool, **kwargs) -> bool:
@@ -83,4 +83,4 @@ def test_dbUpdate(get_db, tablename, f_data, t_data):
     param(Artist, {'ArtistName':'Another Test Artist'}, id='Artist')]   
     )
 def test_dbDelete(get_db, tablename, data):
-    assert dbDelete(get_db[0], tablename, get_db[3], get_db[4], **(data)) == True
+    assert dbDelete(get_db, tablename, echo, trace, **(data)) == True

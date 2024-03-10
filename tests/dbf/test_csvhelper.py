@@ -3,7 +3,7 @@ from pytest import mark, param
 from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect
-from src.helper import engine
+from src.helper import engine, echo, trace
 
 # Verify test datbase exists
 def test_dbBuild(dbBuild):
@@ -26,7 +26,7 @@ def test_dbBuild(dbBuild):
      )
 def test_csvRead(get_db, filename, record):
     if os.path.exists(filename):
-        assert len(csvRead(filename, get_db[3]))-1 == record
+        assert len(csvRead(filename, echo))-1 == record
 
 # Verify sample files loaded to test database
 # def csvDictReader(filename:str, echo:bool) -> list:
@@ -43,9 +43,9 @@ def test_csvRead(get_db, filename, record):
      param('./sam/csv/playlisttracks.csv', 8715, id='Playlisttracks'),
      param('./sam/csv/tracks.csv', 3503, id='Tracks')]
      )
-def test_csvDictReader(get_db, filename, record):
+def test_csvDictRead(get_db, filename, record):
     if os.path.exists(filename):
-        assert len(csvDictReader(filename, get_db[3])) == record
+        assert len(csvDictReader(filename, echo)) == record
 
 # Verify CSV write from test database
 # def csvWrite(filename:str, data:list, echo:bool) -> bool: 
@@ -63,7 +63,7 @@ def test_csvDictReader(get_db, filename, record):
      param('tracks.csv', Track, id='Tracks')]
      )
 def test_csvWrite(get_db, temp, filename, table):
-    assert csvWrite(temp/filename, dbSelect(get_db[0], table, get_db[3], get_db[4], **{'Id':'%'}), False) == True
+    assert csvWrite(temp/filename, dbSelect(get_db, table, echo, trace, **{'Id':'%'}), False) == True
 
 # Verify CSV write from test database
 # def csvDictWriter(filename:str, data:dict, echo:bool) -> bool:
@@ -80,5 +80,5 @@ def test_csvWrite(get_db, temp, filename, table):
      param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
      param('tracks.csv', Track, id='Tracks')]
      )
-def test_csvDictWriter(get_db, temp, filename, table):
-    assert csvDictWriter(temp/filename, dbSelect(get_db[0], table, get_db[3], get_db[4], **{'Id':'%'}), False) == True
+def test_csvDictWrite(get_db, temp, filename, table):
+    assert csvDictWriter(temp/filename, dbSelect(get_db, table, echo, trace, **{'Id':'%'}), False) == True
