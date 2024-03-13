@@ -1,10 +1,9 @@
 import csv, logging
 
-def csvRead(filename:str, echo:bool) -> list:
+def csvRead(filename:str) -> list:
     """
     READ CSV file
     :param filename (str): Fully qualified path to filename
-    :param echo (bool): Enable application logging
     :return list: List of read lines
     """
     applog = logging.getLogger('AppLog')
@@ -16,16 +15,14 @@ def csvRead(filename:str, echo:bool) -> list:
                 data.append(', '.join(row))
         return data
     except Exception as e:
-        if echo:
-            applog.error(e)
+        applog.error(e)
         return e
 
-def csvWrite(filename:str, data:list, echo:bool) -> bool:
+def csvWrite(filename:str, data:list) -> bool:
     """
     WRITE CSV file
     :param filename (str): Fully qualified path to OS directory
     :parma data (list): Data to write
-    :param echo (bool): Enable application logging
     :return bool: True or exception
     """
     applog = logging.getLogger('AppLog')
@@ -36,15 +33,13 @@ def csvWrite(filename:str, data:list, echo:bool) -> bool:
                 writer.writerow([data[i]])
         return True
     except Exception as e:
-        if echo:
-            applog.error(e)
+        applog.error(e)
         return e
 
-def csvDictReader(filename:str, echo:bool) -> list:
+def csvDictReader(filename:str) -> list:
     """
     READ CSV file as dictionary
     :param filename (str): Fully qualified path to filename
-    :param echo (bool): Enable application logging
     :return list: List of read lines 
     """
     applog = logging.getLogger('AppLog')
@@ -56,16 +51,14 @@ def csvDictReader(filename:str, echo:bool) -> list:
                 data.append(row)
         return data
     except Exception as e:
-        if echo:
-            applog.error(e)
-    return e
+        applog.error(e)
+        return e
 
-def csvDictWriter(filename:str, data:dict, echo:bool) -> bool:
+def csvDictWriter(filename:str, data:dict) -> bool:
     """
     WRITE CSV file from dictionary
     :param filename (str): Fully qualified path to OS directory
     :parma data (dict): Data to write
-    :param echo (bool): Enable application logging
     :return bool (bool): True or exception
     """
     applog = logging.getLogger('AppLog')
@@ -77,6 +70,5 @@ def csvDictWriter(filename:str, data:dict, echo:bool) -> bool:
             writer.writerows(data)
         return True
     except Exception as e:
-        if echo:
-            applog.error(e)
+        applog.error(e)
         return e

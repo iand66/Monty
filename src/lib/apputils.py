@@ -1,4 +1,4 @@
-import configparser, logging, os, sys, inspect
+import configparser, os, sys, inspect
 from datetime import date
 from logging.config import fileConfig
 
@@ -6,6 +6,7 @@ from logging.config import fileConfig
 def whoami():
     return inspect.stack()[1][3]
 
+# Read configurable parameters from INI file
 def config(filename: str) -> configparser:
     """
     Read configurable parameters from INI file
@@ -21,37 +22,32 @@ def config(filename: str) -> configparser:
         sys.exit()
     return config
 
-def logSetup(cfg: str, loc: str, echo: bool, trace: bool, sec: bool) -> logging.Logger:
+# Setup logging environment
+def logSetup(logcfg: str, logloc: str) -> None:
     """
     Setup logging environment
-    :param cfg (str): Fully qualified location of logging config file
-    :param loc (str): Directory to store log files
-    :param echo (bool): Update application logger object
-    :param trace (bool): Update database logger object
-    :param sec (bool): Update security logger object
-    :return logging.Logger: Logger object
+    :param logcfg (str): Fully qualified location of logging config file
+    :param logloc (str): Directory to store log files
+    :return None
     """
     today = date.today()
-    appfile = loc + f"{today.year}-{today.month:02d}-{today.day:02d}.app"
-    datfile = loc + f"{today.year}-{today.month:02d}-{today.day:02d}.dat"
-    secfile = loc + f"{today.year}-{today.month:02d}-{today.day:02d}.sec"
+    appfile = logloc + f"{today.year}-{today.month:02d}-{today.day:02d}.app"
+    datfile = logloc + f"{today.year}-{today.month:02d}-{today.day:02d}.dat"
+    secfile = logloc + f"{today.year}-{today.month:02d}-{today.day:02d}.sec"
 
     try:
-        os.path.exists(cfg)
+        os.path.exists(logcfg)
     except Exception as e:
-        print(f"Could not find {cfg} file")
+        print(f"Could not find {logcfg} file")
         sys.exit()
 
     try:
-        # TODO Update to dictConfig - json.load(filename)
-        fileConfig(cfg, defaults={"logfilename": appfile, "datfilename": datfile, "secfilename": secfile })
-        logger = logging.getLogger("AppLog")
-        logger.propagate = echo
-        logger = logging.getLogger("DatLog")
-        logger.propagate = trace
-        logger = logging.getLogger("SecLog")
-        logger.propagate = sec
+        fileConfig(logcfg, defaults={"logfilename": appfile, "datfilename": datfile, "secfilename": secfile })
+        # TODO Log rotation @ 00:00
     except Exception as e:
-        print(f"Could not parse {cfg} file")
-        sys.exit()
-    return logger
+        if os.path.exists(logloc):
+            print(f"Could not process {logcfg} file")
+            sys.exit()
+        else:
+            os.mkdir(logloc)
+

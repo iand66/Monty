@@ -3,14 +3,10 @@ from pytest import mark, param
 from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
 from src.orm.schema import *
 from src.orm.dbfunctions import dbSelect
-from src.helper import engine, echo, trace
-
-# Verify test datbase exists
-def test_dbBuild(dbBuild):
-    assert os.path.exists(engine.url.database) == True
+from src.helper import trace
 
 # Verify sample files loaded to test database
-# def csvRead(filename:str, echo:bool) -> list:
+# def csvRead(filename:str) -> list:
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
      param('./sam/csv/artists.csv', 275, id='Artists'),
@@ -26,10 +22,10 @@ def test_dbBuild(dbBuild):
      )
 def test_csvRead(get_db, filename, record):
     if os.path.exists(filename):
-        assert len(csvRead(filename, echo))-1 == record
+        assert len(csvRead(filename))-1 == record
 
 # Verify sample files loaded to test database
-# def csvDictReader(filename:str, echo:bool) -> list:
+# def csvDictReader(filename:str) -> list:
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
      param('./sam/csv/artists.csv', 275, id='Artists'),
@@ -45,10 +41,10 @@ def test_csvRead(get_db, filename, record):
      )
 def test_csvDictRead(get_db, filename, record):
     if os.path.exists(filename):
-        assert len(csvDictReader(filename, echo)) == record
+        assert len(csvDictReader(filename)) == record
 
 # Verify CSV write from test database
-# def csvWrite(filename:str, data:list, echo:bool) -> bool: 
+# def csvWrite(filename:str, data:list) -> bool: 
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
@@ -63,10 +59,10 @@ def test_csvDictRead(get_db, filename, record):
      param('tracks.csv', Track, id='Tracks')]
      )
 def test_csvWrite(get_db, temp, filename, table):
-    assert csvWrite(temp/filename, dbSelect(get_db, table, echo, trace, **{'Id':'%'}), False) == True
+    assert csvWrite(temp/filename, dbSelect(get_db, table, trace, **{'Id':'%'})) == True
 
 # Verify CSV write from test database
-# def csvDictWriter(filename:str, data:dict, echo:bool) -> bool:
+# def csvDictWriter(filename:str, data:dict) -> bool:
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
@@ -81,4 +77,4 @@ def test_csvWrite(get_db, temp, filename, table):
      param('tracks.csv', Track, id='Tracks')]
      )
 def test_csvDictWrite(get_db, temp, filename, table):
-    assert csvDictWriter(temp/filename, dbSelect(get_db, table, echo, trace, **{'Id':'%'}), False) == True
+    assert csvDictWriter(temp/filename, dbSelect(get_db, table, trace, **{'Id':'%'})) == True

@@ -1,7 +1,7 @@
 from typing import List, Any
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, Depends, APIRouter, status
-from src.helper import get_db, echo, trace
+from src.helper import get_db, trace
 from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
 from src.orm.schema import Mediatype
 from src.api.models import mediatype, mediatypeCreate, mediatypeUpdate, mediatypeDelete
@@ -14,7 +14,7 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
     **Get All Mediatypes:**
     - **MediaTypeName**: Name of the Mediatype
     """
-    result = dbSelect(db, Mediatype, echo, trace, **{"Id": "%"})
+    result = dbSelect(db, Mediatype, trace, **{"Id": "%"})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No artists found")
     else:
@@ -26,7 +26,7 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     **Get Mediatype by Mediatype Id:**
     - **MediaTypeName**: Name of the Mediatype
     """
-    result = dbSelect(db, Mediatype, echo, trace, **{"Id": id})
+    result = dbSelect(db, Mediatype, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Mediatype {id} not found")
     else:
@@ -38,7 +38,7 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     **Get Mediatype by Mediatype Name:**
     - **MediaTypeName**: Name of the Mediatype
     """
-    result = dbSelect(db, Mediatype, echo, trace, **{"MediaTypeName": name})
+    result = dbSelect(db, Mediatype, trace, **{"MediaTypeName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Mediatype {name} not found")
     else:
@@ -50,12 +50,12 @@ async def create_name(data: mediatypeCreate, db: Session = Depends(get_db)) -> A
     **Create New Mediatype:**
     - **MediaTypeName**: Name of the Mediatype
     """
-    result = dbSelect(db, Mediatype, echo, trace, **data.model_dump())
+    result = dbSelect(db, Mediatype, trace, **data.model_dump())
     if result:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Mediatype {data} already exists")
     else:
         new_album = Mediatype(**data.model_dump())
-        success = dbInsert(db, new_album, echo, trace)
+        success = dbInsert(db, new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -66,12 +66,12 @@ async def update_id(id: int, data: mediatypeCreate, db: Session = Depends(get_db
     **Update Mediatype by Mediatype Id:**
     - **MediaTypeName**: Name of the Mediatype
     """
-    result = dbSelect(db, Mediatype, echo, trace, **{"Id": id})
+    result = dbSelect(db, Mediatype, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Mediatype {id} not found")
     else:
         new_album = data.model_dump()
-        success = dbUpdate(db, Mediatype, result[0], new_album, echo, trace)
+        success = dbUpdate(db, Mediatype, result[0], new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -82,12 +82,12 @@ async def update_name(name: str, data: mediatypeUpdate, db: Session = Depends(ge
     **Update Mediatype by Mediatype Name:**
     - **MediaTypeName**: Name of the Mediatype
     """
-    result = dbSelect(db, Mediatype, echo, trace, **{"MediaTypeName": name})
+    result = dbSelect(db, Mediatype, trace, **{"MediaTypeName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Mediatype {name} not found")
     else:
         new_album = data.model_dump()
-        success = dbUpdate(db, Mediatype, result[0], new_album, echo, trace)
+        success = dbUpdate(db, Mediatype, result[0], new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -99,11 +99,11 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     - **Id**: Unique Id of Mediatype
     - **MediaTypeName**: Name of the Mediatype
     """
-    result = dbSelect(db, Mediatype, echo, trace, **{"Id": id})
+    result = dbSelect(db, Mediatype, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Mediatype {id} not found")
     else:
-        success = dbDelete(db, Mediatype, echo, trace, **{"Id": id})
+        success = dbDelete(db, Mediatype, trace, **{"Id": id})
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result
@@ -115,11 +115,11 @@ async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     - **Id**: Unique Id of Mediatype
     - **MediaTypeName**: Name of the Mediatype
     """
-    result = dbSelect(db, Mediatype, echo, trace, **{"MediaTypeName": name})
+    result = dbSelect(db, Mediatype, trace, **{"MediaTypeName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Mediatype {name} not found")
     else:
-        success = dbDelete(db, Mediatype, echo, trace, **{"MediaTypeName": name})
+        success = dbDelete(db, Mediatype, trace, **{"MediaTypeName": name})
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result

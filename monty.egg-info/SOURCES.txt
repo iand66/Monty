@@ -4,7 +4,6 @@ monty.egg-info/SOURCES.txt
 monty.egg-info/dependency_links.txt
 monty.egg-info/top_level.txt
 src/__init__.py
-src/helper.py
 src/main.py
 src/api/__init__.py
 src/api/albums_v1.py

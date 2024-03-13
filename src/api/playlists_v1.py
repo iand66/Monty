@@ -1,7 +1,7 @@
 from typing import List, Any
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, Depends, APIRouter, status
-from src.helper import get_db, echo, trace
+from src.helper import get_db, trace
 from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
 from src.orm.schema import Playlist
 from src.api.models import playlist, playlistCreate, playlistUpdate, playlistDelete
@@ -14,7 +14,7 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
     **Get All Playlists:**
     - **PlaylistName**: Name of the Playlist
     """
-    result = dbSelect(db, Playlist, echo, trace, **{"Id": "%"})
+    result = dbSelect(db, Playlist, trace, **{"Id": "%"})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No artists found")
     else:
@@ -26,7 +26,7 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     **Get Playlist by Playlist Id:**
     - **PlaylistName**: Name of the Playlist
     """
-    result = dbSelect(db, Playlist, echo, trace, **{"Id": id})
+    result = dbSelect(db, Playlist, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Playlist {id} not found")
     else:
@@ -38,7 +38,7 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     **Get Playlist by Playlist Name:**
     - **PlaylistName**: Name of the Playlist
     """
-    result = dbSelect(db, Playlist, echo, trace, **{"PlaylistName": name})
+    result = dbSelect(db, Playlist, trace, **{"PlaylistName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Playlist {name} not found")
     else:
@@ -50,12 +50,12 @@ async def create_name(data: playlistCreate, db: Session = Depends(get_db)) -> An
     **Create New Playlist:**
     - **PlaylistName**: Name of the Playlist
     """
-    result = dbSelect(db, Playlist, echo, trace, **data.model_dump())
+    result = dbSelect(db, Playlist, trace, **data.model_dump())
     if result:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Playlist {data} already exists")
     else:
         new_album = Playlist(**data.model_dump())
-        success = dbInsert(db, new_album, echo, trace)
+        success = dbInsert(db, new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -66,12 +66,12 @@ async def update_id(id: int, data: playlistCreate, db: Session = Depends(get_db)
     **Update Playlist by Playlist Id:**
     - **PlaylistName**: Name of the Playlist
     """
-    result = dbSelect(db, Playlist, echo, trace, **{"Id": id})
+    result = dbSelect(db, Playlist, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Playlist {id} not found")
     else:
         new_album = data.model_dump()
-        success = dbUpdate(db, Playlist, result[0], new_album, echo, trace)
+        success = dbUpdate(db, Playlist, result[0], new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -82,12 +82,12 @@ async def update_name(name: str, data: playlistUpdate, db: Session = Depends(get
     **Update Playlist by Playlist Name:**
     - **PlaylistName**: Name of the Playlist
     """
-    result = dbSelect(db, Playlist, echo, trace, **{"PlaylistName": name})
+    result = dbSelect(db, Playlist, trace, **{"PlaylistName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Playlist {name} not found")
     else:
         new_album = data.model_dump()
-        success = dbUpdate(db, Playlist, result[0], new_album, echo, trace)
+        success = dbUpdate(db, Playlist, result[0], new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -99,11 +99,11 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     - **Id**: Unique Id of Playlist
     - **PlaylistName**: Name of the Playlist
     """
-    result = dbSelect(db, Playlist, echo, trace, **{"Id": id})
+    result = dbSelect(db, Playlist, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Playlist {id} not found")
     else:
-        success = dbDelete(db, Playlist, echo, trace, **{"Id": id})
+        success = dbDelete(db, Playlist, trace, **{"Id": id})
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result
@@ -115,11 +115,11 @@ async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     - **Id**: Unique Id of Playlist
     - **PlaylistName**: Name of the Playlist
     """
-    result = dbSelect(db, Playlist, echo, trace, **{"PlaylistName": name})
+    result = dbSelect(db, Playlist, trace, **{"PlaylistName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Playlist {name} not found")
     else:
-        success = dbDelete(db, Playlist, echo, trace, **{"PlaylistName": name})
+        success = dbDelete(db, Playlist, trace, **{"PlaylistName": name})
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result

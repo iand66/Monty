@@ -2,6 +2,7 @@ import logging
 from sqlalchemy import exc
 from src.orm.schema import Base
 
+# RETURN all attributes from a SQLAlchemy object.
 def get_attributes(model) -> dict:
     """
     RETURN all attributes from a SQLAlchemy object.
@@ -14,13 +15,13 @@ def get_attributes(model) -> dict:
             data[column.key] = getattr(model, column.key)
     return data
 
-def dbBulkInsert(session, table: str, data: Base, echo: bool, trace: bool) -> int:
+# INSERT multiple records into database table
+def dbBulkInsert(session, table: str, data: Base, trace: bool) -> int:
     """
     INSERT multiple records into database table
     :param session (session): SQLAlchemy session instance
     :param table (str): Database tablename
     :param data (Base): SQLALchemy data object(s)
-    :param echo (bool): Enable application logging
     :param trace (bool): Enable database logging
     :return int: Number of records inserted
     """
@@ -34,18 +35,17 @@ def dbBulkInsert(session, table: str, data: Base, echo: bool, trace: bool) -> in
         return len(data)
     except Exception as e:
         session.rollback()
-        if echo:
-            applog.error(e)
+        applog.error(e)
         return 0
     finally:
         session.close()
 
-def dbInsert(session, data: Base, echo: bool, trace: bool) -> bool:
+# INSERT record into database table
+def dbInsert(session, data: Base, trace: bool) -> bool:
     """
     INSERT record into database table
     :param session (session): SQLAlchemy session instance
     :param data (Base): SQLALchemy data object
-    :param echo (bool): Enable application logging
     :param trace (bool): Enable database logging
     :return int: RowId of inserted record
     """
@@ -60,18 +60,17 @@ def dbInsert(session, data: Base, echo: bool, trace: bool) -> bool:
         return True
     except exc.SQLAlchemyError as e:
         session.rollback()
-        if echo:
-            applog.error(e)
+        applog.error(e)
         return False
     finally:
         session.close()
 
-def dbSelect(session, table: Base, echo: bool, trace: bool, **kwargs) -> list:
+# SELECT query on the given table with optional filtering
+def dbSelect(session, table: Base, trace: bool, **kwargs) -> list:
     """
     SELECT query on the given table with optional filtering
     :param session (session): SQLAlchemy session object
     :param table (Base): Database tablename
-    :param echo (bool): Enable application logging
     :param trace (bool): Enable database logging
     :param kwargs (dict): Key-value pairs representing filter conditions (column_name=value)
     :return list: List of model instances if found, empty list otherwise.
@@ -94,20 +93,19 @@ def dbSelect(session, table: Base, echo: bool, trace: bool, **kwargs) -> list:
                 datlog.info(f"Selected ... {r}")
         return data
     except exc.SQLAlchemyError as e:
-        if echo:
-            applog.error(e)
+        applog.error(e)
         return []
     finally:
         session.close()
 
-def dbUpdate(session, table: Base, filter: dict, update: dict,echo: bool, trace: bool,) -> bool:
+# UPDATE records in the database based on the given filter condition(s)
+def dbUpdate(session, table: Base, filter: dict, update: dict, trace: bool,) -> bool:
     """
     UPDATE records in the database based on the given filter condition(s)
     :param session (session): SQLAlchemy session object
     :param table (Base): SQLAlchemy model class
     :param filter_kwargs (dict): Key-value pairs filter conditions (column_name=value)
     :param update_kwargs (dict): Key-value pairs update values (column_name=new_value)
-    :param echo (bool): Enable application logging
     :param trace (bool): Enable database logging
     :return int: Number of updated records
     """
@@ -126,18 +124,17 @@ def dbUpdate(session, table: Base, filter: dict, update: dict,echo: bool, trace:
             datlog.info(f"Updated {table.__tablename__} {updated} times")
         return True
     except exc.SQLAlchemyError as e:
-        if echo:
-            applog.error(e)
+        applog.error(e)
         return False
     finally:
         session.close()
 
-def dbDelete(session, table: Base, echo: bool, trace: bool, **kwargs) -> bool:
+# DELETE records from a database table
+def dbDelete(session, table: Base, trace: bool, **kwargs) -> bool:
     """
     DELETE records from a database table
     :param session (session): SQLAlchemy session object
     :param table (Base): Database tablename
-    :param echo (bool): Enable application logging
     :param trace (bool): Enable database logging
     :param kwargs (dict): Key-value pairs representing filter conditions (column_name=value)
     :return int: Number of records deleted
@@ -160,8 +157,7 @@ def dbDelete(session, table: Base, echo: bool, trace: bool, **kwargs) -> bool:
         else:
             return False
     except exc.SQLAlchemyError as e:
-        if echo:
-            applog.error(e)
+        applog.error(e)
         return False
     finally:
         session.close()

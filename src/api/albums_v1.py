@@ -1,7 +1,7 @@
 from typing import List, Any
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, Depends, APIRouter, status
-from src.helper import get_db, echo, trace
+from src.helper import get_db, trace
 from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
 from src.orm.schema import Album
 from src.api.models import album, albumCreate, albumUpdate, albumDelete
@@ -15,7 +15,7 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
     - **AlbumTitle**: Title of the Album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **{"Id": "%"})
+    result = dbSelect(db, Album, trace, **{"Id": "%"})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No albums found")
     else:
@@ -28,7 +28,7 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     - **AlbumTitle**: Title of the Album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **{"Id": id})
+    result = dbSelect(db, Album, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {id} not found")
     else:
@@ -41,7 +41,7 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     - **AlbumTitle**: Title of the Album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **{"AlbumTitle": name})
+    result = dbSelect(db, Album, trace, **{"AlbumTitle": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {name} not found")
     else:
@@ -54,7 +54,7 @@ async def get_artist(artist: int, db: Session = Depends(get_db)) -> Any:
     - **AlbumTitle**: Title of the Album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **{"ArtistId": artist})
+    result = dbSelect(db, Album, trace, **{"ArtistId": artist})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Artist Id {artist} not found")
     else:
@@ -67,12 +67,12 @@ async def create_name(data: albumCreate, db: Session = Depends(get_db)) -> Any:
     - **AlbumTitle**: Name of the Album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **data.model_dump())
+    result = dbSelect(db, Album, trace, **data.model_dump())
     if result:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Album {data} already exists")
     else:
         new_album = Album(**data.model_dump())
-        success = dbInsert(db, new_album, echo, trace)
+        success = dbInsert(db, new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -84,12 +84,12 @@ async def update_id(id: int, data: albumCreate, db: Session = Depends(get_db)) -
     - **AlbumTitle**: Name of the Album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **{"Id": id})
+    result = dbSelect(db, Album, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {id} not found")
     else:
         new_album = data.model_dump()
-        success = dbUpdate(db, Album, result[0], new_album, echo, trace)
+        success = dbUpdate(db, Album, result[0], new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -101,12 +101,12 @@ async def update_name(name: str, data: albumUpdate, db: Session = Depends(get_db
     - **AlbumTitle**: Name of the Album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **{"AlbumTitle": name})
+    result = dbSelect(db, Album, trace, **{"AlbumTitle": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {name} not found")
     else:
         new_album = data.model_dump()
-        success = dbUpdate(db, Album, result[0], new_album, echo, trace)
+        success = dbUpdate(db, Album, result[0], new_album, trace)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -119,11 +119,11 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     - **AlbumTitle**: Name of the album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **{"Id": id})
+    result = dbSelect(db, Album, trace, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {id} not found")
     else:
-        success = dbDelete(db, Album, echo, trace, **{"Id": id})
+        success = dbDelete(db, Album, trace, **{"Id": id})
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result
@@ -136,11 +136,11 @@ async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     - **AlbumTitle**: Name of the Album
     - **ArtistId**: Unique Id of Artist
     """
-    result = dbSelect(db, Album, echo, trace, **{"AlbumTitle": name})
+    result = dbSelect(db, Album, trace, **{"AlbumTitle": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Album {name} not found")
     else:
-        success = dbDelete(db, Album, echo, trace, **{"AlbumTitle": name})
+        success = dbDelete(db, Album, trace, **{"AlbumTitle": name})
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result

@@ -2,7 +2,7 @@ import os
 from pytest import fixture
 from src.orm.schema import *
 from src.orm.dbutils import dbKill, dbInit, dbFill
-from src.helper import appcfg, mode, echo, trace, engine, session
+from src.helper import appcfg, mode, trace, engine, session
 
 # Setup testing environment
 @fixture(scope="session")
@@ -22,26 +22,18 @@ def dbBuild(get_db):
     dbInit - Create new database shell - orm/schema
     dbFill - Populate new database
     """
-    session = get_db
-    
     if mode:
-        if os.path.exists(appcfg['DBCFG']['dbName']): 
-            assert dbKill(appcfg['DBCFG']['dbName'], echo) == True
-            assert dbInit(engine, echo) == True
-        else:
-            assert dbInit(engine, echo) == True
-            
-        assert dbFill(session, './sam/csv/import.csv', appcfg['DBCFG']['dbName'], echo, trace) == True
+        dbname = appcfg.get('DBCFG','dblive')
     else:
-        if os.path.exists(appcfg['DBTST']['dbName']): 
-            assert dbKill(appcfg['DBTST']['dbName'], echo) == True
-            assert dbInit(engine, echo) == True
-        else:
-            assert dbInit(engine, echo) == True
-            
-        assert dbFill(session, './sam/csv/import.csv', appcfg['DBTST']['dbName'], echo, trace) == True
+        dbname = appcfg.get('DBCFG','dbtest')
     
-    #yield session
+    if os.path.exists(dbname): 
+        assert dbKill(dbname) == True
+        assert dbInit(engine) == True
+    else:
+        assert dbInit(engine) == True
+            
+    assert dbFill(get_db, './sam/csv/import.csv', dbname, trace) == True
     
 # Define tmp directory
 # TODO tmp directory?
