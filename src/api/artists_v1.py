@@ -1,10 +1,12 @@
-from typing import List, Any
+from typing import Any, List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, Depends, APIRouter, status
-from src.helper import get_db, trace
-from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
-from src.orm.schema import Artist
+
 from src.api.models import artist, artistCreate, artistUpdate
+from src.helper import get_db, trace
+from src.orm.dbfunctions import dbDelete, dbInsert, dbSelect, dbUpdate
+from src.orm.schema import Artist
 
 router = APIRouter()
 
@@ -12,7 +14,8 @@ router = APIRouter()
 async def get_all(db: Session = Depends(get_db)) -> Any:
     """
     **Get All Artists:**
-    - **ArtistName**: Name of the Artist
+    - **Id**: Unique Id of Artist
+    - **Artist Name**: Name of the Artist
     """
     result = dbSelect(db, Artist, trace, **{"Id": "%"})
     if not result:
@@ -24,7 +27,8 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
 async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Get Artist by Artist Id:**
-    - **ArtistName**: Name of the Artist
+    - **Id**: Unique Id of Artist
+    - **Artist Name**: Name of the Artist
     """
     result = dbSelect(db, Artist, trace, **{"Id": id})
     if not result:
@@ -36,7 +40,8 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
 async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Get Artist by Artist Name:**
-    - **ArtistName**: Name of the Artist
+    - **Id**: Unique Id of Artist
+    - **Artist Name**: Name of the Artist
     """
     result = dbSelect(db, Artist, trace, **{"ArtistName": name})
     if not result:
@@ -48,7 +53,8 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
 async def create_name(data: artistCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Create New Artist:**
-    - **ArtistName**: Name of the Artist
+    - **Id**: Unique Id of Artist
+    - **Artist Name**: Name of the Artist
     """
     result = dbSelect(db, Artist, trace, **data.model_dump())
     if result:
@@ -64,7 +70,8 @@ async def create_name(data: artistCreate, db: Session = Depends(get_db)) -> Any:
 async def update_id(id: int, data: artistCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Artist by Artist Id:**
-    - **ArtistName**: Name of the Artist
+    - **Id**: Unique Id of Artist
+    - **Artist Name**: Name of the Artist
     """
     result = dbSelect(db, Artist, trace, **{"Id": id})
     if not result:
@@ -80,7 +87,8 @@ async def update_id(id: int, data: artistCreate, db: Session = Depends(get_db)) 
 async def update_name(name: str, data: artistUpdate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Artist by Artist Name:**
-    - **ArtistName**: Name of the Artist
+    - **Id**: Unique Id of Artist
+    - **Artist Name**: Name of the Artist
     """
     result = dbSelect(db, Artist, trace, **{"ArtistName": name})
     if not result:
@@ -97,7 +105,7 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Artist by Artist Id:**
     - **Id**: Unique Id of Artist
-    - **ArtistName**: Name of the Artist
+    - **Artist Name**: Name of the Artist
     """
     result = dbSelect(db, Artist, trace, **{"Id": id})
     if not result:
@@ -113,7 +121,7 @@ async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Artist(s) by Artist Name:**
     - **Id**: Unique Id of Artist
-    - **ArtistName**: Name of the Artist
+    - **Artist Name**: Name of the Artist
     """
     result = dbSelect(db, Artist, trace, **{"ArtistName": name})
     if not result:

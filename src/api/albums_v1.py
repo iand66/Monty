@@ -1,10 +1,12 @@
-from typing import List, Any
+from typing import Any, List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, Depends, APIRouter, status
+
+from src.api.models import album, albumCreate, albumUpdate
 from src.helper import get_db, trace
-from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
+from src.orm.dbfunctions import dbDelete, dbInsert, dbSelect, dbUpdate
 from src.orm.schema import Album
-from src.api.models import album, albumCreate, albumUpdate, albumDelete
 
 router = APIRouter()
 
@@ -12,8 +14,9 @@ router = APIRouter()
 async def get_all(db: Session = Depends(get_db)) -> Any:
     """
     **Get All Albums:**
-    - **AlbumTitle**: Title of the Album
-    - **ArtistId**: Unique Id of Artist
+    - **Id**: Unique Id of Album
+    - **Album Title**: Title of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **{"Id": "%"})
     if not result:
@@ -25,8 +28,9 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
 async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Get Album by Album Id:**
-    - **AlbumTitle**: Title of the Album
-    - **ArtistId**: Unique Id of Artist
+    - **Id**: Unique Id of Album
+    - **Album Title**: Title of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **{"Id": id})
     if not result:
@@ -38,8 +42,9 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
 async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Get Album(s) by Album Name:**
-    - **AlbumTitle**: Title of the Album
-    - **ArtistId**: Unique Id of Artist
+    - **Id**: Unique Id of Album
+    - **Album Title**: Title of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **{"AlbumTitle": name})
     if not result:
@@ -51,8 +56,9 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
 async def get_artist(artist: int, db: Session = Depends(get_db)) -> Any:
     """
     **Get Album(s) by Artist Id:**
-    - **AlbumTitle**: Title of the Album
-    - **ArtistId**: Unique Id of Artist
+    - **Id**: Unique Id of Album
+    - **Album Title**: Title of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **{"ArtistId": artist})
     if not result:
@@ -64,8 +70,8 @@ async def get_artist(artist: int, db: Session = Depends(get_db)) -> Any:
 async def create_name(data: albumCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Create New Album:**
-    - **AlbumTitle**: Name of the Album
-    - **ArtistId**: Unique Id of Artist
+    - **Album Title**: Name of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **data.model_dump())
     if result:
@@ -81,8 +87,9 @@ async def create_name(data: albumCreate, db: Session = Depends(get_db)) -> Any:
 async def update_id(id: int, data: albumCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Album by Album Id:**
-    - **AlbumTitle**: Name of the Album
-    - **ArtistId**: Unique Id of Artist
+    - **Id**: Unique Id of Album
+    - **Album Title**: Name of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **{"Id": id})
     if not result:
@@ -98,8 +105,9 @@ async def update_id(id: int, data: albumCreate, db: Session = Depends(get_db)) -
 async def update_name(name: str, data: albumUpdate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Album by Album Name:**
-    - **AlbumTitle**: Name of the Album
-    - **ArtistId**: Unique Id of Artist
+    - **Id**: Unique Id of Album
+    - **Album Title**: Title of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **{"AlbumTitle": name})
     if not result:
@@ -111,13 +119,13 @@ async def update_name(name: str, data: albumUpdate, db: Session = Depends(get_db
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
 
-@router.delete("/id/{id:int}", summary='Delete Album by Album Id', response_model=List[albumDelete], status_code=status.HTTP_202_ACCEPTED)
+@router.delete("/id/{id:int}", summary='Delete Album by Album Id', response_model=List[album], status_code=status.HTTP_202_ACCEPTED)
 async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Album by Album Id:**
     - **Id**: Unique Id of Album
-    - **AlbumTitle**: Name of the album
-    - **ArtistId**: Unique Id of Artist
+    - **Album Title**: Title of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **{"Id": id})
     if not result:
@@ -128,13 +136,13 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result
 
-@router.delete("/name/{name:str}", summary='Delete Album(s) by Album Name', response_model=List[albumDelete], status_code=status.HTTP_202_ACCEPTED)
+@router.delete("/name/{name:str}", summary='Delete Album(s) by Album Name', response_model=List[album], status_code=status.HTTP_202_ACCEPTED)
 async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Album by Album Name:**
     - **Id**: Unique Id of Album
-    - **AlbumTitle**: Name of the Album
-    - **ArtistId**: Unique Id of Artist
+    - **Album Title**: Name of the Album
+    - **Artist Id**: Unique Id of Artist
     """
     result = dbSelect(db, Album, trace, **{"AlbumTitle": name})
     if not result:

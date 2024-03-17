@@ -1,19 +1,21 @@
-import os, logging
+import os
 from datetime import datetime
+
 from sqlalchemy.engine.base import Engine
 from sqlalchemy_utils import database_exists
-from src.raw.csvhelper import csvDictReader, csvRead
+
+from src.helper import applog
 from src.orm.dbfunctions import dbBulkInsert
 from src.orm.schema import *
+from src.raw.csvhelper import csvDictReader, csvRead
 
 # CREATE database shell
 def dbInit(engine: Engine) -> bool:
     """
     CREATE database shell
-    :param engine (engine): SQLAlchemy engine instance
+    :param engine (object): SQLAlchemy engine instance
     :return bool: True or False
     """
-    applog = logging.getLogger("AppLog")
     if not database_exists(engine.url):
         Base.metadata.create_all(bind=engine)
         applog.info(f'Database {engine.url.database} created at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
@@ -28,13 +30,12 @@ def dbInit(engine: Engine) -> bool:
 def dbFill(session, seed: str, database: str, trace: bool) -> bool:
     """
     RELOAD sample data
-    :param session (Session): SQLAlchemy session instance
+    :param session (object): SQLAlchemy session instance
     :param seed (str): Fully qualified CSV file of files to import
     :param database (str): Database name to populate
     :param trace (bool): Enable database logging
     :return bool: True or False
     """
-    applog = logging.getLogger("AppLog")
     try:
         filesToImport = csvRead(seed)
         if filesToImport is not None:
@@ -42,8 +43,10 @@ def dbFill(session, seed: str, database: str, trace: bool) -> bool:
                 dataToImport = csvDictReader(seed[0 : seed.rfind("/") + 1] + f[1])
                 tblName = f[1][0 : f[1].rfind(".") - 1]
                 result = dbBulkInsert(session, eval(tblName.title()), dataToImport, trace)
-                # TODO check for dbBulkInsert
-                applog.info(f'Populated {database} {tblName.title()} at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+                if result:
+                    applog.info(f'Populated {database} {tblName.title()} at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+                else:
+                    applog.warning(f'REJECTED {database} {tblName.title()} at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
             return True
     except Exception as e:
         applog.error(f"Seed file of sample files could not be found")
@@ -56,7 +59,6 @@ def dbKill(filename: str) -> bool:
     :param filename (str): Fully qualified path to database name
     :return bool: True or False
     """
-    applog = logging.getLogger("AppLog")
     try:
         if os.path.exists(filename):
             os.remove(filename)

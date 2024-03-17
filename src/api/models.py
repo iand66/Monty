@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from decimal import Decimal
 from datetime import date
 
 """ Albums """
@@ -7,9 +8,8 @@ class albumCreate(BaseModel):
     ArtistId: int
 
 class albumUpdate(albumCreate):
-    AlbumTitle: str | None
-    ArtistId: int  | None
     #DateUpdated: date | None
+    pass
 
 class albumDelete(albumCreate):
     Id: int
@@ -23,12 +23,13 @@ class artistCreate(BaseModel):
     ArtistName: str
 
 class artistUpdate(artistCreate):
-    DateUpdated: date
+    #DateUpdated: date
+    pass
 
 class artistDelete(artistCreate):
     Id: int
 
-class artist(BaseModel):
+class artist(artistCreate):
     Id: int
     DateCreated: date
     
@@ -37,12 +38,13 @@ class genreCreate(BaseModel):
     GenreName: str
 
 class genreUpdate(genreCreate):
-    DateUpdated: date
+    #DateUpdated: date
+    pass
 
 class genreDelete(genreCreate):
     Id: int
 
-class genre(BaseModel):
+class genre(genreCreate):
     Id: int
     DateCreated: date
     
@@ -51,12 +53,13 @@ class mediatypeCreate(BaseModel):
     MediaTypeName: str
 
 class mediatypeUpdate(mediatypeCreate):
-    DateUpdated: date
+    #DateUpdated: date
+    pass
 
 class mediatypeDelete(mediatypeCreate):
     Id: int
 
-class mediatype(BaseModel):
+class mediatype(mediatypeCreate):
     Id: int
     DateCreated: date
 
@@ -65,12 +68,13 @@ class playlistCreate(BaseModel):
     PlaylistName: str
 
 class playlistUpdate(playlistCreate):
-    DateUpdated: date
+    #DateUpdated: date
+    pass
 
 class playlistDelete(playlistCreate):
     Id: int
 
-class playlist(BaseModel):
+class playlist(playlistCreate):
     Id: int
     DateCreated: date
 
@@ -86,7 +90,7 @@ class playlist(BaseModel):
 #     Postalcode: str
 #     Phone: str
 #     Fax: str
-#     Email: str  # TODO Valid Email?
+#     Email: str 
 #     SupportRepId: str
 
 # class employee(Base):
@@ -95,8 +99,8 @@ class playlist(BaseModel):
 #     Firstname: str
 #     Title: str
 #     ReportsTo: int
-#     Birthdate: str  # TODO Date
-#     Hiredate: str  # TODO Date
+#     Birthdate: str  
+#     Hiredate: str 
 #     Address: str
 #     City: str
 #     State: str
@@ -104,7 +108,7 @@ class playlist(BaseModel):
 #     Postalcode: str
 #     Phone: str
 #     Fax: str
-#     Email: str  # TODO Valid Email?
+#     Email: str  
 
 # class invoice(Base):
 #     """ Invoices """
@@ -123,19 +127,28 @@ class playlist(BaseModel):
 #     TrackId: int
 #     UnitPrice: Decimal
 #     Quantity: int
+    
+""" Tracks per Album """
+class trackCreate(BaseModel):
+    TrackName: str
+    AlbumId: int
+    MediaTypeId: int
+    GenreId: int
+    Composer: str
+    Milliseconds: int
+    Bytes: int
+    UnitPrice: float
 
-# class track(Base):
-#     """ Tracks per Album """
-#     TrackName: str
-#     AlbumId: int
-#     MediaTypeId: int
-#     GenreId: int
-#     Composer: str
-#     Milliseconds: int
-#     Bytes: int
-#     UnitPrice: Decimal
+class trackUpdate(trackCreate):
+    #DateUpdated: date
+    pass
 
+class trackDelete(trackCreate):
+    Id: int
 
+class track(trackCreate):
+    Id: int
+    DateCreated: date
 
 # class playlisttrack(Base):
 #     """ Playlist Tracks """

@@ -7,20 +7,20 @@ from src.main import app
 
 client = TestClient(app)
 
-# GET All Genres - PASS
+# GET All Tracks - PASS
 @mark.order(1)
 @mark.parametrize("tablename, version, record", 
-    [param("genres", "v1", 25, id="Genres")])
+    [param("tracks", "v1", 3503, id="Tracks")])
 def test_getall(tablename: str, version: str, record: int):
     response = client.get(f"/{tablename}/{version}")
     print(f"Endpoint = /{tablename}/{version} records {record}")
     assert response.status_code == 200
     assert len(response.json()) == record
 
-# GET RANDOM Genre by Genre Id - PASS
+# GET RANDOM Track by Track Id - PASS
 @mark.order(2)
 @mark.parametrize("tablename, version, record", 
-    [param("genres", "v1", 25, id="Genres")])
+    [param("tracks", "v1", 3503, id="Tracks")])
 def test_getid_pass(tablename: str, version: str, record: int):
     x = randint(1, record)
     response = client.get(f"/{tablename}/{version}/id/{x}")
@@ -28,134 +28,190 @@ def test_getid_pass(tablename: str, version: str, record: int):
     assert response.status_code == 200
     assert len(response.json()) == 1
 
-# GET Genres by Id - FAIL
+# GET Tracks by Id - FAIL
 @mark.order(3)
 @mark.parametrize("tablename, version, record", 
-    [param("genres", "v1", 99, id="Genres")])
+    [param("tracks", "v1", 9999, id="Tracks")])
 def test_getid_fail(tablename: str, version: str, record: int):
     response = client.get(f"/{tablename}/{version}/id/{record}")
     print(f"Endpoint = /{tablename}/{version}/id/{record}")
     assert response.status_code == 404
     
-# GET Genres by Name - PASS
+# GET Tracks by Name - PASS
 @mark.order(7)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "Test Genre%", id="Genres")])
+    [param("tracks", "v1", "Test Track%", id="Tracks")])
 def test_getname_pass(tablename: str, version: str, name: str):
     response = client.get(f"/{tablename}/{version}/name/{name}")
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 200
 
-# GET Genres by Name - FAIL
+# GET Tracks by Name - FAIL
 @mark.order(4)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "Not Found", id="Genres")])
+    [param("tracks", "v1", "Not Found", id="Tracks")])
 def test_getname_fail(tablename: str, version: str, name: str):
     response = client.get(f"/{tablename}/{version}/name/{name}")
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 404
    
-# POST Genre by Name - PASS
+# POST Track by Name - PASS
 @mark.order(5)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "name", id="Genres")])
+    [param("tracks", "v1", "name", id="Tracks")])
 def test_postname_pass1(tablename: str, version: str, name: str):
-    data = {"GenreName":"Test Genre 1"}
+    data = {"TrackName": "Test Track 1",
+            "AlbumId": 1,
+            "MediaTypeId": 1,
+            "GenreId": 12,
+            "Composer": "Some Random Dude",
+            "Milliseconds": 123456,
+            "Bytes": 9876543,
+            "UnitPrice": 0.99
+            }
     response = client.post(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 201
 
-# POST Genre by Name - PASS
+# POST Track by Name - PASS
 @mark.order(6)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "name", id="Genres")])
+    [param("tracks", "v1", "name", id="Tracks")])
 def test_postname_pass2(tablename: str, version: str, name: str):
-    data = {"GenreName":"Test Genre 2"}
+    data = {"TrackName": "Test Track 2",
+        "AlbumId": 1,
+        "MediaTypeId": 1,
+        "GenreId": 12,
+        "Composer": "Some Random Dude",
+        "Milliseconds": 123456,
+        "Bytes": 9876543,
+        "UnitPrice": 1.99
+        }
     response = client.post(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 201
 
-# POST Genre by Name - FAIL
+# POST Track by Name - FAIL
 @mark.order(8)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "name", id="Genres")])
+    [param("tracks", "v1", "name", id="Tracks")])
 def test_postname_fail(tablename: str, version: str, name: str):
-    data = {"GenreName":"Test Genre 1"}
+    data = {"TrackName": "Test Track 1",
+            "AlbumId": 1,
+            "MediaTypeId": 1,
+            "GenreId": 12,
+            "Composer": "Some Random Dude",
+            "Milliseconds": 123456,
+            "Bytes": 9876543,
+            "UnitPrice": 0.99
+            }
     response = client.post(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 409
 
-# PUT Genre by Id - PASS
+# PUT Track by Id - PASS
 @mark.order(9)
 @mark.parametrize("tablename, version, record", 
-    [param("genres", "v1", 26, id="Genres")])
+    [param("tracks", "v1", 3504, id="Tracks")])
 def test_putid_pass(tablename: str, version: str, record: int):
-    data = {"GenreName":"Test Genre 3"}
+    data = {"TrackName": "Test Track 3",
+            "AlbumId": 1,
+            "MediaTypeId": 1,
+            "GenreId": 12,
+            "Composer": "Some Random Dude",
+            "Milliseconds": 123456,
+            "Bytes": 9876543,
+            "UnitPrice": 0.99
+            }
     response = client.put(f"/{tablename}/{version}/id/{record}", json=data)
     print(f"Endpoint = /{tablename}/{version}/id/{record}")
     assert response.status_code == 201
     
-# PUT Genre by Id - FAIL
+# PUT Track by Id - FAIL
 @mark.order(10)
 @mark.parametrize("tablename, version, record", 
-    [param("genres", "v1", 99, id="Genres")])
+    [param("tracks", "v1", 9999, id="Tracks")])
 def test_putid_fail(tablename: str, version: str, record: int):
-    data = {"GenreName":"Test Genre 1"}
+    data = {"TrackName": "Test Track 3",
+            "AlbumId": 1,
+            "MediaTypeId": 1,
+            "GenreId": 12,
+            "Composer": "Some Random Dude",
+            "Milliseconds": 123456,
+            "Bytes": 9876543,
+            "UnitPrice": 0.99
+            }
     response = client.put(f"/{tablename}/{version}/id/{record}", json=data)
     print(f"Endpoint = /{tablename}/{version}/id/{record}")
     assert response.status_code == 404
     
-# PUT Genre by Name - PASS
+# PUT Track by Name - PASS
 @mark.order(11)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "Test Genre 3", id="Genres")])
+    [param("tracks", "v1", "Test Track 3", id="Tracks")])
 def test_putname_pass(tablename: str, version: str, name: str):
-    data = {"GenreName":"Test Genre 1"}
+    data = {"TrackName": "Test Track 1",
+            "AlbumId": 1,
+            "MediaTypeId": 1,
+            "GenreId": 12,
+            "Composer": "Some Random Dude",
+            "Milliseconds": 123456,
+            "Bytes": 9876543,
+            "UnitPrice": 0.99
+            }
     response = client.put(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 201
 
-# PUT Genre by Name - FAIL
+# PUT Track by Name - FAIL
 @mark.order(12)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "Test Genre 3", id="Genres")])
+    [param("tracks", "v1", "Test Track 3", id="Tracks")])
 def test_putname_fail(tablename: str, version: str, name: str):
-    data = {"GenreName":"Test Genre 1","Artistid":999}
+    data = {"TrackName": "Test Track 3",
+            "AlbumId": 1,
+            "MediaTypeId": 1,
+            "GenreId": 12,
+            "Composer": "Some Random Dude",
+            "Milliseconds": 123456,
+            "Bytes": 9876543,
+            "UnitPrice": 0.99
+            }
     response = client.put(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 404
 
-# DELETE Genre by Id - PASS
+# DELETE Track by Id - PASS
 @mark.order(13)
 @mark.parametrize("tablename, version, record", 
-    [param("genres", "v1" , 26, id="Genres")])
+    [param("tracks", "v1" , 3504, id="Tracks")])
 def test_deleteid_pass(tablename: str, version: str, record: int):
     response = client.delete(f"/{tablename}/{version}/id/{record}")
     print(f"Endpoint = /{tablename}/{version}/id/{record}")
     assert response.status_code == 202
 
-# DELETE Genre by Id - FAIL
+# DELETE Track by Id - FAIL
 @mark.order(14)
 @mark.parametrize("tablename, version, record", 
-    [param("genres", "v1", 26, id="Genres")])
+    [param("tracks", "v1", 3504, id="Tracks")])
 def test_deleteid_fail(tablename: str, version: str, record: int):
     response = client.delete(f"/{tablename}/{version}/id/{record}")
     print(f"Endpoint = /{tablename}/{version}/id/{record}")
     assert response.status_code == 404
 
-# DELETE Genre by Name - PASS
+# DELETE Track by Name - PASS
 @mark.order(15)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "Test Genre%", id="Genres")])
+    [param("tracks", "v1", "Test Track%", id="Tracks")])
 def test_deletename_pass(tablename: str, version: str, name: str):
     response = client.delete(f"/{tablename}/{version}/name/{name}")
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 202
 
-# DELETE Genre by Name - FAIL
+# DELETE Track by Name - FAIL
 @mark.order(16)
 @mark.parametrize("tablename, version, name", 
-    [param("genres", "v1", "Test Genre%", id="Genres")])
+    [param("tracks", "v1", "Test Track%", id="Tracks")])
 def test_deletename_fail(tablename: str, version: str, name: str):
     response = client.delete(f"/{tablename}/{version}/name/{name}")
     print(f"Endpoint = /{tablename}/{version}/name/{name}")

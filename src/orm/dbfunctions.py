@@ -1,5 +1,6 @@
-import logging
 from sqlalchemy import exc
+
+from src.helper import applog, datlog
 from src.orm.schema import Base
 
 # RETURN all attributes from a SQLAlchemy object.
@@ -25,13 +26,11 @@ def dbBulkInsert(session, table: str, data: Base, trace: bool) -> int:
     :param trace (bool): Enable database logging
     :return int: Number of records inserted
     """
-    applog = logging.getLogger("AppLog")
-    datlog = logging.getLogger("DatLog")
     try:
         session.bulk_insert_mappings(table, data)
         session.commit()
         if trace:
-            datlog.info(f"{table.__tablename__} {data}")
+            datlog.info(f"Added {data} to {table.__tablename__} ")
         return len(data)
     except Exception as e:
         session.rollback()
@@ -49,8 +48,6 @@ def dbInsert(session, data: Base, trace: bool) -> bool:
     :param trace (bool): Enable database logging
     :return int: RowId of inserted record
     """
-    applog = logging.getLogger("AppLog")
-    datlog = logging.getLogger("DatLog")
     try:
         session.add(data)
         session.commit()
@@ -70,13 +67,11 @@ def dbSelect(session, table: Base, trace: bool, **kwargs) -> list:
     """
     SELECT query on the given table with optional filtering
     :param session (session): SQLAlchemy session object
-    :param table (Base): Database tablename
+    :param table (object): Database tablename
     :param trace (bool): Enable database logging
     :param kwargs (dict): Key-value pairs representing filter conditions (column_name=value)
     :return list: List of model instances if found, empty list otherwise.
     """
-    applog = logging.getLogger("AppLog")
-    datlog = logging.getLogger("DatLog")
     data = []
     try:
         query = session.query(table)
@@ -103,14 +98,12 @@ def dbUpdate(session, table: Base, filter: dict, update: dict, trace: bool,) -> 
     """
     UPDATE records in the database based on the given filter condition(s)
     :param session (session): SQLAlchemy session object
-    :param table (Base): SQLAlchemy model class
+    :param table (object): SQLAlchemy model class
     :param filter_kwargs (dict): Key-value pairs filter conditions (column_name=value)
     :param update_kwargs (dict): Key-value pairs update values (column_name=new_value)
     :param trace (bool): Enable database logging
     :return int: Number of updated records
     """
-    applog = logging.getLogger("AppLog")
-    datlog = logging.getLogger("DatLog")
     try:
         query = session.query(table)
         for key, value in filter.items():
@@ -134,13 +127,11 @@ def dbDelete(session, table: Base, trace: bool, **kwargs) -> bool:
     """
     DELETE records from a database table
     :param session (session): SQLAlchemy session object
-    :param table (Base): Database tablename
+    :param table (object): Database tablename
     :param trace (bool): Enable database logging
     :param kwargs (dict): Key-value pairs representing filter conditions (column_name=value)
     :return int: Number of records deleted
     """
-    applog = logging.getLogger("AppLog")
-    datlog = logging.getLogger("DatLog")
     try:
         query = session.query(table)
         for key, value in kwargs.items():
@@ -150,9 +141,8 @@ def dbDelete(session, table: Base, trace: bool, **kwargs) -> bool:
                 query = query.filter(getattr(table, key) == (value))
         deleted = query.delete()
         session.commit()
-        if deleted > 0:
-            if trace:
-                datlog.info(f"Deleted {deleted} from {table.__tablename__}")
+        if trace and deleted > 0:
+            datlog.info(f"Deleted {deleted} from {table.__tablename__}")
             return True
         else:
             return False

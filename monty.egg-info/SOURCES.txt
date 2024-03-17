@@ -4,6 +4,7 @@ monty.egg-info/SOURCES.txt
 monty.egg-info/dependency_links.txt
 monty.egg-info/top_level.txt
 src/__init__.py
+src/helper.py
 src/main.py
 src/api/__init__.py
 src/api/albums_v1.py
@@ -12,9 +13,8 @@ src/api/genres_v1.py
 src/api/mediatype_v1.py
 src/api/models.py
 src/api/playlists_v1.py
+src/api/tracks_v1.py
 src/gui/__init__.py
-src/lib/__init__.py
-src/lib/apputils.py
 src/orm/__init__.py
 src/orm/dbfunctions.py
 src/orm/dbutils.py

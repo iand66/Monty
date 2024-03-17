@@ -1,10 +1,12 @@
-from typing import List, Any
+from typing import Any, List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, Depends, APIRouter, status
-from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
-from src.helper import get_db, trace
-from src.orm.schema import Genre
+
 from src.api.models import genre, genreCreate, genreUpdate
+from src.helper import get_db, trace
+from src.orm.dbfunctions import dbDelete, dbInsert, dbSelect, dbUpdate
+from src.orm.schema import Genre
 
 router = APIRouter()
 
@@ -12,11 +14,12 @@ router = APIRouter()
 async def get_all(db: Session = Depends(get_db)) -> Any:
     """
     **Get All Genres:**
-    - **GenreName**: Name of the Genre
+    - **Id**: Unique Id of Genre
+    - **Genre Name**: Name of the Genre
     """
     result = dbSelect(db, Genre,trace, **{"Id": "%"})
     if not result:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No artists found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No genres found")
     else:
         return result
 
@@ -24,7 +27,8 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
 async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Get Genre by Genre Id:**
-    - **GenreName**: Name of the Genre
+    - **Id**: Unique Id of Genre
+    - **Genre Name**: Name of the Genre
     """
     result = dbSelect(db, Genre, trace, **{"Id": id})
     if not result:
@@ -36,7 +40,8 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
 async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Get Genre by Genre Name:**
-    - **GenreName**: Name of the Genre
+    - **Id**: Unique Id of Genre
+    - **Genre Name**: Name of the Genre
     """
     result = dbSelect(db, Genre, trace, **{"GenreName": name})
     if not result:
@@ -48,7 +53,8 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
 async def create_name(data: genreCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Create New Genre:**
-    - **GenreName**: Name of the Genre
+    - **Id**: Unique Id of Genre
+    - **Genre Name**: Name of the Genre
     """
     result = dbSelect(db, Genre, trace, **data.model_dump())
     if result:
@@ -64,7 +70,8 @@ async def create_name(data: genreCreate, db: Session = Depends(get_db)) -> Any:
 async def update_id(id: int, data: genreCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Genre by Genre Id:**
-    - **GenreName**: Name of the Genre
+    - **Id**: Unique Id of Genre
+    - **Genre Name**: Name of the Genre
     """
     result = dbSelect(db, Genre, trace, **{"Id": id})
     if not result:
@@ -80,7 +87,8 @@ async def update_id(id: int, data: genreCreate, db: Session = Depends(get_db)) -
 async def update_name(name: str, data: genreUpdate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Genre by Genre Name:**
-    - **GenreName**: Name of the Genre
+    - **Id**: Unique Id of Genre
+    - **Genre Name**: Name of the Genre
     """
     result = dbSelect(db, Genre, trace, **{"GenreName": name})
     if not result:
@@ -97,7 +105,7 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Genre by Genre Id:**
     - **Id**: Unique Id of Genre
-    - **GenreName**: Name of the Genre
+    - **Genre Name**: Name of the Genre
     """
     result = dbSelect(db, Genre, trace, **{"Id": id})
     if not result:
@@ -113,7 +121,7 @@ async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Genre(s) by Genre Name:**
     - **Id**: Unique Id of Genre
-    - **GenreName**: Name of the Genre
+    - **Genre Name**: Name of the Genre
     """
     result = dbSelect(db, Genre, trace, **{"GenreName": name})
     if not result:

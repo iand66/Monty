@@ -1,4 +1,6 @@
-import csv, logging
+import csv
+
+from src.helper import applog
 
 def csvRead(filename:str) -> list:
     """
@@ -6,7 +8,6 @@ def csvRead(filename:str) -> list:
     :param filename (str): Fully qualified path to filename
     :return list: List of read lines
     """
-    applog = logging.getLogger('AppLog')
     data = []
     try:
         with open(filename, encoding='utf-8') as f:
@@ -25,7 +26,6 @@ def csvWrite(filename:str, data:list) -> bool:
     :parma data (list): Data to write
     :return bool: True or exception
     """
-    applog = logging.getLogger('AppLog')
     try:
         with open(filename,'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
@@ -42,7 +42,6 @@ def csvDictReader(filename:str) -> list:
     :param filename (str): Fully qualified path to filename
     :return list: List of read lines 
     """
-    applog = logging.getLogger('AppLog')
     data = []
     try:
         with open(filename, encoding='utf-8') as f:
@@ -61,7 +60,6 @@ def csvDictWriter(filename:str, data:dict) -> bool:
     :parma data (dict): Data to write
     :return bool (bool): True or exception
     """
-    applog = logging.getLogger('AppLog')
     try:
         with open(filename, 'w', newline='', encoding='utf8') as f:
             fieldnames = data[0]

@@ -1,10 +1,12 @@
 import os
-from pytest import fixture
-from src.orm.schema import *
-from src.orm.dbutils import dbKill, dbInit, dbFill
-from src.helper import appcfg, mode, trace, engine, session
 
-# Setup testing environment
+from pytest import fixture
+
+from src.helper import appcfg, engine, mode, session, trace
+from src.orm.dbutils import dbFill, dbInit, dbKill
+from src.orm.schema import *
+
+# Get testing database name
 @fixture(scope="session")
 def get_db():
     db = session()
@@ -14,7 +16,7 @@ def get_db():
     finally:
         db.close()
 
-# Setup clean database    
+# Setup testing environment
 @fixture(scope="session")
 def dbBuild(get_db):
     """

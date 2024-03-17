@@ -1,10 +1,12 @@
-from typing import List, Any
+from typing import Any, List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, Depends, APIRouter, status
+
+from src.api.models import mediatype, mediatypeCreate, mediatypeUpdate
 from src.helper import get_db, trace
-from src.orm.dbfunctions import dbSelect, dbInsert, dbDelete, dbUpdate
+from src.orm.dbfunctions import dbDelete, dbInsert, dbSelect, dbUpdate
 from src.orm.schema import Mediatype
-from src.api.models import mediatype, mediatypeCreate, mediatypeUpdate, mediatypeDelete
 
 router = APIRouter()
 
@@ -12,11 +14,12 @@ router = APIRouter()
 async def get_all(db: Session = Depends(get_db)) -> Any:
     """
     **Get All Mediatypes:**
-    - **MediaTypeName**: Name of the Mediatype
+    - **Id**: Unique Id of Mediatype
+    - **MediaType Name**: Name of the Mediatype
     """
     result = dbSelect(db, Mediatype, trace, **{"Id": "%"})
     if not result:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No artists found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No mediatype found")
     else:
         return result
 
@@ -24,7 +27,8 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
 async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Get Mediatype by Mediatype Id:**
-    - **MediaTypeName**: Name of the Mediatype
+    - **Id**: Unique Id of Mediatype
+    - **MediaType Name**: Name of the Mediatype
     """
     result = dbSelect(db, Mediatype, trace, **{"Id": id})
     if not result:
@@ -36,7 +40,8 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
 async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Get Mediatype by Mediatype Name:**
-    - **MediaTypeName**: Name of the Mediatype
+    - **Id**: Unique Id of Mediatype
+    - **MediaType Name**: Name of the Mediatype
     """
     result = dbSelect(db, Mediatype, trace, **{"MediaTypeName": name})
     if not result:
@@ -48,7 +53,8 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
 async def create_name(data: mediatypeCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Create New Mediatype:**
-    - **MediaTypeName**: Name of the Mediatype
+    - **Id**: Unique Id of Mediatype
+    - **MediaType Name**: Name of the Mediatype
     """
     result = dbSelect(db, Mediatype, trace, **data.model_dump())
     if result:
@@ -64,7 +70,8 @@ async def create_name(data: mediatypeCreate, db: Session = Depends(get_db)) -> A
 async def update_id(id: int, data: mediatypeCreate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Mediatype by Mediatype Id:**
-    - **MediaTypeName**: Name of the Mediatype
+    - **Id**: Unique Id of Mediatype
+    - **MediaType Name**: Name of the Mediatype
     """
     result = dbSelect(db, Mediatype, trace, **{"Id": id})
     if not result:
@@ -80,7 +87,8 @@ async def update_id(id: int, data: mediatypeCreate, db: Session = Depends(get_db
 async def update_name(name: str, data: mediatypeUpdate, db: Session = Depends(get_db)) -> Any:
     """
     **Update Mediatype by Mediatype Name:**
-    - **MediaTypeName**: Name of the Mediatype
+    - **Id**: Unique Id of Mediatype
+    - **MediaType Name**: Name of the Mediatype
     """
     result = dbSelect(db, Mediatype, trace, **{"MediaTypeName": name})
     if not result:
@@ -97,7 +105,7 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Mediatype by Mediatype Id:**
     - **Id**: Unique Id of Mediatype
-    - **MediaTypeName**: Name of the Mediatype
+    - **MediaType Name**: Name of the Mediatype
     """
     result = dbSelect(db, Mediatype, trace, **{"Id": id})
     if not result:
@@ -113,7 +121,7 @@ async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     """
     **Delete Mediatype(s) by Mediatype Name:**
     - **Id**: Unique Id of Mediatype
-    - **MediaTypeName**: Name of the Mediatype
+    - **MediaType Name**: Name of the Mediatype
     """
     result = dbSelect(db, Mediatype, trace, **{"MediaTypeName": name})
     if not result:
