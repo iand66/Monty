@@ -29,20 +29,14 @@ class Artist(Base):
     DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     Albums = relationship("Album")
 
-class Genre(Base):
-    """ Musical Styles """
-    __tablename__ = "Genres"
+class Currency(Base):
+    """ ISO Currency Codes """
+    __tablename__ = "Currencies"
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
-    GenreName: Mapped[str] = mapped_column(String(20), nullable=False, unique=True)
-    DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
-    DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
-    Tracks = relationship("Track")
-
-class Mediatype(Base):
-    """ MediaType of Track """
-    __tablename__ = "MediaTypes"
-    Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
-    MediaTypeName: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+    Code: Mapped[str] = mapped_column(String(3), nullable=False, unique=True)
+    Number: Mapped[int] = mapped_column(nullable=False, unique=True)
+    Decimals: Mapped[int] = mapped_column(nullable=False)
+    Description: Mapped[str] = mapped_column(String(35), nullable=False)
     DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     Tracks = relationship("Track")
@@ -59,8 +53,12 @@ class Customer(Base):
     State: Mapped[str] = mapped_column(String(10), nullable=True)
     Country: Mapped[str] = mapped_column(String(15), nullable=True)
     Postalcode: Mapped[str] = mapped_column(String(10), nullable=True)
+    BillingAddress: Mapped[str] = mapped_column(String(50), nullable=True)
+    BillingCity: Mapped[str] = mapped_column(String(25), nullable=True)
+    BillingState: Mapped[str] = mapped_column(String(10), nullable=True)
+    BillingCountry: Mapped[str] = mapped_column(String(20), nullable=True)
+    BillingPostalcode: Mapped[Optional[str]] = mapped_column(String(10), nullable=True)
     Phone: Mapped[str] = mapped_column(String(20), nullable=True)
-    Fax: Mapped[str] = mapped_column(String(20), nullable=True)
     Email: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
     SupportRepId: Mapped[int] = mapped_column(ForeignKey("Employees.Id"), index=True)
     DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
@@ -83,12 +81,20 @@ class Employee(Base):
     Country: Mapped[str] = mapped_column(String(10), nullable=True)
     Postalcode: Mapped[str] = mapped_column(String(10), nullable=True)
     Phone: Mapped[str] = mapped_column(String(20), nullable=True)
-    Fax: Mapped[str] = mapped_column(String(20), nullable=True)
     Email: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
     DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     SupportReps = relationship("Customer")
     Employees = relationship("Employee")
+
+class Genre(Base):
+    """ Musical Styles """
+    __tablename__ = "Genres"
+    Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    GenreName: Mapped[str] = mapped_column(String(20), nullable=False, unique=True)
+    DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
+    DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
+    Tracks = relationship("Track")
 
 class Invoice(Base):
     """ Invoices """
@@ -96,11 +102,6 @@ class Invoice(Base):
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     CustomerId: Mapped[int] = mapped_column(ForeignKey("Customers.Id"), nullable=False, index=True)
     InvoiceDate: Mapped[Date] = mapped_column(String(16), nullable=True)
-    BillingAddress: Mapped[str] = mapped_column(String(50), nullable=True)
-    BillingCity: Mapped[str] = mapped_column(String(25), nullable=True)
-    BillingState: Mapped[str] = mapped_column(String(10), nullable=True)
-    BillingCountry: Mapped[str] = mapped_column(String(20), nullable=True)
-    BillingPostalcode: Mapped[Optional[str]] = mapped_column(String(10), nullable=True)
     Total: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
     DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
@@ -117,6 +118,15 @@ class Invoiceitem(Base):
     DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
 
+class Mediatype(Base):
+    """ MediaType of Track """
+    __tablename__ = "MediaTypes"
+    Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    MediaTypeName: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+    DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
+    DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
+    Tracks = relationship("Track")
+
 class Track(Base):
     """ Available Tracks per Album """
     __tablename__ = "Tracks"
@@ -129,6 +139,7 @@ class Track(Base):
     Milliseconds: Mapped[int] = mapped_column(nullable=True)
     Bytes: Mapped[int] = mapped_column(nullable=True)
     UnitPrice: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
+    CurrencyId: Mapped[int] = mapped_column(ForeignKey("Currencies.Id"), nullable=False, index=True)
     DateCreated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     DateUpdated: Mapped[Date] = mapped_column(String(16), nullable=False, default=date.today().strftime("%Y-%m-%d"))
     PlaylistTracks = relationship("Playlisttrack")

@@ -1,6 +1,7 @@
 import os
 
 from pytest import fixture
+from sqlalchemy import text
 
 from src.helper import appcfg, engine, mode, session, trace
 from src.orm.dbutils import dbFill, dbInit, dbKill
@@ -10,7 +11,6 @@ from src.orm.schema import *
 @fixture(scope="session")
 def get_db():
     db = session()
-
     try:
         yield db
     finally:
@@ -35,14 +35,19 @@ def dbBuild(get_db):
     else:
         assert dbInit(engine) == True
             
+    if get_db.bind.name == 'sqlite':
+        get_db.execute(text('pragma foreign_keys=on'))
+    
     assert dbFill(get_db, './sam/csv/import.csv', dbname, trace) == True
     
 # Define tmp directory
 # TODO tmp directory?
 @fixture(scope="session")
-def temp(tmp_path_factory):
+def temp():
     """
     Create tempdir for CSV I/O tests
     """
-    tempdir = tmp_path_factory.mktemp('tmp')
-    return tempdir
+    if not os.path.exists('./sam/tmp'):
+        os.makedirs('./sam/tmp')
+    tmpdir = './sam/tmp'
+    return tmpdir

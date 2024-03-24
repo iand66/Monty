@@ -30,7 +30,7 @@ def dbBulkInsert(session, table: str, data: Base, trace: bool) -> int:
         session.bulk_insert_mappings(table, data)
         session.commit()
         if trace:
-            datlog.info(f"Added {data} to {table.__tablename__} ")
+            datlog.info(f"Added {table.__tablename__} {data}")
         return len(data)
     except Exception as e:
         session.rollback()
@@ -141,8 +141,9 @@ def dbDelete(session, table: Base, trace: bool, **kwargs) -> bool:
                 query = query.filter(getattr(table, key) == (value))
         deleted = query.delete()
         session.commit()
-        if trace and deleted > 0:
-            datlog.info(f"Deleted {deleted} from {table.__tablename__}")
+        if deleted > 0:
+            if trace:
+                datlog.info(f"Deleted {deleted} from {table.__tablename__}")
             return True
         else:
             return False

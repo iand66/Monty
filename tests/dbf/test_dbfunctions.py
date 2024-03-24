@@ -16,6 +16,7 @@ def test_dbBuild(dbBuild):
 @mark.parametrize('tablename, record',
     [param(Album, 347, id='Album'),
     param(Artist, 275, id='Artist'),
+    param(Currency, 152, id='Currency'),
     param(Customer, 59, id='Customer'),
     param(Employee, 8, id='Employee'),   
     param(Genre, 25, id='Genres'),
@@ -35,12 +36,13 @@ def test_dbSelect(get_db, tablename, record):
 @mark.parametrize('tablename, data',
     [param(Artist, {'ArtistName':'Test Artist'}, id='Artist'),
     param(Album, {'AlbumTitle':'Test Album','ArtistId':'276'}, id='Album'),
+    param(Currency,{'Code':'XXX','Number':999,'Decimals':2,'Description':'Test Currency'}, id='Currency'),
     param(Customer, {'Firstname':'Test','Lastname':'User','Email':'test@somewhere.com','SupportRepId':'1'}, id='Customer'),
     param(Employee, {'Lastname':'Employee','Firstname':'Test','Title':'Temporary Employee','ReportsTo':'1','Email':'test@somewhere.com'}, id='Employee'),
     param(Genre, {'GenreName':'Unbearable'}, id='Genres'),
     param(Mediatype, {'MediaTypeName':'Unrecognised Format'}, id='Mediatype'),
     param(Playlist, {'PlaylistName':'Unbearable'}, id='Playlist'),
-    param(Track, {'TrackName':'Just Don\'t Do It!','AlbumId':'348','MediaTypeId':'6','GenreId':'26','UnitPrice':'0.01'}, id='Track'),
+    param(Track, {'TrackName':'Just Don\'t Do It!','AlbumId':'348','MediaTypeId':'6','GenreId':'26','UnitPrice':'0.01','CurrencyId':26}, id='Track'),
     param(Playlisttrack, {'PlaylistId':'15','TrackId':'3504'}, id='Playlisttrack'),
     param(Invoice, {'CustomerId':'60','InvoiceDate':date.today().strftime("%d/%m/%Y %H:%M"),'Total':'0.01'}, id='Invoice'),
     param(Invoiceitem, {'InvoiceId':'413','TrackId':'3504','UnitPrice':'0.01','Quantity':'1'}, id='Invoiceitem')]   
@@ -54,6 +56,7 @@ def test_dbInsert(get_db, tablename, data):
 @mark.parametrize('tablename, f_data, t_data',
     [param(Artist, {'ArtistName':'Test Artist'}, {'ArtistName':'Another Test Artist'}, id='Artist'),
     param(Album, {'AlbumTitle':'Test Album'}, {'AlbumTitle':'Another Test Album'}, id='Album'),
+    param(Currency,{'Code':'XXX'}, {'Code':'ZZZ'}, id='Currency'),
     param(Customer, {'Email':'test@somewhere.com'},{'Company':'ACME Inc'}, id='Customer'),
     param(Employee, {'Email':'test@somewhere.com'}, {'ReportsTo':'2'}, id='Employee'),
     param(Genre, {'GenreName':'Unbearable'}, {'GenreName':'Grotesque'}, id='Genres'),
@@ -79,6 +82,7 @@ def test_dbUpdate(get_db, tablename, f_data, t_data):
     param(Genre, {'GenreName':'Grotesque'}, id='Genres'),
     param(Employee, {'Email':'test@somewhere.com'}, id='Employee'),
     param(Customer, {'Email':'test@somewhere.com'}, id='Customer'),
+    param(Currency, {'Code':'ZZZ'}, id='Currency'),
     param(Album, {'AlbumTitle':'Another Test Album'}, id='Album'),
     param(Artist, {'ArtistName':'Another Test Artist'}, id='Artist')]   
     )

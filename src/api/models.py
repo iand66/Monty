@@ -138,6 +138,7 @@ class trackCreate(BaseModel):
     Milliseconds: int
     Bytes: int
     UnitPrice: float
+    Currency: str
 
 class trackUpdate(trackCreate):
     #DateUpdated: date

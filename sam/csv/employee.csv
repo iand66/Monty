@@ -1,0 +1,9 @@
+Id,Lastname,Firstname,Title,ReportsTo,Birthdate,Hiredate,Address,City,State,Country,Postalcode,Phone,Email
+1,Adams,Andrew,General Manager,1,18/02/1962,14/08/2002,11120 Jasper Ave NW,Edmonton,AB,Canada,T5K 2N1,+1 (780) 428-9482,andrew@chinookcorp.com
+2,Edwards,Nancy,Sales Manager,1,08/12/1958,01/05/2002,825 8 Ave SW,Calgary,AB,Canada,T2P 2T3,+1 (403) 262-3443,nancy@chinookcorp.com
+3,Peacock,Jane,Sales Support Agent,2,29/08/1973,01/04/2002,1111 6 Ave SW,Calgary,AB,Canada,T2P 5M5,+1 (403) 262-3443,jane@chinookcorp.com
+4,Park,Margaret,Sales Support Agent,2,19/09/1947,03/05/2003,683 10 Street SW,Calgary,AB,Canada,T2P 5G3,+1 (403) 263-4423,margaret@chinookcorp.com
+5,Johnson,Steve,Sales Support Agent,2,03/03/1965,17/10/2003,7727B 41 Ave,Calgary,AB,Canada,T3B 1Y7,+1 (780) 836-9987,steve@chinookcorp.com
+6,Mitchell,Michael,IT Manager,1,01/07/1973,17/10/2003,5827 Bowness Road NW,Calgary,AB,Canada,T3B 0C5,+1 (403) 246-9887,michael@chinookcorp.com
+7,King,Robert,IT Staff,6,29/05/1970,02/01/2004,590 Columbia Boulevard West,Lethbridge,AB,Canada,T1K 5N8,+1 (403) 456-9986,robert@chinookcorp.com
+8,Callahan,Laura,IT Staff,6,09/01/1968,04/03/2004,923 7 ST NW,Lethbridge,AB,Canada,T1H 1Y8,+1 (403) 467-3351,laura@chinookcorp.com

@@ -10,6 +10,7 @@ from src.helper import trace
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
      param('./sam/csv/artists.csv', 275, id='Artists'),
+     param('./sam/csv/currency.csv', 152, id='Currency'),
      param('./sam/csv/customers.csv', 59, id='Customers'),
      param('./sam/csv/employees.csv', 8, id='Employees'),
      param('./sam/csv/genres.csv', 25, id='Genres'),
@@ -29,6 +30,7 @@ def test_csvRead(get_db, filename, record):
 @mark.parametrize('filename, record',
     [param('./sam/csv/albums.csv', 347, id='Albums'),
      param('./sam/csv/artists.csv', 275, id='Artists'),
+     param('./sam/csv/currency.csv', 152, id='Currency'),
      param('./sam/csv/customers.csv', 59, id='Customers'),
      param('./sam/csv/employees.csv', 8, id='Employees'),
      param('./sam/csv/genres.csv', 25, id='Genres'),
@@ -49,6 +51,7 @@ def test_csvDictRead(get_db, filename, record):
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
      param('customers.csv', Customer, id='Customers'),
+     param('currency.csv', Currency, id='Currency'),
      param('employees.csv', Employee, id='Employees'),
      param('genres.csv', Genre, id='Genres'),
      param('invoices.csv', Invoice, id='Invoices'),
@@ -59,13 +62,14 @@ def test_csvDictRead(get_db, filename, record):
      param('tracks.csv', Track, id='Tracks')]
      )
 def test_csvWrite(get_db, temp, filename, table):
-    assert csvWrite(temp/filename, dbSelect(get_db, table, trace, **{'Id':'%'})) == True
+    assert csvWrite(temp+'\\'+filename, dbSelect(get_db, table, trace, **{'Id':'%'})) == True
 
 # Verify CSV write from test database
 # def csvDictWriter(filename:str, data:dict) -> bool:
 @mark.parametrize('filename, table',
     [param('albums.csv', Album, id='Albums'),
      param('artists.csv', Artist, id='Artists'),
+     param('currency.csv', Currency, id='Currency'),
      param('customers.csv', Customer, id='Customers'),
      param('employees.csv', Employee, id='Employees'),
      param('genres.csv', Genre, id='Genres'),

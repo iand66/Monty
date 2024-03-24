@@ -60,7 +60,7 @@ def logSetup(logcfg: str, logloc: str) -> None:
         
     except Exception as e:
         if os.path.exists(logloc):
-            print(f"Could not process {logcfg} file")
+            print(f"Could not process {logcfg} file {e}")
             sys.exit()
         else:
             os.mkdir(logloc)

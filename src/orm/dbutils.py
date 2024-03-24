@@ -41,15 +41,13 @@ def dbFill(session, seed: str, database: str, trace: bool) -> bool:
         if filesToImport is not None:
             for f in enumerate(filesToImport):
                 dataToImport = csvDictReader(seed[0 : seed.rfind("/") + 1] + f[1])
-                tblName = f[1][0 : f[1].rfind(".") - 1]
+                tblName = f[1][0 : f[1].rfind(".")]
                 result = dbBulkInsert(session, eval(tblName.title()), dataToImport, trace)
                 if result:
                     applog.info(f'Populated {database} {tblName.title()} at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
-                else:
-                    applog.warning(f'REJECTED {database} {tblName.title()} at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
             return True
     except Exception as e:
-        applog.error(f"Seed file of sample files could not be found")
+        applog.error(f"{e}")
         return e
 
 # DELETE database
@@ -63,8 +61,9 @@ def dbKill(filename: str) -> bool:
         if os.path.exists(filename):
             os.remove(filename)
             applog.info(f'File {filename} has been removed at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
-            if not os.path.exists(filename):
-                return True
+        
+        if not os.path.exists(filename):
+            return True
         else:
             applog.warning(f"File {filename} could not be found")
             return False

@@ -22,7 +22,8 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
     - **Composer**: Name of Composer(s)
     - **Milliseconds**: Length of Track in Milliseconds
     - **Bytes**: Size of Track in Bytes
-    - **Unit Price**: Price of Track in GBP
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
     """
     result = dbSelect(db, Track, trace, **{"Id": "%"})
     if not result:
@@ -42,7 +43,8 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     - **Composer**: Name of Composer(s)
     - **Milliseconds**: Length of Track in Milliseconds
     - **Bytes**: Size of Track in Bytes
-    - **Unit Price**: Price of Track in GBP
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
     """
     result = dbSelect(db, Track, trace, **{"Id": id})
     if not result:
@@ -62,7 +64,8 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     - **Composer**: Name of Composer(s)
     - **Milliseconds**: Length of Track in Milliseconds
     - **Bytes**: Size of Track in Bytes
-    - **Unit Price**: Price of Track in GBP
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
     """
     result = dbSelect(db, Track, trace, **{"TrackName": name})
     if not result:
@@ -82,7 +85,8 @@ async def create_name(data: trackCreate, db: Session = Depends(get_db)) -> Any:
     - **Composer**: Name of Composer(s)
     - **Milliseconds**: Length of Track in Milliseconds
     - **Bytes**: Size of Track in Bytes
-    - **Unit Price**: Price of Track in GBP
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
     """
     result = dbSelect(db, Track, trace, **data.model_dump())
     if result:
@@ -106,7 +110,8 @@ async def update_id(id: int, data: trackCreate, db: Session = Depends(get_db)) -
     - **Composer**: Name of Composer(s)
     - **Milliseconds**: Length of Track in Milliseconds
     - **Bytes**: Size of Track in Bytes
-    - **Unit Price**: Price of Track in GBP
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
     """
     result = dbSelect(db, Track, trace, **{"Id": id})
     if not result:
@@ -130,7 +135,8 @@ async def update_name(name: str, data: trackUpdate, db: Session = Depends(get_db
     - **Composer**: Name of Composer(s)
     - **Milliseconds**: Length of Track in Milliseconds
     - **Bytes**: Size of Track in Bytes
-    - **Unit Price**: Price of Track in GBP
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
     """
     result = dbSelect(db, Track, trace, **{"TrackName": name})
     if not result:
@@ -154,7 +160,8 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     - **Composer**: Name of Composer(s)
     - **Milliseconds**: Length of Track in Milliseconds
     - **Bytes**: Size of Track in Bytes
-    - **Unit Price**: Price of Track in GBP
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
     """
     result = dbSelect(db, Track, trace, **{"Id": id})
     if not result:
@@ -177,7 +184,8 @@ async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     - **Composer**: Name of Composer(s)
     - **Milliseconds**: Length of Track in Milliseconds
     - **Bytes**: Size of Track in Bytes
-    - **Unit Price**: Price of Track in GBP
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
     """
     result = dbSelect(db, Track, trace, **{"TrackName": name})
     if not result:
