@@ -25,7 +25,7 @@ async def get_all(db: Session = Depends(get_db)) -> Any:
     - **Unit Price**: Price of Track in Currency
     - **Currency**: Trading Currency
     """
-    result = dbSelect(db, Track, trace, **{"Id": "%"})
+    result = dbSelect(db, Track, **{"Id": "%"})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No tracks found")
     else:
@@ -46,7 +46,7 @@ async def get_id(id: int, db: Session = Depends(get_db)) -> Any:
     - **Unit Price**: Price of Track in Currency
     - **Currency**: Trading Currency
     """
-    result = dbSelect(db, Track, trace, **{"Id": id})
+    result = dbSelect(db, Track, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Track {id} not found")
     else:
@@ -67,7 +67,7 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
     - **Unit Price**: Price of Track in Currency
     - **Currency**: Trading Currency
     """
-    result = dbSelect(db, Track, trace, **{"TrackName": name})
+    result = dbSelect(db, Track, **{"TrackName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Track {name} not found")
     else:
@@ -88,12 +88,12 @@ async def create_name(data: trackCreate, db: Session = Depends(get_db)) -> Any:
     - **Unit Price**: Price of Track in Currency
     - **Currency**: Trading Currency
     """
-    result = dbSelect(db, Track, trace, **data.model_dump())
+    result = dbSelect(db, Track, **data.model_dump())
     if result:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Track {data} already exists")
     else:
         new_album = Track(**data.model_dump())
-        success = dbInsert(db, new_album, trace)
+        success = dbInsert(db, new_album)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -113,12 +113,12 @@ async def update_id(id: int, data: trackCreate, db: Session = Depends(get_db)) -
     - **Unit Price**: Price of Track in Currency
     - **Currency**: Trading Currency
     """
-    result = dbSelect(db, Track, trace, **{"Id": id})
+    result = dbSelect(db, Track, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Track {id} not found")
     else:
         new_album = data.model_dump()
-        success = dbUpdate(db, Track, result[0], new_album, trace)
+        success = dbUpdate(db, Track, result[0], new_album)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -138,12 +138,12 @@ async def update_name(name: str, data: trackUpdate, db: Session = Depends(get_db
     - **Unit Price**: Price of Track in Currency
     - **Currency**: Trading Currency
     """
-    result = dbSelect(db, Track, trace, **{"TrackName": name})
+    result = dbSelect(db, Track, **{"TrackName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Track {name} not found")
     else:
         new_album = data.model_dump()
-        success = dbUpdate(db, Track, result[0], new_album, trace)
+        success = dbUpdate(db, Track, result[0], new_album)
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return data
@@ -163,11 +163,11 @@ async def delete_id(id: int, db: Session = Depends(get_db)) -> Any:
     - **Unit Price**: Price of Track in Currency
     - **Currency**: Trading Currency
     """
-    result = dbSelect(db, Track, trace, **{"Id": id})
+    result = dbSelect(db, Track, **{"Id": id})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Track {id} not found")
     else:
-        success = dbDelete(db, Track, trace, **{"Id": id})
+        success = dbDelete(db, Track, **{"Id": id})
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result
@@ -187,11 +187,11 @@ async def delete_name(name: str, db: Session = Depends(get_db)) -> Any:
     - **Unit Price**: Price of Track in Currency
     - **Currency**: Trading Currency
     """
-    result = dbSelect(db, Track, trace, **{"TrackName": name})
+    result = dbSelect(db, Track, **{"TrackName": name})
     if not result:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Track {name} not found")
     else:
-        success = dbDelete(db, Track, trace, **{"TrackName": name})
+        success = dbDelete(db, Track, **{"TrackName": name})
         if not success:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database Error. Please check application logs")
     return result

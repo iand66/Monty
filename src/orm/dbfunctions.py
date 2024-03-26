@@ -1,6 +1,6 @@
 from sqlalchemy import exc
 
-from src.helper import applog, datlog
+from src.helper import applog, datlog, trace
 from src.orm.schema import Base
 
 # RETURN all attributes from a SQLAlchemy object.
@@ -17,13 +17,12 @@ def get_attributes(model) -> dict:
     return data
 
 # INSERT multiple records into database table
-def dbBulkInsert(session, table: str, data: Base, trace: bool) -> int:
+def dbBulkInsert(session, table: str, data: Base) -> int:
     """
     INSERT multiple records into database table
     :param session (session): SQLAlchemy session instance
     :param table (str): Database tablename
     :param data (Base): SQLALchemy data object(s)
-    :param trace (bool): Enable database logging
     :return int: Number of records inserted
     """
     try:
@@ -40,12 +39,11 @@ def dbBulkInsert(session, table: str, data: Base, trace: bool) -> int:
         session.close()
 
 # INSERT record into database table
-def dbInsert(session, data: Base, trace: bool) -> bool:
+def dbInsert(session, data: Base) -> bool:
     """
     INSERT record into database table
     :param session (session): SQLAlchemy session instance
     :param data (Base): SQLALchemy data object
-    :param trace (bool): Enable database logging
     :return int: RowId of inserted record
     """
     try:
@@ -63,12 +61,11 @@ def dbInsert(session, data: Base, trace: bool) -> bool:
         session.close()
 
 # SELECT query on the given table with optional filtering
-def dbSelect(session, table: Base, trace: bool, **kwargs) -> list:
+def dbSelect(session, table: Base, **kwargs) -> list:
     """
     SELECT query on the given table with optional filtering
     :param session (session): SQLAlchemy session object
     :param table (object): Database tablename
-    :param trace (bool): Enable database logging
     :param kwargs (dict): Key-value pairs representing filter conditions (column_name=value)
     :return list: List of model instances if found, empty list otherwise.
     """
@@ -94,14 +91,13 @@ def dbSelect(session, table: Base, trace: bool, **kwargs) -> list:
         session.close()
 
 # UPDATE records in the database based on the given filter condition(s)
-def dbUpdate(session, table: Base, filter: dict, update: dict, trace: bool,) -> bool:
+def dbUpdate(session, table: Base, filter: dict, update: dict) -> bool:
     """
     UPDATE records in the database based on the given filter condition(s)
     :param session (session): SQLAlchemy session object
     :param table (object): SQLAlchemy model class
     :param filter_kwargs (dict): Key-value pairs filter conditions (column_name=value)
     :param update_kwargs (dict): Key-value pairs update values (column_name=new_value)
-    :param trace (bool): Enable database logging
     :return int: Number of updated records
     """
     try:
@@ -123,12 +119,11 @@ def dbUpdate(session, table: Base, filter: dict, update: dict, trace: bool,) -> 
         session.close()
 
 # DELETE records from a database table
-def dbDelete(session, table: Base, trace: bool, **kwargs) -> bool:
+def dbDelete(session, table: Base, **kwargs) -> bool:
     """
     DELETE records from a database table
     :param session (session): SQLAlchemy session object
     :param table (object): Database tablename
-    :param trace (bool): Enable database logging
     :param kwargs (dict): Key-value pairs representing filter conditions (column_name=value)
     :return int: Number of records deleted
     """

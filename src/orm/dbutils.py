@@ -27,13 +27,12 @@ def dbInit(engine: Engine) -> bool:
         return True
 
 # RELOAD sample data
-def dbFill(session, seed: str, database: str, trace: bool) -> bool:
+def dbFill(session, seed: str, database: str) -> bool:
     """
     RELOAD sample data
     :param session (object): SQLAlchemy session instance
     :param seed (str): Fully qualified CSV file of files to import
     :param database (str): Database name to populate
-    :param trace (bool): Enable database logging
     :return bool: True or False
     """
     try:
@@ -42,7 +41,7 @@ def dbFill(session, seed: str, database: str, trace: bool) -> bool:
             for f in enumerate(filesToImport):
                 dataToImport = csvDictReader(seed[0 : seed.rfind("/") + 1] + f[1])
                 tblName = f[1][0 : f[1].rfind(".")]
-                result = dbBulkInsert(session, eval(tblName.title()), dataToImport, trace)
+                result = dbBulkInsert(session, eval(tblName.title()), dataToImport)
                 if result:
                     applog.info(f'Populated {database} {tblName.title()} at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
             return True

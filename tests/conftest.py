@@ -38,7 +38,7 @@ def dbBuild(get_db):
     if get_db.bind.name == 'sqlite':
         get_db.execute(text('pragma foreign_keys=on'))
     
-    assert dbFill(get_db, './sam/csv/import.csv', dbname, trace) == True
+    assert dbFill(get_db, './sam/csv/import.csv', dbname) == True
     
 # Define tmp directory
 @fixture(scope="session")

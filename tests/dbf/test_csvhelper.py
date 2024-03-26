@@ -62,7 +62,7 @@ def test_csvDictRead(get_db, filename, record):
     #  param('tracks.csv', Track, id='Tracks')]
       )
 def test_csvWrite(get_db, temp, filename, table):
-    assert csvWrite(temp+'\\'+filename, dbSelect(get_db, table, trace, **{'Id':'%'})) == True
+    assert csvWrite(temp+'\\'+filename, dbSelect(get_db, table, **{'Id':'%'})) == True
 
 # Verify CSV write from test database
 # def csvDictWriter(filename:str, data:dict) -> bool:
@@ -81,4 +81,4 @@ def test_csvWrite(get_db, temp, filename, table):
      param('tracks.csv', Track, id='Tracks')]
      )
 def test_csvDictWrite(get_db, temp, filename, table):
-    assert csvDictWriter(temp+'\\'+filename, dbSelect(get_db, table, trace, **{'Id':'%'})) == True
+    assert csvDictWriter(temp+'\\'+filename, dbSelect(get_db, table, **{'Id':'%'})) == True
