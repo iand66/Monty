@@ -1,14 +1,15 @@
-"{'Id': 1, 'PlaylistName': '90’s Music', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 2, 'PlaylistName': 'Audiobooks', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 3, 'PlaylistName': 'Brazilian Music', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 4, 'PlaylistName': 'Classical', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 5, 'PlaylistName': 'Classical 101 - Deep Cuts', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 6, 'PlaylistName': 'Classical 101 - Next Steps', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 7, 'PlaylistName': 'Classical 101 - The Basics', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 8, 'PlaylistName': 'Grunge', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 9, 'PlaylistName': 'Heavy Metal Classic', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 10, 'PlaylistName': 'Movies', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 11, 'PlaylistName': 'Music', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 12, 'PlaylistName': 'Music Videos', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 13, 'PlaylistName': 'On-The-Go 1', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 14, 'PlaylistName': 'TV Shows', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
+Id,PlaylistName,DateCreated,DateUpdated
+1,90’s Music,2024-03-26,2024-03-26
+2,Audiobooks,2024-03-26,2024-03-26
+3,Brazilian Music,2024-03-26,2024-03-26
+4,Classical,2024-03-26,2024-03-26
+5,Classical 101 - Deep Cuts,2024-03-26,2024-03-26
+6,Classical 101 - Next Steps,2024-03-26,2024-03-26
+7,Classical 101 - The Basics,2024-03-26,2024-03-26
+8,Grunge,2024-03-26,2024-03-26
+9,Heavy Metal Classic,2024-03-26,2024-03-26
+10,Movies,2024-03-26,2024-03-26
+11,Music,2024-03-26,2024-03-26
+12,Music Videos,2024-03-26,2024-03-26
+13,On-The-Go 1,2024-03-26,2024-03-26
+14,TV Shows,2024-03-26,2024-03-26

@@ -31,7 +31,6 @@ def config(filename: str) -> configparser:
 
 # Setup logging environment
 def logSetup(logcfg: str, logloc: str) -> None:
-    # TODO Log rotation @ 00:00
     """
     Setup logging environment
     :param logcfg (str): Fully qualified location of logging config file

@@ -1,152 +1,153 @@
-"{'Id': 1, 'Code': 'AED', 'Number': 784, 'Decimals': 2, 'Description': 'United Arab Emirates Dirham', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 2, 'Code': 'AFN', 'Number': 971, 'Decimals': 2, 'Description': 'Afghan Afghani', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 3, 'Code': 'ALL', 'Number': 8, 'Decimals': 2, 'Description': 'Albanian Lek', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 4, 'Code': 'AMD', 'Number': 51, 'Decimals': 2, 'Description': 'Armenian Dram', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 5, 'Code': 'ANG', 'Number': 532, 'Decimals': 2, 'Description': 'Netherlands Antillean Guilder', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 6, 'Code': 'AOA', 'Number': 973, 'Decimals': 2, 'Description': 'Angolan Kwanza', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 7, 'Code': 'ARS', 'Number': 32, 'Decimals': 2, 'Description': 'Argentine Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 8, 'Code': 'AUD', 'Number': 36, 'Decimals': 2, 'Description': 'Australian Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 9, 'Code': 'AWG', 'Number': 533, 'Decimals': 2, 'Description': 'Aruban Florin', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 10, 'Code': 'AZN', 'Number': 944, 'Decimals': 2, 'Description': 'Azerbaijani Manat', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 11, 'Code': 'BAM', 'Number': 977, 'Decimals': 2, 'Description': 'Bosnia And Herzegovina Mark', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 12, 'Code': 'BBD', 'Number': 52, 'Decimals': 2, 'Description': 'Barbados Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 13, 'Code': 'BDT', 'Number': 50, 'Decimals': 2, 'Description': 'Bangladeshi Taka', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 14, 'Code': 'BGN', 'Number': 975, 'Decimals': 2, 'Description': 'Bulgarian Lev', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 15, 'Code': 'BHD', 'Number': 48, 'Decimals': 3, 'Description': 'Bahraini Dinar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 16, 'Code': 'BIF', 'Number': 108, 'Decimals': 0, 'Description': 'Burundian Franc', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 17, 'Code': 'BMD', 'Number': 60, 'Decimals': 2, 'Description': 'Bermudian Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 18, 'Code': 'BND', 'Number': 96, 'Decimals': 2, 'Description': 'Brunei Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 19, 'Code': 'BOB', 'Number': 68, 'Decimals': 2, 'Description': 'Bolivia Boliviano', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 20, 'Code': 'BRL', 'Number': 986, 'Decimals': 2, 'Description': 'Brazilian Real', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 21, 'Code': 'BSD', 'Number': 44, 'Decimals': 2, 'Description': 'Bahamian Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 22, 'Code': 'BTN', 'Number': 64, 'Decimals': 2, 'Description': 'Bhutanese Ngultrum', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 23, 'Code': 'BWP', 'Number': 72, 'Decimals': 2, 'Description': 'Botswana Pula', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 24, 'Code': 'BYR', 'Number': 974, 'Decimals': 0, 'Description': 'Belarusian Ruble', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 25, 'Code': 'BZD', 'Number': 84, 'Decimals': 2, 'Description': 'Belize Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 26, 'Code': 'CAD', 'Number': 124, 'Decimals': 2, 'Description': 'Canadian Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 27, 'Code': 'CDF', 'Number': 976, 'Decimals': 2, 'Description': 'Congolese Franc', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 28, 'Code': 'CHF', 'Number': 756, 'Decimals': 2, 'Description': 'Swiss Franc', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 29, 'Code': 'CLP', 'Number': 152, 'Decimals': 0, 'Description': 'Chilean Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 30, 'Code': 'CNY', 'Number': 156, 'Decimals': 2, 'Description': 'Chinese Yuan', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 31, 'Code': 'COP', 'Number': 170, 'Decimals': 2, 'Description': 'Colombian Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 32, 'Code': 'COU', 'Number': 970, 'Decimals': 2, 'Description': 'Unidad De Valor Real', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 33, 'Code': 'CRC', 'Number': 188, 'Decimals': 2, 'Description': 'Costa Rican Colon', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 34, 'Code': 'CUC', 'Number': 931, 'Decimals': 2, 'Description': 'Cuban Convertible Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 35, 'Code': 'CUP', 'Number': 192, 'Decimals': 2, 'Description': 'Cuban Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 36, 'Code': 'CVE', 'Number': 132, 'Decimals': 0, 'Description': 'Cape Verde Escudo', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 37, 'Code': 'CZK', 'Number': 203, 'Decimals': 2, 'Description': 'Czech Koruna', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 38, 'Code': 'DJF', 'Number': 262, 'Decimals': 0, 'Description': 'Djiboutian Franc', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 39, 'Code': 'DKK', 'Number': 208, 'Decimals': 2, 'Description': 'Danish Krone', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 40, 'Code': 'DOP', 'Number': 214, 'Decimals': 2, 'Description': 'Dominican Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 41, 'Code': 'DZD', 'Number': 12, 'Decimals': 2, 'Description': 'Algerian Dinar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 42, 'Code': 'EGP', 'Number': 818, 'Decimals': 2, 'Description': 'Egyptian Pound', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 43, 'Code': 'ERN', 'Number': 232, 'Decimals': 2, 'Description': 'Eritrean Nakfa', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 44, 'Code': 'ETB', 'Number': 230, 'Decimals': 2, 'Description': 'Ethiopian Birr', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 45, 'Code': 'EUR', 'Number': 978, 'Decimals': 2, 'Description': 'Euro', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 46, 'Code': 'FJD', 'Number': 242, 'Decimals': 2, 'Description': 'Fiji Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 47, 'Code': 'FKP', 'Number': 238, 'Decimals': 2, 'Description': 'Falkland Islands Pound', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 48, 'Code': 'GBP', 'Number': 826, 'Decimals': 2, 'Description': 'Pound Sterling', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 49, 'Code': 'GEL', 'Number': 981, 'Decimals': 2, 'Description': 'Georgian Lari', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 50, 'Code': 'GHS', 'Number': 936, 'Decimals': 2, 'Description': 'Ghanaian Cedi', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 51, 'Code': 'GIP', 'Number': 292, 'Decimals': 2, 'Description': 'Gibraltar Pound', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 52, 'Code': 'GMD', 'Number': 270, 'Decimals': 2, 'Description': 'Gambian Dalasi', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 53, 'Code': 'GNF', 'Number': 324, 'Decimals': 0, 'Description': 'Guinean Franc', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 54, 'Code': 'GTQ', 'Number': 320, 'Decimals': 2, 'Description': 'Guatemalan Quetzal', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 55, 'Code': 'GYD', 'Number': 328, 'Decimals': 2, 'Description': 'Guyanese Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 56, 'Code': 'HKD', 'Number': 344, 'Decimals': 2, 'Description': 'Hong Kong Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 57, 'Code': 'HNL', 'Number': 340, 'Decimals': 2, 'Description': 'Honduran Lempira', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 58, 'Code': 'HRK', 'Number': 191, 'Decimals': 2, 'Description': 'Croatian Kuna', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 59, 'Code': 'HTG', 'Number': 332, 'Decimals': 2, 'Description': 'Haitian Gourde', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 60, 'Code': 'HUF', 'Number': 348, 'Decimals': 2, 'Description': 'Hungarian Forint', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 61, 'Code': 'IDR', 'Number': 360, 'Decimals': 2, 'Description': 'Indonesian Rupiah', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 62, 'Code': 'ILS', 'Number': 376, 'Decimals': 2, 'Description': 'Israeli New Shekel', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 63, 'Code': 'INR', 'Number': 356, 'Decimals': 2, 'Description': 'Indian Rupee', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 64, 'Code': 'IQD', 'Number': 368, 'Decimals': 3, 'Description': 'Iraqi Dinar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 65, 'Code': 'IRR', 'Number': 364, 'Decimals': 0, 'Description': 'Iranian Rial', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 66, 'Code': 'ISK', 'Number': 352, 'Decimals': 0, 'Description': 'Icelandic Króna', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 67, 'Code': 'JMD', 'Number': 388, 'Decimals': 2, 'Description': 'Jamaican Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 68, 'Code': 'JOD', 'Number': 400, 'Decimals': 3, 'Description': 'Jordanian Dinar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 69, 'Code': 'JPY', 'Number': 392, 'Decimals': 0, 'Description': 'Japanese Yen', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 70, 'Code': 'KES', 'Number': 404, 'Decimals': 2, 'Description': 'Kenyan Shilling', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 71, 'Code': 'KGS', 'Number': 417, 'Decimals': 2, 'Description': 'Kyrgyzstani Som', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 72, 'Code': 'KHR', 'Number': 116, 'Decimals': 2, 'Description': 'Cambodian Riel', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 73, 'Code': 'KMF', 'Number': 174, 'Decimals': 0, 'Description': 'Comoro Franc', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 74, 'Code': 'KPW', 'Number': 408, 'Decimals': 0, 'Description': 'North Korean Won', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 75, 'Code': 'KRW', 'Number': 410, 'Decimals': 0, 'Description': 'South Korean Won', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 76, 'Code': 'KWD', 'Number': 414, 'Decimals': 3, 'Description': 'Kuwaiti Dinar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 77, 'Code': 'KYD', 'Number': 136, 'Decimals': 2, 'Description': 'Cayman Islands Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 78, 'Code': 'KZT', 'Number': 398, 'Decimals': 2, 'Description': 'Kazakhstani Tenge', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 79, 'Code': 'LAK', 'Number': 418, 'Decimals': 0, 'Description': 'Lao Kip', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 80, 'Code': 'LBP', 'Number': 422, 'Decimals': 0, 'Description': 'Lebanese Pound', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 81, 'Code': 'LKR', 'Number': 144, 'Decimals': 2, 'Description': 'Sri Lankan Rupee', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 82, 'Code': 'LRD', 'Number': 430, 'Decimals': 2, 'Description': 'Liberian Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 83, 'Code': 'LSL', 'Number': 426, 'Decimals': 2, 'Description': 'Lesotho Loti', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 84, 'Code': 'LTL', 'Number': 440, 'Decimals': 2, 'Description': 'Lithuanian Litas', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 85, 'Code': 'LVL', 'Number': 428, 'Decimals': 2, 'Description': 'Latvian Lats', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 86, 'Code': 'LYD', 'Number': 434, 'Decimals': 3, 'Description': 'Libyan Dinar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 87, 'Code': 'MAD', 'Number': 504, 'Decimals': 2, 'Description': 'Moroccan Dirham', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 88, 'Code': 'MDL', 'Number': 498, 'Decimals': 2, 'Description': 'Moldovan Leu', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 89, 'Code': 'MKD', 'Number': 807, 'Decimals': 0, 'Description': 'Macedonian Denar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 90, 'Code': 'MMK', 'Number': 104, 'Decimals': 0, 'Description': 'Myanma Kyat', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 91, 'Code': 'MNT', 'Number': 496, 'Decimals': 2, 'Description': 'Mongolian Tugrik', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 92, 'Code': 'MOP', 'Number': 446, 'Decimals': 2, 'Description': 'Macanese Pataca', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 93, 'Code': 'MUR', 'Number': 480, 'Decimals': 2, 'Description': 'Mauritian Rupee', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 94, 'Code': 'MVR', 'Number': 462, 'Decimals': 2, 'Description': 'Maldivian Rufiyaa', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 95, 'Code': 'MWK', 'Number': 454, 'Decimals': 2, 'Description': 'Malawian Kwacha', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 96, 'Code': 'MXN', 'Number': 484, 'Decimals': 2, 'Description': 'Mexican Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 97, 'Code': 'MYR', 'Number': 458, 'Decimals': 2, 'Description': 'Malaysian Ringgit', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 98, 'Code': 'MZN', 'Number': 943, 'Decimals': 2, 'Description': 'Mozambican Metical', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 99, 'Code': 'NAD', 'Number': 516, 'Decimals': 2, 'Description': 'Namibian Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 100, 'Code': 'NGN', 'Number': 566, 'Decimals': 2, 'Description': 'Nigerian Naira', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 101, 'Code': 'NIO', 'Number': 558, 'Decimals': 2, 'Description': 'Nicaraguan Córdoba ', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 102, 'Code': 'NOK', 'Number': 578, 'Decimals': 2, 'Description': 'Norwegian Krone', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 103, 'Code': 'NPR', 'Number': 524, 'Decimals': 2, 'Description': 'Nepalese Rupee', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 104, 'Code': 'NZD', 'Number': 554, 'Decimals': 2, 'Description': 'New Zealand Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 105, 'Code': 'OMR', 'Number': 512, 'Decimals': 3, 'Description': 'Omani Rial', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 106, 'Code': 'PAB', 'Number': 590, 'Decimals': 2, 'Description': 'Panamanian Balboa', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 107, 'Code': 'PEN', 'Number': 604, 'Decimals': 2, 'Description': 'Peruvian Nuevo Sol', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 108, 'Code': 'PGK', 'Number': 598, 'Decimals': 2, 'Description': 'Papua New Guinean Kina', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 109, 'Code': 'PHP', 'Number': 608, 'Decimals': 2, 'Description': 'Philippine Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 110, 'Code': 'PKR', 'Number': 586, 'Decimals': 2, 'Description': 'Pakistani Rupee', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 111, 'Code': 'PLN', 'Number': 985, 'Decimals': 2, 'Description': 'Polish Złoty ', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 112, 'Code': 'PYG', 'Number': 600, 'Decimals': 0, 'Description': 'Paraguayan Guarani ', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 113, 'Code': 'QAR', 'Number': 634, 'Decimals': 2, 'Description': 'Qatari Riyal', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 114, 'Code': 'RON', 'Number': 946, 'Decimals': 2, 'Description': 'Romanian New Leu', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 115, 'Code': 'RSD', 'Number': 941, 'Decimals': 2, 'Description': 'Serbian Dinar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 116, 'Code': 'RUB', 'Number': 643, 'Decimals': 2, 'Description': 'Russian Rouble', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 117, 'Code': 'RWF', 'Number': 646, 'Decimals': 0, 'Description': 'Rwandan Franc', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 118, 'Code': 'SAR', 'Number': 682, 'Decimals': 2, 'Description': 'Saudi Riyal', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 119, 'Code': 'SBD', 'Number': 90, 'Decimals': 2, 'Description': 'Solomon Islands Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 120, 'Code': 'SCR', 'Number': 690, 'Decimals': 2, 'Description': 'Seychelles Rupee', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 121, 'Code': 'SDG', 'Number': 938, 'Decimals': 2, 'Description': 'Sudanese Pound', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 122, 'Code': 'SEK', 'Number': 752, 'Decimals': 2, 'Description': 'Swedish Krona/Kronor', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 123, 'Code': 'SGD', 'Number': 702, 'Decimals': 2, 'Description': 'Singapore Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 124, 'Code': 'SHP', 'Number': 654, 'Decimals': 2, 'Description': 'Saint Helena Pound', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 125, 'Code': 'SLL', 'Number': 694, 'Decimals': 0, 'Description': 'Sierra Leonean Leone', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 126, 'Code': 'SOS', 'Number': 706, 'Decimals': 2, 'Description': 'Somali Shilling', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 127, 'Code': 'SRD', 'Number': 968, 'Decimals': 2, 'Description': 'Surinamese Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 128, 'Code': 'SSP', 'Number': 728, 'Decimals': 2, 'Description': 'South Sudanese Pound', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 129, 'Code': 'STD', 'Number': 678, 'Decimals': 0, 'Description': 'São Tomé and Príncipe Dobra', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 130, 'Code': 'SYP', 'Number': 760, 'Decimals': 2, 'Description': 'Syrian Pound', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 131, 'Code': 'SZL', 'Number': 748, 'Decimals': 2, 'Description': 'Swazi Lilangeni', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 132, 'Code': 'THB', 'Number': 764, 'Decimals': 2, 'Description': 'Thai Baht', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 133, 'Code': 'TJS', 'Number': 972, 'Decimals': 2, 'Description': 'Tajikistani Somoni', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 134, 'Code': 'TMT', 'Number': 934, 'Decimals': 2, 'Description': 'Turkmenistani Manat', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 135, 'Code': 'TND', 'Number': 788, 'Decimals': 3, 'Description': 'Tunisian Dinar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 136, 'Code': 'TOP', 'Number': 776, 'Decimals': 2, 'Description': 'Tongan Paʻanga', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 137, 'Code': 'TRY', 'Number': 949, 'Decimals': 2, 'Description': 'Turkish Lira', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 138, 'Code': 'TTD', 'Number': 780, 'Decimals': 2, 'Description': 'Trinidad And Tobago Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 139, 'Code': 'TWD', 'Number': 901, 'Decimals': 2, 'Description': 'New Taiwan Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 140, 'Code': 'TZS', 'Number': 834, 'Decimals': 2, 'Description': 'Tanzanian Shilling', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 141, 'Code': 'UAH', 'Number': 980, 'Decimals': 2, 'Description': 'Ukrainian Hryvnia', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 142, 'Code': 'UGX', 'Number': 800, 'Decimals': 2, 'Description': 'Ugandan Shilling', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 143, 'Code': 'USD', 'Number': 840, 'Decimals': 2, 'Description': 'United States Dollar', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 144, 'Code': 'UYU', 'Number': 858, 'Decimals': 2, 'Description': 'Uruguayan Peso', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 145, 'Code': 'UZS', 'Number': 860, 'Decimals': 2, 'Description': 'Uzbekistan Som', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 146, 'Code': 'VEF', 'Number': 937, 'Decimals': 2, 'Description': 'Venezuelan Bolivar Fuente', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 147, 'Code': 'VND', 'Number': 704, 'Decimals': 0, 'Description': 'Vietnamese Dong', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 148, 'Code': 'VUV', 'Number': 548, 'Decimals': 0, 'Description': 'Vanuatu Vatu', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 149, 'Code': 'WST', 'Number': 882, 'Decimals': 2, 'Description': 'Samoan Tala', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 150, 'Code': 'YER', 'Number': 886, 'Decimals': 2, 'Description': 'Yemeni Rial', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 151, 'Code': 'ZAR', 'Number': 710, 'Decimals': 2, 'Description': 'South African Rand', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 152, 'Code': 'ZMW', 'Number': 967, 'Decimals': 2, 'Description': 'Zambian Kwacha', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
+Id,Code,Number,Decimals,Description,DateCreated,DateUpdated
+1,AED,784,2,United Arab Emirates Dirham,2024-03-26,2024-03-26
+2,AFN,971,2,Afghan Afghani,2024-03-26,2024-03-26
+3,ALL,8,2,Albanian Lek,2024-03-26,2024-03-26
+4,AMD,51,2,Armenian Dram,2024-03-26,2024-03-26
+5,ANG,532,2,Netherlands Antillean Guilder,2024-03-26,2024-03-26
+6,AOA,973,2,Angolan Kwanza,2024-03-26,2024-03-26
+7,ARS,32,2,Argentine Peso,2024-03-26,2024-03-26
+8,AUD,36,2,Australian Dollar,2024-03-26,2024-03-26
+9,AWG,533,2,Aruban Florin,2024-03-26,2024-03-26
+10,AZN,944,2,Azerbaijani Manat,2024-03-26,2024-03-26
+11,BAM,977,2,Bosnia And Herzegovina Mark,2024-03-26,2024-03-26
+12,BBD,52,2,Barbados Dollar,2024-03-26,2024-03-26
+13,BDT,50,2,Bangladeshi Taka,2024-03-26,2024-03-26
+14,BGN,975,2,Bulgarian Lev,2024-03-26,2024-03-26
+15,BHD,48,3,Bahraini Dinar,2024-03-26,2024-03-26
+16,BIF,108,0,Burundian Franc,2024-03-26,2024-03-26
+17,BMD,60,2,Bermudian Dollar,2024-03-26,2024-03-26
+18,BND,96,2,Brunei Dollar,2024-03-26,2024-03-26
+19,BOB,68,2,Bolivia Boliviano,2024-03-26,2024-03-26
+20,BRL,986,2,Brazilian Real,2024-03-26,2024-03-26
+21,BSD,44,2,Bahamian Dollar,2024-03-26,2024-03-26
+22,BTN,64,2,Bhutanese Ngultrum,2024-03-26,2024-03-26
+23,BWP,72,2,Botswana Pula,2024-03-26,2024-03-26
+24,BYR,974,0,Belarusian Ruble,2024-03-26,2024-03-26
+25,BZD,84,2,Belize Dollar,2024-03-26,2024-03-26
+26,CAD,124,2,Canadian Dollar,2024-03-26,2024-03-26
+27,CDF,976,2,Congolese Franc,2024-03-26,2024-03-26
+28,CHF,756,2,Swiss Franc,2024-03-26,2024-03-26
+29,CLP,152,0,Chilean Peso,2024-03-26,2024-03-26
+30,CNY,156,2,Chinese Yuan,2024-03-26,2024-03-26
+31,COP,170,2,Colombian Peso,2024-03-26,2024-03-26
+32,COU,970,2,Unidad De Valor Real,2024-03-26,2024-03-26
+33,CRC,188,2,Costa Rican Colon,2024-03-26,2024-03-26
+34,CUC,931,2,Cuban Convertible Peso,2024-03-26,2024-03-26
+35,CUP,192,2,Cuban Peso,2024-03-26,2024-03-26
+36,CVE,132,0,Cape Verde Escudo,2024-03-26,2024-03-26
+37,CZK,203,2,Czech Koruna,2024-03-26,2024-03-26
+38,DJF,262,0,Djiboutian Franc,2024-03-26,2024-03-26
+39,DKK,208,2,Danish Krone,2024-03-26,2024-03-26
+40,DOP,214,2,Dominican Peso,2024-03-26,2024-03-26
+41,DZD,12,2,Algerian Dinar,2024-03-26,2024-03-26
+42,EGP,818,2,Egyptian Pound,2024-03-26,2024-03-26
+43,ERN,232,2,Eritrean Nakfa,2024-03-26,2024-03-26
+44,ETB,230,2,Ethiopian Birr,2024-03-26,2024-03-26
+45,EUR,978,2,Euro,2024-03-26,2024-03-26
+46,FJD,242,2,Fiji Dollar,2024-03-26,2024-03-26
+47,FKP,238,2,Falkland Islands Pound,2024-03-26,2024-03-26
+48,GBP,826,2,Pound Sterling,2024-03-26,2024-03-26
+49,GEL,981,2,Georgian Lari,2024-03-26,2024-03-26
+50,GHS,936,2,Ghanaian Cedi,2024-03-26,2024-03-26
+51,GIP,292,2,Gibraltar Pound,2024-03-26,2024-03-26
+52,GMD,270,2,Gambian Dalasi,2024-03-26,2024-03-26
+53,GNF,324,0,Guinean Franc,2024-03-26,2024-03-26
+54,GTQ,320,2,Guatemalan Quetzal,2024-03-26,2024-03-26
+55,GYD,328,2,Guyanese Dollar,2024-03-26,2024-03-26
+56,HKD,344,2,Hong Kong Dollar,2024-03-26,2024-03-26
+57,HNL,340,2,Honduran Lempira,2024-03-26,2024-03-26
+58,HRK,191,2,Croatian Kuna,2024-03-26,2024-03-26
+59,HTG,332,2,Haitian Gourde,2024-03-26,2024-03-26
+60,HUF,348,2,Hungarian Forint,2024-03-26,2024-03-26
+61,IDR,360,2,Indonesian Rupiah,2024-03-26,2024-03-26
+62,ILS,376,2,Israeli New Shekel,2024-03-26,2024-03-26
+63,INR,356,2,Indian Rupee,2024-03-26,2024-03-26
+64,IQD,368,3,Iraqi Dinar,2024-03-26,2024-03-26
+65,IRR,364,0,Iranian Rial,2024-03-26,2024-03-26
+66,ISK,352,0,Icelandic Króna,2024-03-26,2024-03-26
+67,JMD,388,2,Jamaican Dollar,2024-03-26,2024-03-26
+68,JOD,400,3,Jordanian Dinar,2024-03-26,2024-03-26
+69,JPY,392,0,Japanese Yen,2024-03-26,2024-03-26
+70,KES,404,2,Kenyan Shilling,2024-03-26,2024-03-26
+71,KGS,417,2,Kyrgyzstani Som,2024-03-26,2024-03-26
+72,KHR,116,2,Cambodian Riel,2024-03-26,2024-03-26
+73,KMF,174,0,Comoro Franc,2024-03-26,2024-03-26
+74,KPW,408,0,North Korean Won,2024-03-26,2024-03-26
+75,KRW,410,0,South Korean Won,2024-03-26,2024-03-26
+76,KWD,414,3,Kuwaiti Dinar,2024-03-26,2024-03-26
+77,KYD,136,2,Cayman Islands Dollar,2024-03-26,2024-03-26
+78,KZT,398,2,Kazakhstani Tenge,2024-03-26,2024-03-26
+79,LAK,418,0,Lao Kip,2024-03-26,2024-03-26
+80,LBP,422,0,Lebanese Pound,2024-03-26,2024-03-26
+81,LKR,144,2,Sri Lankan Rupee,2024-03-26,2024-03-26
+82,LRD,430,2,Liberian Dollar,2024-03-26,2024-03-26
+83,LSL,426,2,Lesotho Loti,2024-03-26,2024-03-26
+84,LTL,440,2,Lithuanian Litas,2024-03-26,2024-03-26
+85,LVL,428,2,Latvian Lats,2024-03-26,2024-03-26
+86,LYD,434,3,Libyan Dinar,2024-03-26,2024-03-26
+87,MAD,504,2,Moroccan Dirham,2024-03-26,2024-03-26
+88,MDL,498,2,Moldovan Leu,2024-03-26,2024-03-26
+89,MKD,807,0,Macedonian Denar,2024-03-26,2024-03-26
+90,MMK,104,0,Myanma Kyat,2024-03-26,2024-03-26
+91,MNT,496,2,Mongolian Tugrik,2024-03-26,2024-03-26
+92,MOP,446,2,Macanese Pataca,2024-03-26,2024-03-26
+93,MUR,480,2,Mauritian Rupee,2024-03-26,2024-03-26
+94,MVR,462,2,Maldivian Rufiyaa,2024-03-26,2024-03-26
+95,MWK,454,2,Malawian Kwacha,2024-03-26,2024-03-26
+96,MXN,484,2,Mexican Peso,2024-03-26,2024-03-26
+97,MYR,458,2,Malaysian Ringgit,2024-03-26,2024-03-26
+98,MZN,943,2,Mozambican Metical,2024-03-26,2024-03-26
+99,NAD,516,2,Namibian Dollar,2024-03-26,2024-03-26
+100,NGN,566,2,Nigerian Naira,2024-03-26,2024-03-26
+101,NIO,558,2,Nicaraguan Córdoba ,2024-03-26,2024-03-26
+102,NOK,578,2,Norwegian Krone,2024-03-26,2024-03-26
+103,NPR,524,2,Nepalese Rupee,2024-03-26,2024-03-26
+104,NZD,554,2,New Zealand Dollar,2024-03-26,2024-03-26
+105,OMR,512,3,Omani Rial,2024-03-26,2024-03-26
+106,PAB,590,2,Panamanian Balboa,2024-03-26,2024-03-26
+107,PEN,604,2,Peruvian Nuevo Sol,2024-03-26,2024-03-26
+108,PGK,598,2,Papua New Guinean Kina,2024-03-26,2024-03-26
+109,PHP,608,2,Philippine Peso,2024-03-26,2024-03-26
+110,PKR,586,2,Pakistani Rupee,2024-03-26,2024-03-26
+111,PLN,985,2,Polish Złoty ,2024-03-26,2024-03-26
+112,PYG,600,0,Paraguayan Guarani ,2024-03-26,2024-03-26
+113,QAR,634,2,Qatari Riyal,2024-03-26,2024-03-26
+114,RON,946,2,Romanian New Leu,2024-03-26,2024-03-26
+115,RSD,941,2,Serbian Dinar,2024-03-26,2024-03-26
+116,RUB,643,2,Russian Rouble,2024-03-26,2024-03-26
+117,RWF,646,0,Rwandan Franc,2024-03-26,2024-03-26
+118,SAR,682,2,Saudi Riyal,2024-03-26,2024-03-26
+119,SBD,90,2,Solomon Islands Dollar,2024-03-26,2024-03-26
+120,SCR,690,2,Seychelles Rupee,2024-03-26,2024-03-26
+121,SDG,938,2,Sudanese Pound,2024-03-26,2024-03-26
+122,SEK,752,2,Swedish Krona/Kronor,2024-03-26,2024-03-26
+123,SGD,702,2,Singapore Dollar,2024-03-26,2024-03-26
+124,SHP,654,2,Saint Helena Pound,2024-03-26,2024-03-26
+125,SLL,694,0,Sierra Leonean Leone,2024-03-26,2024-03-26
+126,SOS,706,2,Somali Shilling,2024-03-26,2024-03-26
+127,SRD,968,2,Surinamese Dollar,2024-03-26,2024-03-26
+128,SSP,728,2,South Sudanese Pound,2024-03-26,2024-03-26
+129,STD,678,0,São Tomé and Príncipe Dobra,2024-03-26,2024-03-26
+130,SYP,760,2,Syrian Pound,2024-03-26,2024-03-26
+131,SZL,748,2,Swazi Lilangeni,2024-03-26,2024-03-26
+132,THB,764,2,Thai Baht,2024-03-26,2024-03-26
+133,TJS,972,2,Tajikistani Somoni,2024-03-26,2024-03-26
+134,TMT,934,2,Turkmenistani Manat,2024-03-26,2024-03-26
+135,TND,788,3,Tunisian Dinar,2024-03-26,2024-03-26
+136,TOP,776,2,Tongan Paʻanga,2024-03-26,2024-03-26
+137,TRY,949,2,Turkish Lira,2024-03-26,2024-03-26
+138,TTD,780,2,Trinidad And Tobago Dollar,2024-03-26,2024-03-26
+139,TWD,901,2,New Taiwan Dollar,2024-03-26,2024-03-26
+140,TZS,834,2,Tanzanian Shilling,2024-03-26,2024-03-26
+141,UAH,980,2,Ukrainian Hryvnia,2024-03-26,2024-03-26
+142,UGX,800,2,Ugandan Shilling,2024-03-26,2024-03-26
+143,USD,840,2,United States Dollar,2024-03-26,2024-03-26
+144,UYU,858,2,Uruguayan Peso,2024-03-26,2024-03-26
+145,UZS,860,2,Uzbekistan Som,2024-03-26,2024-03-26
+146,VEF,937,2,Venezuelan Bolivar Fuente,2024-03-26,2024-03-26
+147,VND,704,0,Vietnamese Dong,2024-03-26,2024-03-26
+148,VUV,548,0,Vanuatu Vatu,2024-03-26,2024-03-26
+149,WST,882,2,Samoan Tala,2024-03-26,2024-03-26
+150,YER,886,2,Yemeni Rial,2024-03-26,2024-03-26
+151,ZAR,710,2,South African Rand,2024-03-26,2024-03-26
+152,ZMW,967,2,Zambian Kwacha,2024-03-26,2024-03-26

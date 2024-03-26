@@ -68,7 +68,7 @@ def test_postname_pass1(tablename: str, version: str, name: str):
             "Milliseconds": 123456,
             "Bytes": 9876543,
             "UnitPrice": 0.99,
-            "Currency": "CAN"
+            "CurrencyId": 26
             }
     response = client.post(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
@@ -87,7 +87,7 @@ def test_postname_pass2(tablename: str, version: str, name: str):
         "Milliseconds": 123456,
         "Bytes": 9876543,
         "UnitPrice": 1.99,
-        "Currency": "CAN"
+        "CurrencyId": 26
         }
     response = client.post(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
@@ -106,7 +106,7 @@ def test_postname_fail(tablename: str, version: str, name: str):
             "Milliseconds": 123456,
             "Bytes": 9876543,
             "UnitPrice": 0.99,
-            "Currency": "CAN"
+            "CurrencyId": 26
             }
     response = client.post(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
@@ -125,7 +125,7 @@ def test_putid_pass(tablename: str, version: str, record: int):
             "Milliseconds": 123456,
             "Bytes": 9876543,
             "UnitPrice": 0.99,
-            "Currency": "CAN"
+            "CurrencyId": 26
             }
     response = client.put(f"/{tablename}/{version}/id/{record}", json=data)
     print(f"Endpoint = /{tablename}/{version}/id/{record}")
@@ -144,7 +144,7 @@ def test_putid_fail(tablename: str, version: str, record: int):
             "Milliseconds": 123456,
             "Bytes": 9876543,
             "UnitPrice": 0.99,
-            "Currency": "CAN"
+            "CurrencyId": 26
             }
     response = client.put(f"/{tablename}/{version}/id/{record}", json=data)
     print(f"Endpoint = /{tablename}/{version}/id/{record}")
@@ -163,7 +163,7 @@ def test_putname_pass(tablename: str, version: str, name: str):
             "Milliseconds": 123456,
             "Bytes": 9876543,
             "UnitPrice": 0.99,
-            "Currency": "CAN"
+            "CurrencyId": 26
             }
     response = client.put(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
@@ -182,7 +182,7 @@ def test_putname_fail(tablename: str, version: str, name: str):
             "Milliseconds": 123456,
             "Bytes": 9876543,
             "UnitPrice": 0.99,
-            "Currency": "CAN"
+            "CurrencyId": 26
             }
     response = client.put(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")

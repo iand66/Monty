@@ -41,7 +41,6 @@ def dbBuild(get_db):
     assert dbFill(get_db, './sam/csv/import.csv', dbname, trace) == True
     
 # Define tmp directory
-# TODO tmp directory?
 @fixture(scope="session")
 def temp():
     """

@@ -78,56 +78,6 @@ class playlist(playlistCreate):
     Id: int
     DateCreated: date
 
-# class customer(Base):
-#     """ Customers """
-#     Firstname: str
-#     Lastname: str
-#     Company: str
-#     Address: str
-#     City: str
-#     State: str
-#     Country: str
-#     Postalcode: str
-#     Phone: str
-#     Fax: str
-#     Email: str 
-#     SupportRepId: str
-
-# class employee(Base):
-#     """ Employees """
-#     Lastname: str
-#     Firstname: str
-#     Title: str
-#     ReportsTo: int
-#     Birthdate: str  
-#     Hiredate: str 
-#     Address: str
-#     City: str
-#     State: str
-#     Country: str
-#     Postalcode: str
-#     Phone: str
-#     Fax: str
-#     Email: str  
-
-# class invoice(Base):
-#     """ Invoices """
-#     CustomerId: int
-#     InvoiceDate: str
-#     BillingAddress: str
-#     BillingCity: str
-#     BillingState: str
-#     BillingCountry: str
-#     BillingPostalcode: str
-#     Total: Decimal
-
-# class invoiceitem(Base):
-#     """ Invoice Items """
-#     InvoiceId: int
-#     TrackId: int
-#     UnitPrice: Decimal
-#     Quantity: int
-    
 """ Tracks per Album """
 class trackCreate(BaseModel):
     TrackName: str
@@ -138,7 +88,7 @@ class trackCreate(BaseModel):
     Milliseconds: int
     Bytes: int
     UnitPrice: float
-    Currency: str
+    CurrencyId: int
 
 class trackUpdate(trackCreate):
     #DateUpdated: date

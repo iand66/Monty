@@ -1,25 +1,26 @@
-"{'Id': 1, 'GenreName': 'Rock', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 2, 'GenreName': 'Jazz', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 3, 'GenreName': 'Metal', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 4, 'GenreName': 'Alternative & Punk', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 5, 'GenreName': 'Rock And Roll', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 6, 'GenreName': 'Blues', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 7, 'GenreName': 'Latin', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 8, 'GenreName': 'Reggae', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 9, 'GenreName': 'Pop', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 10, 'GenreName': 'Soundtrack', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 11, 'GenreName': 'Bossa Nova', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 12, 'GenreName': 'Easy Listening', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 13, 'GenreName': 'Heavy Metal', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 14, 'GenreName': 'R&B/Soul', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 15, 'GenreName': 'Electronica/Dance', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 16, 'GenreName': 'World', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 17, 'GenreName': 'Hip Hop/Rap', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 18, 'GenreName': 'Science Fiction', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 19, 'GenreName': 'TV Shows', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 20, 'GenreName': 'Sci Fi & Fantasy', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 21, 'GenreName': 'Drama', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 22, 'GenreName': 'Comedy', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 23, 'GenreName': 'Alternative', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 24, 'GenreName': 'Classical', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
-"{'Id': 25, 'GenreName': 'Opera', 'DateCreated': '2024-03-23', 'DateUpdated': '2024-03-23'}"
+Id,GenreName,DateCreated,DateUpdated
+1,Rock,2024-03-26,2024-03-26
+2,Jazz,2024-03-26,2024-03-26
+3,Metal,2024-03-26,2024-03-26
+4,Alternative & Punk,2024-03-26,2024-03-26
+5,Rock And Roll,2024-03-26,2024-03-26
+6,Blues,2024-03-26,2024-03-26
+7,Latin,2024-03-26,2024-03-26
+8,Reggae,2024-03-26,2024-03-26
+9,Pop,2024-03-26,2024-03-26
+10,Soundtrack,2024-03-26,2024-03-26
+11,Bossa Nova,2024-03-26,2024-03-26
+12,Easy Listening,2024-03-26,2024-03-26
+13,Heavy Metal,2024-03-26,2024-03-26
+14,R&B/Soul,2024-03-26,2024-03-26
+15,Electronica/Dance,2024-03-26,2024-03-26
+16,World,2024-03-26,2024-03-26
+17,Hip Hop/Rap,2024-03-26,2024-03-26
+18,Science Fiction,2024-03-26,2024-03-26
+19,TV Shows,2024-03-26,2024-03-26
+20,Sci Fi & Fantasy,2024-03-26,2024-03-26
+21,Drama,2024-03-26,2024-03-26
+22,Comedy,2024-03-26,2024-03-26
+23,Alternative,2024-03-26,2024-03-26
+24,Classical,2024-03-26,2024-03-26
+25,Opera,2024-03-26,2024-03-26
