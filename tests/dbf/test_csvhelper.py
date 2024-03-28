@@ -1,9 +1,8 @@
 import os
 from pytest import mark, param
 from src.raw.csvhelper import csvRead, csvDictReader, csvWrite, csvDictWriter
-from src.orm.schema import *
+from src.orm.schema import Album, Artist, Customer, Currency, Employee, Genre, Invoice, Invoiceitem, Mediatype, Playlist, Playlisttrack, Track
 from src.orm.dbfunctions import dbSelect
-from src.helper import trace
 
 # Verify sample files loaded to test database
 # def csvRead(filename:str) -> list:
@@ -48,21 +47,21 @@ def test_csvDictRead(get_db, filename, record):
 # Verify CSV write from test database
 # def csvWrite(filename:str, data:list) -> bool: 
 @mark.parametrize('filename, table',
-    # [param('albums.csv', Album, id='Albums'),
-    #  param('artists.csv', Artist, id='Artists'),
-    #  param('customers.csv', Customer, id='Customers'),
-    #  param('currency.csv', Currency, id='Currency'),
-    [param('employees.csv', Employee, id='Employees'),]
-    #  param('genres.csv', Genre, id='Genres'),
-    #  param('invoices.csv', Invoice, id='Invoices'),
-    #  param('invoiceitems.csv', Invoiceitem, id='Invoiceitems'),
-    #  param('mediatypes.csv', Mediatype, id='Mediatypes'),
-    #  param('playlists.csv', Playlist, id='Playlists'),
-    #  param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'),
-    #  param('tracks.csv', Track, id='Tracks')]
+    [param('albums.csv', Album, id='Albums'),  
+     param('artists.csv', Artist, id='Artists'), 
+     param('customers.csv', Customer, id='Customers'), 
+     param('currency.csv', Currency, id='Currency'), 
+     param('employees.csv', Employee, id='Employees'), 
+     param('genres.csv', Genre, id='Genres'), 
+     param('invoices.csv', Invoice, id='Invoices'), 
+     param('invoiceitems.csv', Invoiceitem, id='Invoiceitems'), 
+     param('mediatypes.csv', Mediatype, id='Mediatypes'), 
+     param('playlists.csv', Playlist, id='Playlists'), 
+     param('playlisttracks.csv', Playlisttrack, id='Playlisttracks'), 
+     param('tracks.csv', Track, id='Tracks')]
       )
 def test_csvWrite(get_db, temp, filename, table):
-    assert csvWrite(temp+'\\'+filename, dbSelect(get_db, table, **{'Id':'%'})) == True
+    assert csvWrite(temp+'\\'+filename, dbSelect(get_db, table, **{'Id':'%'})) is True
 
 # Verify CSV write from test database
 # def csvDictWriter(filename:str, data:dict) -> bool:
@@ -81,4 +80,4 @@ def test_csvWrite(get_db, temp, filename, table):
      param('tracks.csv', Track, id='Tracks')]
      )
 def test_csvDictWrite(get_db, temp, filename, table):
-    assert csvDictWriter(temp+'\\'+filename, dbSelect(get_db, table, **{'Id':'%'})) == True
+    assert csvDictWriter(temp+'\\'+filename, dbSelect(get_db, table, **{'Id':'%'})) is True

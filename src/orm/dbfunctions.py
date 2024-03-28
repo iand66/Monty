@@ -3,6 +3,7 @@ from sqlalchemy import exc
 from src.helper import applog, datlog, trace
 from src.orm.schema import Base
 
+
 # RETURN all attributes from a SQLAlchemy object.
 def get_attributes(model) -> dict:
     """
@@ -15,6 +16,7 @@ def get_attributes(model) -> dict:
         if not column.key.startswith("_sa_"):
             data[column.key] = getattr(model, column.key)
     return data
+
 
 # INSERT multiple records into database table
 def dbBulkInsert(session, table: str, data: Base) -> int:
@@ -38,6 +40,7 @@ def dbBulkInsert(session, table: str, data: Base) -> int:
     finally:
         session.close()
 
+
 # INSERT record into database table
 def dbInsert(session, data: Base) -> bool:
     """
@@ -59,6 +62,7 @@ def dbInsert(session, data: Base) -> bool:
         return False
     finally:
         session.close()
+
 
 # SELECT query on the given table with optional filtering
 def dbSelect(session, table: Base, **kwargs) -> list:
@@ -90,6 +94,7 @@ def dbSelect(session, table: Base, **kwargs) -> list:
     finally:
         session.close()
 
+
 # UPDATE records in the database based on the given filter condition(s)
 def dbUpdate(session, table: Base, filter: dict, update: dict) -> bool:
     """
@@ -117,6 +122,7 @@ def dbUpdate(session, table: Base, filter: dict, update: dict) -> bool:
         return False
     finally:
         session.close()
+
 
 # DELETE records from a database table
 def dbDelete(session, table: Base, **kwargs) -> bool:

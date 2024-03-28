@@ -1,8 +1,10 @@
 import csv
+
 from dateutil.parser import parse
+from src.helper import applog
 
 def is_date(d: str):
-    if '/' in d:
+    if "/" in d:
         try:
             parsed_date = parse(d)
             return parsed_date.strftime("%Y-%m-%d")
@@ -11,9 +13,8 @@ def is_date(d: str):
     else:
         return d
 
-from src.helper import applog
 
-def csvRead(filename:str) -> list:
+def csvRead(filename: str) -> list:
     """
     READ CSV file
     :param filename (str): Fully qualified path to filename
@@ -21,17 +22,18 @@ def csvRead(filename:str) -> list:
     """
     data = []
     try:
-        with open(filename, encoding='utf-8') as f:
+        with open(filename, encoding="utf-8") as f:
             reader = csv.reader(f)
             for row in reader:
                 row = [is_date(value) for value in row]
-                data.append(', '.join(row))
+                data.append(", ".join(row))
         return data
     except Exception as e:
         applog.error(e)
         return e
 
-def csvWrite(filename:str, data:list) -> bool:
+
+def csvWrite(filename: str, data: list) -> bool:
     """
     WRITE CSV file
     :param filename (str): Fully qualified path to OS directory
@@ -39,7 +41,7 @@ def csvWrite(filename:str, data:list) -> bool:
     :return bool: True or exception
     """
     try:
-        with open(filename,'w', newline='', encoding='utf-8') as f:
+        with open(filename, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             for i in range(len(data)):
                 writer.writerow([data[i]])
@@ -48,15 +50,16 @@ def csvWrite(filename:str, data:list) -> bool:
         applog.error(e)
         return e
 
-def csvDictReader(filename:str) -> list:
+
+def csvDictReader(filename: str) -> list:
     """
     READ CSV file as dictionary
     :param filename (str): Fully qualified path to filename
-    :return list: List of read lines 
+    :return list: List of read lines
     """
     data = []
     try:
-        with open(filename, encoding='utf-8') as f:
+        with open(filename, encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 row = {k: is_date(v) for k, v in row.items()}
@@ -66,7 +69,8 @@ def csvDictReader(filename:str) -> list:
         applog.error(e)
         return e
 
-def csvDictWriter(filename:str, data:dict) -> bool:
+
+def csvDictWriter(filename: str, data: dict) -> bool:
     """
     WRITE CSV file from dictionary
     :param filename (str): Fully qualified path to OS directory
@@ -74,7 +78,7 @@ def csvDictWriter(filename:str, data:dict) -> bool:
     :return bool (bool): True or exception
     """
     try:
-        with open(filename, 'w', newline='', encoding='utf8') as f:
+        with open(filename, "w", newline="", encoding="utf8") as f:
             fieldnames = data[0]
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()

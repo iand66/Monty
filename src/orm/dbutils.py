@@ -6,8 +6,10 @@ from sqlalchemy_utils import database_exists
 
 from src.helper import applog
 from src.orm.dbfunctions import dbBulkInsert
-from src.orm.schema import *
+from src.orm.schema import *  # noqa: F403
+# from src.orm.schema import Base, Album, Artist, Customer, Currency, Employee, Genre, Invoice, Invoiceitem, Mediatype, Playlist, Playlisttrack, Track
 from src.raw.csvhelper import csvDictReader, csvRead
+
 
 # CREATE database shell
 def dbInit(engine: Engine) -> bool:
@@ -17,14 +19,19 @@ def dbInit(engine: Engine) -> bool:
     :return bool: True or False
     """
     if not database_exists(engine.url):
-        Base.metadata.create_all(bind=engine)
-        applog.info(f'Database {engine.url.database} created at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+        Base.metadata.create_all(bind=engine)  # noqa: F405
+        applog.info(
+            f'Database {engine.url.database} created at {datetime.today().strftime("%d-%m-%Y %H:%M")}'
+        )
         return True
     else:
-        for t in Base.metadata.sorted_tables:
-            Base.metadata.create_all(bind=engine, checkfirst=True)
-        applog.info(f'Database {engine.url} updated at at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+        for t in Base.metadata.sorted_tables:  # noqa: F405
+            Base.metadata.create_all(bind=engine, checkfirst=True) # noqa F405
+        applog.info(
+            f'Database {engine.url} updated at at {datetime.today().strftime("%d-%m-%Y %H:%M")}'
+        )
         return True
+
 
 # RELOAD sample data
 def dbFill(session, seed: str, database: str) -> bool:
@@ -43,11 +50,14 @@ def dbFill(session, seed: str, database: str) -> bool:
                 tblName = f[1][0 : f[1].rfind(".")]
                 result = dbBulkInsert(session, eval(tblName.title()), dataToImport)
                 if result:
-                    applog.info(f'Populated {database} {tblName.title()} at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
+                    applog.info(
+                        f'Populated {database} {tblName.title()} at {datetime.today().strftime("%d-%m-%Y %H:%M")}'
+                    )
             return True
     except Exception as e:
         applog.error(f"{e}")
         return e
+
 
 # DELETE database
 def dbKill(filename: str) -> bool:
@@ -59,8 +69,10 @@ def dbKill(filename: str) -> bool:
     try:
         if os.path.exists(filename):
             os.remove(filename)
-            applog.info(f'File {filename} has been removed at {datetime.today().strftime("%d-%m-%Y %H:%M")}')
-        
+            applog.info(
+                f'File {filename} has been removed at {datetime.today().strftime("%d-%m-%Y %H:%M")}'
+            )
+
         if not os.path.exists(filename):
             return True
         else:

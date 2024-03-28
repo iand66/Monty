@@ -3,9 +3,8 @@ import os
 from pytest import fixture
 from sqlalchemy import text
 
-from src.helper import appcfg, engine, mode, session, trace
+from src.helper import appcfg, engine, mode, session
 from src.orm.dbutils import dbFill, dbInit, dbKill
-from src.orm.schema import *
 
 # Get testing database name
 @fixture(scope="session")
@@ -30,15 +29,15 @@ def dbBuild(get_db):
         dbname = appcfg.get('DBCFG','dbtest')
     
     if os.path.exists(dbname): 
-        assert dbKill(dbname) == True
-        assert dbInit(engine) == True
+        assert dbKill(dbname) is True
+        assert dbInit(engine) is True
     else:
-        assert dbInit(engine) == True
+        assert dbInit(engine) is True
             
     if get_db.bind.name == 'sqlite':
         get_db.execute(text('pragma foreign_keys=on'))
     
-    assert dbFill(get_db, './sam/csv/import.csv', dbname) == True
+    assert dbFill(get_db, './sam/csv/import.csv', dbname) is True
     
 # Define tmp directory
 @fixture(scope="session")

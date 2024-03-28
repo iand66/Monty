@@ -9,9 +9,11 @@ from logging.config import fileConfig
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
+
 # Call stack used in debug mode
 def whoami():
     return inspect.stack()[1][3]
+
 
 # Read configurable parameters from INI file
 def config(filename: str) -> configparser:
@@ -25,9 +27,10 @@ def config(filename: str) -> configparser:
     try:
         config.read_file(open(filename, "r"))
     except Exception as e:
-        print(f"Could not find {filename} file")
+        print(f"Could not find {filename} file. Problem {e}")
         sys.exit()
     return config
+
 
 # Setup logging environment
 def logSetup(logcfg: str, logloc: str) -> None:
@@ -46,17 +49,20 @@ def logSetup(logcfg: str, logloc: str) -> None:
     try:
         os.path.exists(logcfg)
     except Exception as e:
-        print(f"Could not find {logcfg} file")
+        print(f"Could not find {logcfg} file. Problem {e}")
         sys.exit()
 
     try:
-        fileConfig(logcfg, defaults=
-                   {"logfilename": appfile, 
-                    "datfilename": datfile, 
-                    "secfilename": secfile,
-                    "apifilename": apifile 
-                    })
-        
+        fileConfig(
+            logcfg,
+            defaults={
+                "logfilename": appfile,
+                "datfilename": datfile,
+                "secfilename": secfile,
+                "apifilename": apifile,
+            },
+        )
+
     except Exception as e:
         if os.path.exists(logloc):
             print(f"Could not process {logcfg} file {e}")
@@ -64,15 +70,17 @@ def logSetup(logcfg: str, logloc: str) -> None:
         else:
             os.mkdir(logloc)
 
+
 # Get current database
 def get_db():
     db = session()
-    if db.bind.name == 'sqlite':
-      db.execute(text('pragma foreign_keys=on'))
+    if db.bind.name == "sqlite":
+        db.execute(text("pragma foreign_keys=on"))
     try:
-        return db 
+        return db
     finally:
         db.close()
+
 
 # Setup working environment
 """
@@ -83,26 +91,26 @@ secure (bool) - Trace security events to security logs
 engine (object) - SQL Alchemy database to use
 session (object) - SQL Alchemy session object
 """
-appcfg = config('./ini/globals.ini')
-mode = eval(appcfg['MODE']['live'])
-trace = eval(appcfg['LOGCFG']['trace'])
-secure = eval(appcfg['LOGCFG']['secure'])
-dbtype = appcfg.get('DBCFG', 'dbtype')
-logcfg = appcfg.get('LOGCFG', 'logcfg')
-logloc = appcfg.get('LOGCFG', 'logloc')
+appcfg = config("./ini/globals.ini")
+mode = eval(appcfg["MODE"]["live"])
+trace = eval(appcfg["LOGCFG"]["trace"])
+secure = eval(appcfg["LOGCFG"]["secure"])
+dbtype = appcfg.get("DBCFG", "dbtype")
+logcfg = appcfg.get("LOGCFG", "logcfg")
+logloc = appcfg.get("LOGCFG", "logloc")
 
 if mode:
-  dbname = appcfg.get('DBCFG','dblive')
+    dbname = appcfg.get("DBCFG", "dblive")
 else:
-  dbname = appcfg.get('DBCFG','dbtest')
+    dbname = appcfg.get("DBCFG", "dbtest")
 
 # Setup logging environment
 logger = logSetup(logcfg, logloc)
-applog = logging.getLogger('AppLog')
-datlog = logging.getLogger('DatLog')
-seclog = logging.getLogger('SecLog')
-apilog = logging.getLogger('ApiLog')
+applog = logging.getLogger("AppLog")
+datlog = logging.getLogger("DatLog")
+seclog = logging.getLogger("SecLog")
+apilog = logging.getLogger("ApiLog")
 
 # Create database
-engine = create_engine(dbtype + dbname, connect_args={'check_same_thread':False})
+engine = create_engine(dbtype + dbname, connect_args={"check_same_thread": False})
 session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
