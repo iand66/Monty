@@ -1,5 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import date
+from typing import Optional
 
 
 class albumCreate(BaseModel):
@@ -33,6 +34,67 @@ class artistDelete(artistCreate):
 
 
 class artist(artistCreate):
+    Id: int
+    DateCreated: date
+
+
+class customerCreate(BaseModel):
+    Lastname: str
+    Firstname: str
+    Company: str | None
+    Address: str | None
+    City: str | None
+    State: str | None
+    Country: str | None
+    Postalcode: str | None
+    BillingAddress: str | None
+    BillingCity: str | None
+    BillingState: str | None
+    BillingCountry: str | None
+    BillingPostalcode: str | None
+    Phone: str | None
+    Email: EmailStr
+    SupportRepId: int
+
+
+class customerUpdate(customerCreate):
+    pass
+
+
+class customerDelete(customerCreate):
+    Id: int
+
+
+class customer(customerCreate):
+    Id: int
+    DateCreated: date
+
+
+class employeeCreate(BaseModel):
+    Lastname: str
+    Firstname: str
+    Title: str
+    ReportsTo: int
+    Birthdate: Optional[date] = None
+    Hiredate: Optional[date] = None
+    Address: str | None
+    City: str | None
+    State: str | None
+    Country: str | None
+    Postalcode: str | None
+    Phone: str | None
+    Email: EmailStr
+
+
+class employeeUpdate(employeeCreate):
+    pass
+
+
+class employeeDelete(employeeCreate):
+    Id: int
+
+
+class employee(employeeCreate):
     Id: int
     DateCreated: date
 

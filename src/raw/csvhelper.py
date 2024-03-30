@@ -3,6 +3,7 @@ import csv
 from dateutil.parser import parse
 from src.helper import applog
 
+
 def is_date(d: str):
     if "/" in d:
         try:

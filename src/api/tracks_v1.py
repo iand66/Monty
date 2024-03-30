@@ -98,6 +98,42 @@ async def get_name(name: str, db: Session = Depends(get_db)) -> Any:
         return result
 
 
+@router.get("/search", response_model=List[trackCreate])
+async def get_query(
+    name: str | None = None, composer: str | None = None, db: Session = Depends(get_db)
+) -> trackCreate:
+    """
+    **Get Track(s) by Track Name and/or Composer:**
+    - **Id**: Unique Id of Track
+    - **Track Name**: Name of the Track
+    - **Album Id**: Unique Id of Album
+    - **Mediatype Id**: Unique Id of Mediatype
+    - **Genre Id**: Unique Id of Genre
+    - **Composer**: Name of Composer(s)
+    - **Milliseconds**: Length of Track in Milliseconds
+    - **Bytes**: Size of Track in Bytes
+    - **Unit Price**: Price of Track in Currency
+    - **Currency**: Trading Currency
+    """
+    if name:
+        result = dbSelect(db, Track, **{"TrackName": name})
+        if len(result) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail=f"Track {name} not found"
+            )
+        else:
+            return result
+    if composer:
+        result = dbSelect(db, Track, **{"Composer": composer})
+        if len(result) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Composer {composer} not found",
+            )
+        else:
+            return result
+
+
 @router.post(
     "/name/{name:str}",
     summary="Create New Track",

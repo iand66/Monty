@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.api import (
     albums_v1,
     artists_v1,
+    customers_v1,
+    employee_v1,
     genres_v1,
     mediatype_v1,
     playlists_v1,
@@ -16,6 +18,8 @@ metadata = [
     {"name": "All", "description": "**Common Methods**"},
     {"name": "Albums", "description": "**Album Methods**"},
     {"name": "Artists", "description": "**Artist Methods**"},
+    {"name": "Customers", "description": "**Customer Methods**"},
+    {"name": "Employees", "description": "**Employee Methods**"},
     {"name": "Genres", "description": "**Genre Methods**"},
     {"name": "Media Types", "description": "**Media Type Methods**"},
     {"name": "Playlists", "description": "**Playlist Methods**"},
@@ -38,6 +42,8 @@ app.add_middleware(
 
 app.include_router(albums_v1.router, prefix="/albums/v1", tags=["Albums"])
 app.include_router(artists_v1.router, prefix="/artists/v1", tags=["Artists"])
+app.include_router(customers_v1.router, prefix="/customers/v1", tags=["Customers"])
+app.include_router(employee_v1.router, prefix="/employees/v1", tags=["Employees"])
 app.include_router(genres_v1.router, prefix="/genres/v1", tags=["Genres"])
 app.include_router(mediatype_v1.router, prefix="/mediatypes/v1", tags=["Media Types"])
 app.include_router(playlists_v1.router, prefix="/playlists/v1", tags=["Playlists"])

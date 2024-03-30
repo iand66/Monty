@@ -7,6 +7,7 @@ from sqlalchemy_utils import database_exists
 from src.helper import applog
 from src.orm.dbfunctions import dbBulkInsert
 from src.orm.schema import *  # noqa: F403
+
 # from src.orm.schema import Base, Album, Artist, Customer, Currency, Employee, Genre, Invoice, Invoiceitem, Mediatype, Playlist, Playlisttrack, Track
 from src.raw.csvhelper import csvDictReader, csvRead
 
@@ -26,7 +27,7 @@ def dbInit(engine: Engine) -> bool:
         return True
     else:
         for t in Base.metadata.sorted_tables:  # noqa: F405
-            Base.metadata.create_all(bind=engine, checkfirst=True) # noqa F405
+            Base.metadata.create_all(bind=engine, checkfirst=True)  # noqa F405
         applog.info(
             f'Database {engine.url} updated at at {datetime.today().strftime("%d-%m-%Y %H:%M")}'
         )
