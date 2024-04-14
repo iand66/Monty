@@ -1,6 +1,8 @@
 import uvicorn
+import typer
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from src.helper import trace, secure
 
 from src.api import (
     albums_v1,
@@ -57,9 +59,16 @@ async def index():
 
 
 # Run Uvicorn
-def main() -> None:
+def main(
+    trace: bool = typer.Argument(trace, help="Enable/Disable DB level logging"),
+    secure: bool = typer.Argument(secure, help="Enable/Disable OAuth checks"),
+) -> None:
+    if trace:
+        trace = True
+    if secure:
+        secure = True
     uvicorn.run("main:app", port=8000, log_level="debug", reload=True)
 
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)
