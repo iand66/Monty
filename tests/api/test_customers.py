@@ -1,32 +1,36 @@
 from random import randint
 
+from sqlalchemy import text
 from fastapi.testclient import TestClient
-from pytest import mark, param
+from pytest import mark, param, fixture
 
 from src.main import app
 
 client = TestClient(app)
 
 
+@fixture
+def num_customers(get_db):
+    result = get_db.execute(text("SELECT COUNT(*) FROM customers"))
+    count = result.fetchone()[0]
+    return count
+
+
 # GET All Customers - PASS
 @mark.order(1)
-@mark.parametrize(
-    "tablename, version, record", [param("customers", "v1", 59, id="Customers")]
-)
-def test_getall(tablename: str, version: str, record: int):
+@mark.parametrize("tablename, version", [param("customers", "v1", id="Customers")])
+def test_getall(tablename: str, version: str, num_customers: int):
     response = client.get(f"/{tablename}/{version}")
-    print(f"Endpoint = /{tablename}/{version} records {record}")
+    print(f"Endpoint = /{tablename}/{version} records {num_customers}")
     assert response.status_code == 200
-    assert len(response.json()) == record
+    assert len(response.json()) == num_customers
 
 
 # GET RANDOM Customer by Customer Id - PASS
 @mark.order(2)
-@mark.parametrize(
-    "tablename, version, record", [param("customers", "v1", 59, id="Customers")]
-)
-def test_getid_pass(tablename: str, version: str, record: int):
-    x = randint(1, record)
+@mark.parametrize("tablename, version", [param("customers", "v1", id="Customers")])
+def test_getid_pass(tablename: str, version: str, num_customers: int):
+    x = randint(1, num_customers)
     response = client.get(f"/{tablename}/{version}/id/{x}")
     print(f"Endpoint = /{tablename}/{version}/id/{x}")
     assert response.status_code == 200
@@ -35,24 +39,12 @@ def test_getid_pass(tablename: str, version: str, record: int):
 
 # GET Customers by Id - FAIL
 @mark.order(3)
-@mark.parametrize(
-    "tablename, version, record", [param("customers", "v1", 99, id="Customers")]
-)
-def test_getid_fail(tablename: str, version: str, record: int):
-    response = client.get(f"/{tablename}/{version}/id/{record}")
-    print(f"Endpoint = /{tablename}/{version}/id/{record}")
+@mark.parametrize("tablename, version", [param("customers", "v1", id="Customers")])
+def test_getid_fail(tablename: str, version: str, num_customers: int):
+    num_customers = num_customers + 1
+    response = client.get(f"/{tablename}/{version}/id/{num_customers}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num_customers}")
     assert response.status_code == 404
-
-
-# GET Customers by Name - PASS
-@mark.order(7)
-@mark.parametrize(
-    "tablename, version, name", [param("customers", "v1", "Customer%", id="Customers")]
-)
-def test_getname_pass(tablename: str, version: str, name: str):
-    response = client.get(f"/{tablename}/{version}/name/{name}")
-    print(f"Endpoint = /{tablename}/{version}/name/{name}")
-    assert response.status_code == 200
 
 
 # GET Customers by Name - FAIL
@@ -124,6 +116,17 @@ def test_postname_pass2(tablename: str, version: str, name: str):
     assert response.status_code == 201
 
 
+# GET Customers by Name - PASS
+@mark.order(7)
+@mark.parametrize(
+    "tablename, version, name", [param("customers", "v1", "Customer%", id="Customers")]
+)
+def test_getname_pass(tablename: str, version: str, name: str):
+    response = client.get(f"/{tablename}/{version}/name/{name}")
+    print(f"Endpoint = /{tablename}/{version}/name/{name}")
+    assert response.status_code == 200
+
+
 # POST Customer by Name - FAIL
 @mark.order(8)
 @mark.parametrize(
@@ -155,10 +158,9 @@ def test_postname_fail(tablename: str, version: str, name: str):
 
 # PUT Customer by Id - PASS
 @mark.order(9)
-@mark.parametrize(
-    "tablename, version, record", [param("customers", "v1", 60, id="Customers")]
-)
-def test_putid_pass(tablename: str, version: str, record: int):
+@mark.parametrize("tablename, version", [param("customers", "v1", id="Customers")])
+def test_putid_pass(tablename: str, version: str, num_customers: int):
+    num_customers = num_customers - 1
     data = {
         "Lastname": "Customer 1",
         "Firstname": "Test",
@@ -177,17 +179,16 @@ def test_putid_pass(tablename: str, version: str, record: int):
         "Email": "user@example.com",
         "SupportRepId": 3,
     }
-    response = client.put(f"/{tablename}/{version}/id/{record}", json=data)
-    print(f"Endpoint = /{tablename}/{version}/id/{record}")
+    response = client.put(f"/{tablename}/{version}/id/{num_customers}", json=data)
+    print(f"Endpoint = /{tablename}/{version}/id/{num_customers}")
     assert response.status_code == 201
 
 
 # PUT Customer by Id - FAIL
 @mark.order(10)
-@mark.parametrize(
-    "tablename, version, record", [param("customers", "v1", 99, id="Customers")]
-)
-def test_putid_fail(tablename: str, version: str, record: int):
+@mark.parametrize("tablename, version", [param("customers", "v1", id="Customers")])
+def test_putid_fail(tablename: str, version: str, num_customers: int):
+    num_customers = num_customers + 1
     data = {
         "Lastname": "Customer 1",
         "Firstname": "Test",
@@ -206,8 +207,8 @@ def test_putid_fail(tablename: str, version: str, record: int):
         "Email": "user@example.com",
         "SupportRepId": 3,
     }
-    response = client.put(f"/{tablename}/{version}/id/{record}", json=data)
-    print(f"Endpoint = /{tablename}/{version}/id/{record}")
+    response = client.put(f"/{tablename}/{version}/id/{num_customers}", json=data)
+    print(f"Endpoint = /{tablename}/{version}/id/{num_customers}")
     assert response.status_code == 404
 
 
@@ -271,23 +272,21 @@ def test_putname_fail(tablename: str, version: str, name: str):
 
 # DELETE Customer by Id - PASS
 @mark.order(13)
-@mark.parametrize(
-    "tablename, version, record", [param("customers", "v1", 60, id="Customers")]
-)
-def test_deleteid_pass(tablename: str, version: str, record: int):
-    response = client.delete(f"/{tablename}/{version}/id/{record}")
-    print(f"Endpoint = /{tablename}/{version}/id/{record}")
+@mark.parametrize("tablename, version", [param("customers", "v1", id="Customers")])
+def test_deleteid_pass(tablename: str, version: str, num_customers: int):
+    num_customers = num_customers - 1
+    response = client.delete(f"/{tablename}/{version}/id/{num_customers}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num_customers}")
     assert response.status_code == 202
 
 
 # DELETE Customer by Id - FAIL
 @mark.order(14)
-@mark.parametrize(
-    "tablename, version, record", [param("customers", "v1", 60, id="Customers")]
-)
-def test_deleteid_fail(tablename: str, version: str, record: int):
-    response = client.delete(f"/{tablename}/{version}/id/{record}")
-    print(f"Endpoint = /{tablename}/{version}/id/{record}")
+@mark.parametrize("tablename, version", [param("customers", "v1", id="Customers")])
+def test_deleteid_fail(tablename: str, version: str, num_customers: int):
+    num_customers = num_customers + 2
+    response = client.delete(f"/{tablename}/{version}/id/{num_customers}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num_customers}")
     assert response.status_code == 404
 
 

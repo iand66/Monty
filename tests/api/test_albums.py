@@ -8,11 +8,13 @@ from src.main import app
 
 client = TestClient(app)
 
+
 @fixture
 def num_albums(get_db):
     result = get_db.execute(text("SELECT COUNT(*) FROM albums"))
     count = result.fetchone()[0]
     return count
+
 
 @fixture
 def num_artists(get_db):
@@ -20,11 +22,10 @@ def num_artists(get_db):
     count = result.fetchone()[0]
     return count
 
+
 # GET All Albums - PASS
 @mark.order(1)
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_getall(tablename: str, version: str, num_albums: int):
     response = client.get(f"/{tablename}/{version}")
     print(f"Endpoint = /{tablename}/{version} records {num_albums}")
@@ -34,9 +35,7 @@ def test_getall(tablename: str, version: str, num_albums: int):
 
 # GET RANDOM Album by Album Id - PASS
 @mark.order(2)
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_getid_pass(tablename: str, version: str, num_albums: int):
     x = randint(1, num_albums)
     response = client.get(f"/{tablename}/{version}/id/{x}")
@@ -47,9 +46,7 @@ def test_getid_pass(tablename: str, version: str, num_albums: int):
 
 # GET Albums by Id - FAIL
 @mark.order(3)
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_getid_fail(tablename: str, version: str, num_albums: int):
     num_albums = num_albums + 1
     response = client.get(f"/{tablename}/{version}/id/{num_albums}")
@@ -71,9 +68,7 @@ def test_getname_fail(tablename: str, version: str, name: str):
 # GET RANDOM Album by Artist Id
 @mark.order(5)
 @mark.flaky(reruns=3, reason="Not all artists have albums")
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_getartist_pass(tablename: str, version: str, num_artists: int):
     x = randint(1, num_artists)
     response = client.get(f"/{tablename}/{version}/artist/{x}")
@@ -84,9 +79,7 @@ def test_getartist_pass(tablename: str, version: str, num_artists: int):
 
 # GET Album by Artist Id - FAIL
 @mark.order(6)
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_getartist_fail(tablename: str, version: str, num_artists: int):
     num_artists = num_artists + 1
     response = client.get(f"/{tablename}/{version}/artist/{num_artists}")
@@ -143,9 +136,7 @@ def test_postname_fail(tablename: str, version: str, name: str):
 
 # PUT Album by Id - PASS
 @mark.order(11)
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_putid_pass(tablename: str, version: str, num_albums: int):
     num_albums = num_albums - 1
     data = {"AlbumTitle": "Another Test", "ArtistId": 1}
@@ -156,9 +147,7 @@ def test_putid_pass(tablename: str, version: str, num_albums: int):
 
 # PUT Album by Id - FAIL
 @mark.order(12)
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_putid_fail(tablename: str, version: str, num_albums: int):
     num_albums = num_albums + 1
     data = {"AlbumTitle": "Another Test", "ArtistId": 1}
@@ -193,9 +182,7 @@ def test_putname_fail(tablename: str, version: str, name: str, num_artists: int)
 
 # DELETE Album by Id - PASS
 @mark.order(15)
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_deleteid_pass(tablename: str, version: str, num_albums: int):
     response = client.delete(f"/{tablename}/{version}/id/{num_albums}")
     print(f"Endpoint = /{tablename}/{version}/id/{num_albums}")
@@ -205,9 +192,7 @@ def test_deleteid_pass(tablename: str, version: str, num_albums: int):
 # DELETE Album by Id - FAIL
 @mark.order(16)
 @mark.flaky(reruns=3, reason="DB Reloading")
-@mark.parametrize(
-    "tablename, version", [param("albums", "v1", id="Albums")]
-)
+@mark.parametrize("tablename, version", [param("albums", "v1", id="Albums")])
 def test_deleteid_fail(tablename: str, version: str, num_albums: int):
     num_albums = num_albums + 1
     response = client.delete(f"/{tablename}/{version}/id/{num_albums}")
