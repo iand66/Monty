@@ -197,6 +197,8 @@ class Mediatype(Base):
 class Track(Base):
     """Available Tracks per Album"""
 
+    # TODO Unique Constraint
+
     __tablename__ = "Tracks"
     Id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     TrackName: Mapped[str] = mapped_column(String(150), nullable=False)

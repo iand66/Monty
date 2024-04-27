@@ -1,36 +1,29 @@
 from random import randint
 
-from sqlalchemy import text
 from fastapi.testclient import TestClient
-from pytest import mark, param, fixture
+from pytest import mark, param
 
 from src.main import app
 
 client = TestClient(app)
 
 
-@fixture
-def num_tracks(get_db):
-    result = get_db.execute(text("SELECT COUNT(*) FROM tracks"))
-    count = result.fetchone()[0]
-    return count
-
-
 # GET All Tracks - PASS
 @mark.order(1)
 @mark.parametrize("tablename, version", [param("tracks", "v1", id="Tracks")])
-def test_getall(tablename: str, version: str, num_tracks: int):
+def test_getall(tablename: str, version: str, get_count: int):
+    num = get_count(tablename)
     response = client.get(f"/{tablename}/{version}")
-    print(f"Endpoint = /{tablename}/{version} records {num_tracks}")
+    print(f"Endpoint = /{tablename}/{version} records {num}")
     assert response.status_code == 200
-    assert len(response.json()) == num_tracks
+    assert len(response.json()) == num
 
 
 # GET RANDOM Track by Track Id - PASS
 @mark.order(2)
 @mark.parametrize("tablename, version", [param("tracks", "v1", id="Tracks")])
-def test_getid_pass(tablename: str, version: str, num_tracks: int):
-    x = randint(1, num_tracks)
+def test_getid_pass(tablename: str, version: str, get_count: int):
+    x = randint(1, get_count(tablename))
     response = client.get(f"/{tablename}/{version}/id/{x}")
     print(f"Endpoint = /{tablename}/{version}/id/{x}")
     assert response.status_code == 200
@@ -40,10 +33,10 @@ def test_getid_pass(tablename: str, version: str, num_tracks: int):
 # GET Tracks by Id - FAIL
 @mark.order(3)
 @mark.parametrize("tablename, version", [param("tracks", "v1", id="Tracks")])
-def test_getid_fail(tablename: str, version: str, num_tracks: int):
-    num_tracks = num_tracks + 1
-    response = client.get(f"/{tablename}/{version}/id/{num_tracks}")
-    print(f"Endpoint = /{tablename}/{version}/id/{num_tracks}")
+def test_getid_fail(tablename: str, version: str, get_count: int):
+    num = get_count(tablename) + 1
+    response = client.get(f"/{tablename}/{version}/id/{num}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 404
 
 
@@ -138,7 +131,8 @@ def test_postname_fail(tablename: str, version: str, name: str):
 # PUT Track by Id - PASS
 @mark.order(9)
 @mark.parametrize("tablename, version", [param("tracks", "v1", id="Tracks")])
-def test_putid_pass(tablename: str, version: str, num_tracks: int):
+def test_putid_pass(tablename: str, version: str, get_count: int):
+    num = get_count(tablename)
     data = {
         "TrackName": "Test Track 3",
         "AlbumId": 1,
@@ -150,16 +144,16 @@ def test_putid_pass(tablename: str, version: str, num_tracks: int):
         "UnitPrice": 0.99,
         "CurrencyId": 26,
     }
-    response = client.put(f"/{tablename}/{version}/id/{num_tracks}", json=data)
-    print(f"Endpoint = /{tablename}/{version}/id/{num_tracks}")
+    response = client.put(f"/{tablename}/{version}/id/{num}", json=data)
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 201
 
 
 # PUT Track by Id - FAIL
 @mark.order(10)
 @mark.parametrize("tablename, version", [param("tracks", "v1", id="Tracks")])
-def test_putid_fail(tablename: str, version: str, num_tracks: int):
-    num_tracks = num_tracks + 1
+def test_putid_fail(tablename: str, version: str, get_count: int):
+    num = get_count(tablename) + 1
     data = {
         "TrackName": "Test Track 3",
         "AlbumId": 1,
@@ -171,8 +165,8 @@ def test_putid_fail(tablename: str, version: str, num_tracks: int):
         "UnitPrice": 0.99,
         "CurrencyId": 26,
     }
-    response = client.put(f"/{tablename}/{version}/id/{num_tracks}", json=data)
-    print(f"Endpoint = /{tablename}/{version}/id/{num_tracks}")
+    response = client.put(f"/{tablename}/{version}/id/{num}", json=data)
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 404
 
 
@@ -223,19 +217,20 @@ def test_putname_fail(tablename: str, version: str, name: str):
 # DELETE Track by Id - PASS
 @mark.order(13)
 @mark.parametrize("tablename, version", [param("tracks", "v1", id="Tracks")])
-def test_deleteid_pass(tablename: str, version: str, num_tracks: int):
-    response = client.delete(f"/{tablename}/{version}/id/{num_tracks}")
-    print(f"Endpoint = /{tablename}/{version}/id/{num_tracks}")
+def test_deleteid_pass(tablename: str, version: str, get_count: int):
+    num = get_count(tablename)
+    response = client.delete(f"/{tablename}/{version}/id/{num}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 202
 
 
 # DELETE Track by Id - FAIL
 @mark.order(14)
 @mark.parametrize("tablename, version", [param("tracks", "v1", id="Tracks")])
-def test_deleteid_fail(tablename: str, version: str, num_tracks: int):
-    num_tracks = num_tracks + 1
-    response = client.delete(f"/{tablename}/{version}/id/{num_tracks}")
-    print(f"Endpoint = /{tablename}/{version}/id/{num_tracks}")
+def test_deleteid_fail(tablename: str, version: str, get_count: int):
+    num = get_count(tablename) + 1
+    response = client.delete(f"/{tablename}/{version}/id/{num}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 404
 
 

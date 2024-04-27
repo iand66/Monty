@@ -1,7 +1,20 @@
 import os
 from datetime import date
 from pytest import mark, param
-from src.orm.schema import Album, Artist, Currency, Customer, Employee, Genre, Invoice, Invoiceitem, Mediatype, Playlist, Playlisttrack, Track
+from src.orm.schema import (
+    Album,
+    Artist,
+    Currency,
+    Customer,
+    Employee,
+    Genre,
+    Invoice,
+    Invoiceitem,
+    Mediatype,
+    Playlist,
+    Playlisttrack,
+    Track,
+)
 
 from src.orm.dbfunctions import dbSelect, dbInsert, dbUpdate, dbDelete
 from src.helper import engine
@@ -13,28 +26,28 @@ def test_dbBuild(dbBuild):
     assert os.path.exists(engine.url.database) is True
 
 
-# Verify dbSelect matches known record count
-# def dbSelect(session, table: Base, **kwargs) -> list:
 @mark.order(2)
 @mark.parametrize(
-    "tablename, record",
+    "classname, tablename",
     [
-        param(Album, 347, id="Album"),
-        param(Artist, 275, id="Artist"),
-        param(Currency, 152, id="Currency"),
-        param(Customer, 59, id="Customer"),
-        param(Employee, 8, id="Employee"),
-        param(Genre, 25, id="Genres"),
-        param(Invoice, 412, id="Invoice"),
-        param(Invoiceitem, 2240, id="Invoiceitem"),
-        param(Mediatype, 5, id="Mediatype"),
-        param(Playlist, 14, id="Playlist"),
-        param(Playlisttrack, 8715, id="Playlisttrack"),
-        param(Track, 3503, id="Track"),
+        param(Album, "albums", id="Album"),
+        param(Artist, "artists", id="Artist"),
+        param(Currency, "currencies", id="Currency"),
+        param(Customer, "customers", id="Customer"),
+        param(Employee, "employees", id="Employee"),
+        param(Genre, "genres", id="Genres"),
+        param(Invoice, "invoices", id="Invoice"),
+        param(Invoiceitem, "invoiceitems", id="Invoiceitem"),
+        param(Mediatype, "mediatypes", id="Mediatype"),
+        param(Playlist, "playlists", id="Playlist"),
+        param(Playlisttrack, "playlisttracks", id="Playlisttrack"),
+        param(Track, "tracks", id="Track"),
     ],
 )
-def test_dbSelect(get_db, tablename, record):
-    assert len(dbSelect(get_db, tablename, **{"Id": "%"})) == record
+def test_dbSelect(get_db, get_count, classname, tablename):
+    num = get_count(tablename)
+    print(f"{classname} contains {num} entries")
+    assert len(dbSelect(get_db, classname, **{"Id": "%"})) == num
 
 
 # Verify dbInsert of new records to each test database table

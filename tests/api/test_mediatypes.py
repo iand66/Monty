@@ -1,36 +1,29 @@
 from random import randint
 
-from sqlalchemy import text
 from fastapi.testclient import TestClient
-from pytest import mark, param, fixture
+from pytest import mark, param
 
 from src.main import app
 
 client = TestClient(app)
 
 
-@fixture
-def num_medias(get_db):
-    result = get_db.execute(text("SELECT COUNT(*) FROM mediatypes"))
-    count = result.fetchone()[0]
-    return count
-
-
 # GET All Mediatypes - PASS
 @mark.order(1)
 @mark.parametrize("tablename, version", [param("mediatypes", "v1", id="Mediatypes")])
-def test_getall(tablename: str, version: str, num_medias: int):
+def test_getall(tablename: str, version: str, get_count: int):
+    num = get_count(tablename)
     response = client.get(f"/{tablename}/{version}")
-    print(f"Endpoint = /{tablename}/{version} records {num_medias}")
+    print(f"Endpoint = /{tablename}/{version} records {num}")
     assert response.status_code == 200
-    assert len(response.json()) == num_medias
+    assert len(response.json()) == num
 
 
 # GET RANDOM Mediatype by Mediatype Id - PASS
 @mark.order(2)
 @mark.parametrize("tablename, version", [param("mediatypes", "v1", id="Mediatypes")])
-def test_getid_pass(tablename: str, version: str, num_medias: int):
-    x = randint(1, num_medias)
+def test_getid_pass(tablename: str, version: str, get_count: int):
+    x = randint(1, get_count(tablename))
     response = client.get(f"/{tablename}/{version}/id/{x}")
     print(f"Endpoint = /{tablename}/{version}/id/{x}")
     assert response.status_code == 200
@@ -40,10 +33,10 @@ def test_getid_pass(tablename: str, version: str, num_medias: int):
 # GET Mediatypes by Id - FAIL
 @mark.order(3)
 @mark.parametrize("tablename, version", [param("mediatypes", "v1", id="Mediatypes")])
-def test_getid_fail(tablename: str, version: str, num_medias: int):
-    num_medias = num_medias + 1
-    response = client.get(f"/{tablename}/{version}/id/{num_medias}")
-    print(f"Endpoint = /{tablename}/{version}/id/{num_medias}")
+def test_getid_fail(tablename: str, version: str, get_count: int):
+    num = get_count(tablename) + 1
+    response = client.get(f"/{tablename}/{version}/id/{num}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 404
 
 
@@ -109,27 +102,23 @@ def test_postname_fail(tablename: str, version: str, name: str):
 
 # PUT Mediatype by Id - PASS
 @mark.order(9)
-@mark.parametrize(
-    "tablename, version", [param("mediatypes", "v1", id="Mediatypes")]
-)
-def test_putid_pass(tablename: str, version: str, num_medias: int):
-    num_medias = num_medias - 1
+@mark.parametrize("tablename, version", [param("mediatypes", "v1", id="Mediatypes")])
+def test_putid_pass(tablename: str, version: str, get_count: int):
+    num = get_count(tablename)
     data = {"MediaTypeName": "Test Mediatype 3"}
-    response = client.put(f"/{tablename}/{version}/id/{num_medias}", json=data)
-    print(f"Endpoint = /{tablename}/{version}/id/{num_medias}")
+    response = client.put(f"/{tablename}/{version}/id/{num}", json=data)
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 201
 
 
 # PUT Mediatype by Id - FAIL
 @mark.order(10)
-@mark.parametrize(
-    "tablename, version", [param("mediatypes", "v1", id="Mediatypes")]
-)
-def test_putid_fail(tablename: str, version: str, num_medias: int):
-    num_medias = num_medias + 1
+@mark.parametrize("tablename, version", [param("mediatypes", "v1", id="Mediatypes")])
+def test_putid_fail(tablename: str, version: str, get_count: int):
+    num = get_count(tablename) + 1
     data = {"MediaTypeName": "Test Mediatype 1"}
-    response = client.put(f"/{tablename}/{version}/id/{num_medias}", json=data)
-    print(f"Endpoint = /{tablename}/{version}/id/{num_medias}")
+    response = client.put(f"/{tablename}/{version}/id/{num}", json=data)
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 404
 
 
@@ -140,7 +129,7 @@ def test_putid_fail(tablename: str, version: str, num_medias: int):
     [param("mediatypes", "v1", "Test Mediatype 3", id="Mediatypes")],
 )
 def test_putname_pass(tablename: str, version: str, name: str):
-    data = {"MediaTypeName": "Test Mediatype 1"}
+    data = {"MediaTypeName": "Test Mediatype 2"}
     response = client.put(f"/{tablename}/{version}/name/{name}", json=data)
     print(f"Endpoint = /{tablename}/{version}/name/{name}")
     assert response.status_code == 201
@@ -161,24 +150,21 @@ def test_putname_fail(tablename: str, version: str, name: str):
 
 # DELETE Mediatype by Id - PASS
 @mark.order(13)
-@mark.parametrize(
-    "tablename, version", [param("mediatypes", "v1", id="Mediatypes")]
-)
-def test_deleteid_pass(tablename: str, version: str, num_medias: int):
-    response = client.delete(f"/{tablename}/{version}/id/{num_medias}")
-    print(f"Endpoint = /{tablename}/{version}/id/{num_medias}")
+@mark.parametrize("tablename, version", [param("mediatypes", "v1", id="Mediatypes")])
+def test_deleteid_pass(tablename: str, version: str, get_count: int):
+    num = get_count(tablename)
+    response = client.delete(f"/{tablename}/{version}/id/{num}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 202
 
 
 # DELETE Mediatype by Id - FAIL
 @mark.order(14)
-@mark.parametrize(
-    "tablename, version", [param("mediatypes", "v1", id="Mediatypes")]
-)
-def test_deleteid_fail(tablename: str, version: str, num_medias: int):
-    num_medias = num_medias + 1
-    response = client.delete(f"/{tablename}/{version}/id/{num_medias}")
-    print(f"Endpoint = /{tablename}/{version}/id/{num_medias}")
+@mark.parametrize("tablename, version", [param("mediatypes", "v1", id="Mediatypes")])
+def test_deleteid_fail(tablename: str, version: str, get_count: int):
+    num = get_count(tablename) + 1
+    response = client.delete(f"/{tablename}/{version}/id/{num}")
+    print(f"Endpoint = /{tablename}/{version}/id/{num}")
     assert response.status_code == 404
 
 
